@@ -15,38 +15,55 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 project("${CMAKE_PROJECT_NAME}")
 
 # Pfad zum Verzeichnis mit den Quellcodedateien
-set(SOURCES_DIR teamcode/sources)
+set(TEAMCODE_SOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/teamcode/sources)
 set(SDK_SOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/sdk/sources)
 
 # Alle vorhandenen Quelldateien im Verzeichnis und seinen Unterordnern sammeln
-file(GLOB_RECURSE teamcode/sources CONFIGURE_DEPENDS ${SOURCES_DIR}/*.cpp)
+file(GLOB_RECURSE TEAMCODE_SOURCES CONFIGURE_DEPENDS ${TEAMCODE_SOURCES_DIR}/*.cpp)
 file(GLOB_RECURSE SDK_SOURCES CONFIGURE_DEPENDS ${SDK_SOURCES_DIR}/*.cpp)
 
 # Aktualisiere die vorhandenen Dateien im Build
-add_library(native-lib SHARED ${SOURCES} ${SDK_SOURCES})
+add_library(native-lib SHARED ${TEAMCODE_SOURCES} ${SDK_SOURCES})
 
-# Specifies a path to prebuilt native libraries outside of your project of OpenCV
-add_library(april_tag SHARED IMPORTED)
-set_target_properties(april_tag PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}../../../../build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libapriltag.so")
+# Für armeabi-v7a
+add_library(april_tag_v7a SHARED IMPORTED)
+set_target_properties(april_tag_v7a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}../../../../build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libapriltag.so")
 
-add_library(image_utils SHARED IMPORTED)
-set_target_properties(image_utils PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}../../../../build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libimage_utils.so")
+add_library(image_utils_v7a SHARED IMPORTED)
+set_target_properties(image_utils_v7a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}../../../../build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libimage_utils.so")
 
-add_library(object_tracking SHARED IMPORTED)
-set_target_properties(object_tracking PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}../../../../build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libobject_tracking.so")
+add_library(object_tracking_v7a SHARED IMPORTED)
+set_target_properties(object_tracking_v7a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}../../../../build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libobject_tracking.so")
 
-add_library(opencv_java4 SHARED IMPORTED)
-set_target_properties(opencv_java4 PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}../../../../build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libopencv_java4.so")
+add_library(opencv_java4_v7a SHARED IMPORTED)
+set_target_properties(opencv_java4_v7a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}../../../../build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libopencv_java4.so")
 
+# Für arm64-v8a
+add_library(april_tag_v8a SHARED IMPORTED)
+set_target_properties(april_tag_v8a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}../../../../build/intermediates/merged_native_libs/debug/out/lib/arm64-v8a/libapriltag.so")
 
-find_library(log-lib log)
+add_library(image_utils_v8a SHARED IMPORTED)
+set_target_properties(image_utils_v8a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}../../../../build/intermediates/merged_native_libs/debug/out/lib/arm64-v8a/libimage_utils.so")
+
+add_library(object_tracking_v8a SHARED IMPORTED)
+set_target_properties(object_tracking_v8a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}../../../../build/intermediates/merged_native_libs/debug/out/lib/arm64-v8a/libobject_tracking.so")
+
+add_library(opencv_java4_v8a SHARED IMPORTED)
+set_target_properties(opencv_java4_v8a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}../../../../build/intermediates/merged_native_libs/debug/out/lib/arm64-v8a/libopencv_java4.so")
+
+# Linken der Bibliotheken
 target_link_libraries(
         native-lib
         ${log-lib}
-        april_tag
-        image_utils
-        object_tracking
-        opencv_java4)
+        $<$<STREQUAL:${ANDROID_ABI},armeabi-v7a>:april_tag_v7a>
+        $<$<STREQUAL:${ANDROID_ABI},armeabi-v7a>:image_utils_v7a>
+        $<$<STREQUAL:${ANDROID_ABI},armeabi-v7a>:object_tracking_v7a>
+        $<$<STREQUAL:${ANDROID_ABI},armeabi-v7a>:opencv_java4_v7a>
+        $<$<STREQUAL:${ANDROID_ABI},arm64-v8a>:april_tag_v8a>
+        $<$<STREQUAL:${ANDROID_ABI},arm64-v8a>:image_utils_v8a>
+        $<$<STREQUAL:${ANDROID_ABI},arm64-v8a>:object_tracking_v8a>
+        $<$<STREQUAL:${ANDROID_ABI},arm64-v8a>:opencv_java4_v8a>
+)
 
 # Specifies a path to native header files.
 include_directories(

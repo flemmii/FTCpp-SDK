@@ -21,6 +21,27 @@ android {
     packagingOptions {
         jniLibs.useLegacyPackaging true
     }
+
+    ndkVersion '21.4.7075529'
+
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+        }
+    }
+
+
+    tasks.register('runJavaScript') {
+        doLast {
+            exec {
+                commandLine 'node', 'src\\main\\cpp\\createOpModeJava\\index.js'
+            }
+        }
+    }
+
+    applicationVariants.configureEach { variant ->
+        variant.preBuild.dependsOn runJavaScript
+    }
 }
 
 dependencies {
