@@ -64,26 +64,26 @@ But if you want to create a new OpMode from scratch you can use the following st
 - Add the following code to the header file:
 
 ```cpp
-    #include <jni.h>
-    #include "sdk.h"
+#include <jni.h>
+#include "sdk.h"
 
-    // Your OpMode annotation shown below
+// Your OpMode annotation shown below
     
-    extern "C"
-    JNIEXPORT void JNICALL
-    Java_org_firstinspires_ftc_teamcode_opmodes_teleop_Example_opMode(JNIEnv *env,
-                                                                  jobject thiz);
+extern "C"
+JNIEXPORT void JNICALL
+Java_org_firstinspires_ftc_teamcode_opmodes_teleop_Example_opMode(JNIEnv *env,
+                                                              jobject thiz);
 ```
 
 - Add the following code to the source file:
 
 ```cpp
-    extern "C"
-    JNIEXPORT void JNICALL
-    Java_org_firstinspires_ftc_teamcode_opmodes_teleop_Example_opMode(JNIEnv *env,
-                                                                  jobject thiz) {
-       init_sdk
-    }
+extern "C"
+JNIEXPORT void JNICALL
+Java_org_firstinspires_ftc_teamcode_opmodes_teleop_Example_opMode(JNIEnv *env,
+                                                              jobject thiz) {
+    init_sdk
+}
 ```
 
 - Change the path to your OpMode by just changing the
