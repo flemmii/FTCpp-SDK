@@ -15,7 +15,7 @@
 #define attach_thread   JNIEnv *env; \
                         sdk::jvm->AttachCurrentThread(reinterpret_cast<JNIEnv **> (&env), nullptr);
 
-void logcat_log(int ERROR_LEVEL, const char *text, ...);
+void logcat_log(int ERROR_LEVEL, const char *tag, const char *text, ...);
 
 void sleep(const std::chrono::duration<double> &duration);
 
