@@ -13,6 +13,14 @@ namespace sdk {
     Lynx_module::Lynx_module(jobject lynxModule) {
         attach_thread
         this->lynxModule = env->NewGlobalRef(lynxModule);
+        env->DeleteGlobalRef(lynxModule);
+    }
+
+    Lynx_module::~Lynx_module() {
+        if (lynxModule) {
+            attach_thread
+            env->DeleteGlobalRef(lynxModule);
+        }
     }
 
     const char *
