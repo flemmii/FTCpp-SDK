@@ -12,12 +12,18 @@ namespace sdk::hardware_map {
 
     jobject get(jclass jclazz, const string &device_name) {
         attach_thread
+        jclass HardwareMap = env->GetObjectClass(hardwareMap);
+        jstring jstr = env->NewStringUTF(device_name.c_str());
+
         jobject result = env->NewGlobalRef(
                 env->CallObjectMethod(hardwareMap,
-                                      env->GetMethodID(env->GetObjectClass(hardwareMap), "get",
+                                      env->GetMethodID(HardwareMap, "get",
                                                        "(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/Object;"),
                                       jclazz,
-                                      env->NewStringUTF(device_name.c_str())));
+                                      jstr));
+
+        env->DeleteLocalRef(HardwareMap);
+        env->DeleteLocalRef(jstr);
         return result;
     }
 }
