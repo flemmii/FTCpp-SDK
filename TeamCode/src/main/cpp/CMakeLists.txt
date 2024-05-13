@@ -51,6 +51,8 @@ set_target_properties(object_tracking_v8a PROPERTIES IMPORTED_LOCATION "${CMAKE_
 add_library(opencv_java4_v8a SHARED IMPORTED)
 set_target_properties(opencv_java4_v8a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}../../../../build/intermediates/merged_native_libs/debug/out/lib/arm64-v8a/libopencv_java4.so")
 
+find_library(log-lib log)
+
 # Linken der Bibliotheken
 target_link_libraries(
         native-lib
