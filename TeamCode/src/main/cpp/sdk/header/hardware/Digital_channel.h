@@ -25,8 +25,6 @@ namespace sdk {
 
         Digital_channel(jobject digitalChannel);
 
-        ~Digital_channel();
-
         [[nodiscard]] Mode get_mode() const;
 
         void set_mode(Mode mode) const;

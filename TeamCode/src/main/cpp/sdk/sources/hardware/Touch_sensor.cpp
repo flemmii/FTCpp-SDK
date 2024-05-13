@@ -12,13 +12,6 @@ namespace sdk {
         this->touchSensor = env->NewGlobalRef(touchSensor);
     }
 
-    Touch_sensor::~Touch_sensor() {
-        if (touchSensor) {
-            attach_thread
-            env->DeleteGlobalRef(touchSensor);
-        }
-    }
-
     double Touch_sensor::get_value() const {
         attach_thread
         return static_cast<double>(env->CallDoubleMethod(touchSensor,

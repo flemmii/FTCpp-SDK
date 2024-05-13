@@ -20,8 +20,6 @@ namespace sdk {
 
         Analog_input(jobject analogInput);
 
-        ~Analog_input();
-
         [[nodiscard]] int get_voltage() const;
 
         [[nodiscard]] int get_max_voltage() const;

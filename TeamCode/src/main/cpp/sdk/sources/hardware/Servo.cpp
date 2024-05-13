@@ -15,13 +15,6 @@ namespace sdk {
         this->servo = env->NewGlobalRef(servo);
     }
 
-    Servo::~Servo() {
-        if (servo) {
-            attach_thread
-            env->DeleteGlobalRef(servo);
-        }
-    }
-
     Servo_controller Servo::get_controller() const {
         attach_thread
         return {env->CallObjectMethod(servo, env->GetMethodID(sdk::Servo, "getController",

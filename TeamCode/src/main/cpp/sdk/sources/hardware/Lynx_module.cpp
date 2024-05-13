@@ -10,18 +10,9 @@ namespace sdk {
     jclass LynxModule;
     jclass BulkCachingMode;
 
-    Lynx_module::Lynx_module() = default;
-
     Lynx_module::Lynx_module(jobject lynxModule) {
         attach_thread
         this->lynxModule = env->NewGlobalRef(lynxModule);
-    }
-
-    Lynx_module::~Lynx_module() {
-        if (lynxModule) {
-            attach_thread
-            env->DeleteGlobalRef(lynxModule);
-        }
     }
 
     const char *

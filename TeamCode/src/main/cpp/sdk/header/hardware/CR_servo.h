@@ -20,8 +20,6 @@ namespace sdk {
 
         CR_servo(jobject crServo);
 
-        ~CR_servo();
-
         [[nodiscard]] Servo_controller get_controller() const;
 
         [[nodiscard]] int get_port_number() const;

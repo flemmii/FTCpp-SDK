@@ -34,11 +34,9 @@ namespace sdk {
 
         jobject dcMotorEx{};
 
-        Dc_motor_ex();
+        Dc_motor_ex() = default;
 
         Dc_motor_ex(jobject dcMotorEx);
-
-        ~Dc_motor_ex();
 
         // DcMotorEx
 

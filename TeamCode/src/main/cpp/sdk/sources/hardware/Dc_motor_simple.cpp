@@ -13,13 +13,6 @@ namespace sdk {
         this->dcMotorSimple = env->NewGlobalRef(dcMotorSimple);
     }
 
-    Dc_motor_simple::~Dc_motor_simple() {
-        if (dcMotorSimple) {
-            attach_thread
-            env->DeleteGlobalRef(dcMotorSimple);
-        }
-    }
-
     void Dc_motor_simple::set_direction(Dc_motor_simple::Direction direction) const {
         attach_thread
         jobject jdirection = env->GetStaticObjectField(sdk::DcMotorSimple_Direction,

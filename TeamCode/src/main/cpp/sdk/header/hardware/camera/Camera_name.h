@@ -18,8 +18,6 @@ namespace sdk {
 
         Camera_name(jobject cameraName);
 
-        ~Camera_name();
-
         [[nodiscard]] bool is_webcam() const;
 
         [[nodiscard]] bool is_camera_direction() const;

@@ -12,13 +12,6 @@ namespace sdk {
         this->digitalChannel = env->NewGlobalRef(digitalChannel);
     }
 
-    Digital_channel::~Digital_channel() {
-        if (digitalChannel) {
-            attach_thread
-            env->DeleteGlobalRef(digitalChannel);
-        }
-    }
-
     Digital_channel::Mode Digital_channel::get_mode() const {
         attach_thread
         jobject mode = env->CallObjectMethod(digitalChannel,

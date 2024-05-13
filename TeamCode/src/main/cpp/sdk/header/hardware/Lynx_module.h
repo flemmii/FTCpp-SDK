@@ -22,11 +22,9 @@ namespace sdk {
             AUTO
         };
 
-        Lynx_module();
+        Lynx_module() = default;
 
         Lynx_module(jobject lynxModule);
-
-        ~Lynx_module();
 
         static const char *bulk_caching_mode_to_string(Bulk_caching_mode bulk_caching_mode);
 

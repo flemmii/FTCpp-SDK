@@ -69,8 +69,6 @@ namespace sdk {
         BNO055IMU(jobject imu);
 
         BNO055IMU() = default;
-
-        ~BNO055IMU();
     };
 
 } // sdk

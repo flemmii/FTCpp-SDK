@@ -12,18 +12,9 @@ namespace sdk {
     jclass PIDFCoefficients;
     jclass DcMotor_ZeroPowerBehavior;
 
-    Dc_motor_ex::Dc_motor_ex() = default;
-
     Dc_motor_ex::Dc_motor_ex(jobject dcMotorEx) : Dc_motor_simple(dcMotorEx) {
         attach_thread
         this->dcMotorEx = env->NewGlobalRef(dcMotorEx);
-    }
-
-    Dc_motor_ex::~Dc_motor_ex() {
-        if (dcMotorEx) {
-            attach_thread
-            env->DeleteGlobalRef(dcMotorEx);
-        }
     }
 
     void Dc_motor_ex::set_motor_enable() const {

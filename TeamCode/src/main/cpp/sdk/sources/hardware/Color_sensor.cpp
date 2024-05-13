@@ -12,13 +12,6 @@ namespace sdk {
         this->colorSensor = env->NewGlobalRef(colorSensor);
     }
 
-    Color_sensor::~Color_sensor() {
-        if (colorSensor) {
-            attach_thread
-            env->DeleteGlobalRef(colorSensor);
-        }
-    }
-
     int Color_sensor::red() const {
         attach_thread
         return static_cast<int>(env->CallIntMethod(colorSensor,

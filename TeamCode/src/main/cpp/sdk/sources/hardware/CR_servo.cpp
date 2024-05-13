@@ -12,13 +12,6 @@ namespace sdk {
         this->crServo = env->NewGlobalRef(crServo);
     }
 
-    CR_servo::~CR_servo() {
-        if (crServo) {
-            attach_thread
-            env->DeleteGlobalRef(crServo);
-        }
-    }
-
     Servo_controller CR_servo::get_controller() const {
         attach_thread
         jobject jcontroller = env->CallObjectMethod(crServo,

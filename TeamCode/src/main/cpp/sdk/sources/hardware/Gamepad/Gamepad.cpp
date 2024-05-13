@@ -8,13 +8,6 @@ namespace sdk {
         this->gamepad = env->NewGlobalRef(gamepad);
     }
 
-    Gamepad::~Gamepad() {
-        if (gamepad) {
-            attach_thread
-            env->DeleteGlobalRef(gamepad);
-        }
-    }
-
     void Gamepad::update() {
         attach_thread
 

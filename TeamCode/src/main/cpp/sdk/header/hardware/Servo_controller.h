@@ -19,8 +19,6 @@ namespace sdk {
 
         Servo_controller(jobject servoController);
 
-        ~Servo_controller();
-
         enum class Pwm_status {
             ENABLED, DISABLED, MIXED
         };

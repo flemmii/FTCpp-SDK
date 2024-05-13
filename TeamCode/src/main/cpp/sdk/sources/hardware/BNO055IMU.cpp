@@ -160,11 +160,4 @@ namespace sdk {
 
     BNO055IMU::BNO055IMU(jobject imu) : BNO055IMU(
             BNO055IMU(imu, defaultParameters(), Vec3d::Vec3d_remap_order::XYZ_XYZ)) {}
-
-    BNO055IMU::~BNO055IMU() {
-        if (bno055imu) {
-            attach_thread
-            env->DeleteGlobalRef(bno055imu);
-        }
-    }
 } // sdk

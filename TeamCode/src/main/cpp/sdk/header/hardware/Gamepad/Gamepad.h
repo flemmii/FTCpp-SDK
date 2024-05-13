@@ -72,8 +72,6 @@ namespace sdk {
 
         Gamepad(jobject gamepad);
 
-        ~Gamepad();
-
         void update();
 
         void rumble(int duration_ms) const;

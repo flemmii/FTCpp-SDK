@@ -12,13 +12,6 @@ namespace sdk {
         this->cameraName = env->NewGlobalRef(cameraName);
     }
 
-    Camera_name::~Camera_name() {
-        if (cameraName) {
-            attach_thread
-            env->DeleteGlobalRef(cameraName);
-        }
-    }
-
     bool Camera_name::is_webcam() const {
         attach_thread
         return env->CallBooleanMethod(cameraName, env->GetMethodID(CameraName, "isWebcam", "()Z"));

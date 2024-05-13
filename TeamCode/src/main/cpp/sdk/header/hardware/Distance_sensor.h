@@ -15,8 +15,6 @@ namespace sdk {
 
         Distance_sensor(jobject distanceSensor);
 
-        ~Distance_sensor();
-
         // Returns the distance in mm
         double get_distance();
     };

@@ -26,8 +26,6 @@ namespace sdk {
 
         Dc_motor_simple(jobject dcMotorSimple);
 
-        ~Dc_motor_simple();
-
         void set_direction(Direction direction) const;
 
         [[nodiscard]] Direction get_direction() const;

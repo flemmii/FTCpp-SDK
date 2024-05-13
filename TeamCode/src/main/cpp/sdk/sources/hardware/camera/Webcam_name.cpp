@@ -14,13 +14,6 @@ namespace sdk {
         this->webcamName = env->NewGlobalRef(webcamName);
     }
 
-    Webcam_name::~Webcam_name() {
-        if (webcamName) {
-            attach_thread
-            env->DeleteGlobalRef(webcamName);
-        }
-    }
-
     string Webcam_name::get_usb_device_name_if_attached() const {
         attach_thread
         auto jstr = (jstring) (env->CallObjectMethod(webcamName,

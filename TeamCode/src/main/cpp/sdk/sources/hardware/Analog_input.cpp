@@ -12,13 +12,6 @@ namespace sdk {
         this->analogInput = env->NewGlobalRef(analogInput);
     }
 
-    Analog_input::~Analog_input() {
-        if (analogInput) {
-            attach_thread
-            env->DeleteGlobalRef(analogInput);
-        }
-    }
-
     int Analog_input::get_voltage() const {
         attach_thread
         return static_cast<int>(env->CallIntMethod(analogInput,

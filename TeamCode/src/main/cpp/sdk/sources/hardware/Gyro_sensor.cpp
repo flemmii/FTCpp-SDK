@@ -12,13 +12,6 @@ namespace sdk {
         this->gyroSensor = env->NewGlobalRef(gyroSensor);
     }
 
-    Gyro_sensor::~Gyro_sensor() {
-        if (gyroSensor) {
-            attach_thread
-            env->DeleteGlobalRef(gyroSensor);
-        }
-    }
-
     void Gyro_sensor::calibrate() const {
         attach_thread
         env->CallVoidMethod(gyroSensor, env->GetMethodID(GyroSensor, "calibrate", "()V"));

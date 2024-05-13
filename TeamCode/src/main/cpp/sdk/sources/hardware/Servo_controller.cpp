@@ -15,13 +15,6 @@ namespace sdk {
         this->servoController = env->NewGlobalRef(servoController);
     }
 
-    Servo_controller::~Servo_controller() {
-        if (servoController) {
-            attach_thread
-            env->DeleteGlobalRef(servoController);
-        }
-    }
-
     void Servo_controller::pwm_enable() const {
         attach_thread
         env->CallVoidMethod(servoController, env->GetMethodID(ServoController, "pwmEnable", "()V"));

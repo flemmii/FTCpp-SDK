@@ -10,13 +10,6 @@ namespace sdk {
         this->distanceSensor = env->NewGlobalRef(distanceSensor);
     }
 
-    Distance_sensor::~Distance_sensor() {
-        if (distanceSensor) {
-            attach_thread
-            env->DeleteGlobalRef(distanceSensor);
-        }
-    }
-
     double Distance_sensor::get_distance() {
         attach_thread
         jobject mmObject = env->GetStaticObjectField(DistanceUnit,
