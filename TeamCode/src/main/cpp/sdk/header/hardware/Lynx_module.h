@@ -26,8 +26,6 @@ namespace sdk {
 
         Lynx_module(jobject lynxModule);
 
-        ~Lynx_module();
-
         static const char *bulk_caching_mode_to_string(Bulk_caching_mode bulk_caching_mode);
 
         [[nodiscard]] bool is_not_responding() const;
