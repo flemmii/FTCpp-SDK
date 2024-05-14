@@ -15,9 +15,9 @@ namespace sdk {
 
     void Dc_motor_simple::set_direction(Dc_motor_simple::Direction direction) const {
         attach_thread
-        jobject jdirection = env->GetStaticObjectField(sdk::DcMotorSimple_Direction,
+        jobject jdirection = env->GetStaticObjectField(DcMotorSimple_Direction,
                                                        env->GetStaticFieldID(
-                                                               sdk::DcMotorSimple_Direction,
+                                                               DcMotorSimple_Direction,
                                                                direction_to_string(direction),
                                                                "Lcom/qualcomm/robotcore/hardware/DcMotorSimple$Direction;"));
         env->CallVoidMethod(dcMotorSimple, env->GetMethodID(DcMotorSimple, "setDirection",
