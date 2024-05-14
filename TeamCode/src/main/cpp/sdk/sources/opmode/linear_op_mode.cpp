@@ -7,36 +7,42 @@
 namespace sdk {
     jobject currentOpMode;
     jclass CurrentOpMode;
-    jmethodID linear_op_mode_is_stop_requested;
 
     namespace linear_op_mode {
 
         void init_cpp() {
             attach_thread
-            hardware_map::hardwareMap = env->NewGlobalRef(env->GetObjectField(currentOpMode,
-                                                                              env->GetFieldID(
-                                                                                      CurrentOpMode,
-                                                                                      "hardwareMap",
-                                                                                      "Lcom/qualcomm/robotcore/hardware/HardwareMap;")));
-            gamepads::gamepad1 = *new class Gamepad(
-                    env->NewGlobalRef(env->GetObjectField(currentOpMode,
-                                                          env->GetFieldID(
-                                                                  CurrentOpMode,
-                                                                  "gamepad1",
-                                                                  "Lcom/qualcomm/robotcore/hardware/Gamepad;"))));
-            gamepads::gamepad2 = *new class Gamepad(
-                    env->NewGlobalRef(env->GetObjectField(currentOpMode,
-                                                          env->GetFieldID(
-                                                                  CurrentOpMode,
-                                                                  "gamepad2",
-                                                                  "Lcom/qualcomm/robotcore/hardware/Gamepad;"))));
-            telemetry::telemetry = env->NewGlobalRef(env->GetObjectField(currentOpMode,
-                                                                         env->GetFieldID(
-                                                                                 CurrentOpMode,
-                                                                                 "telemetry",
-                                                                                 "Lorg/firstinspires/ftc/robotcore/external/Telemetry;")));
-            linear_op_mode_is_stop_requested = env->GetMethodID(CurrentOpMode, "isStopRequested",
-                                                                "()Z");
+            jobject localHardwareMap = env->GetObjectField(currentOpMode,
+                                                           env->GetFieldID(
+                                                                   CurrentOpMode,
+                                                                   "hardwareMap",
+                                                                   "Lcom/qualcomm/robotcore/hardware/HardwareMap;"));
+            hardware_map::hardwareMap = env->NewGlobalRef(localHardwareMap);
+            env->DeleteLocalRef(localHardwareMap);
+
+            jobject localGamepad1 = env->GetObjectField(currentOpMode,
+                                                        env->GetFieldID(
+                                                                CurrentOpMode,
+                                                                "gamepad1",
+                                                                "Lcom/qualcomm/robotcore/hardware/Gamepad;"));
+            gamepads::gamepad1 = {env->NewGlobalRef(localGamepad1)};
+            env->DeleteLocalRef(localGamepad1);
+
+            jobject localGamepad2 = env->GetObjectField(currentOpMode,
+                                                        env->GetFieldID(
+                                                                CurrentOpMode,
+                                                                "gamepad2",
+                                                                "Lcom/qualcomm/robotcore/hardware/Gamepad;"));
+            gamepads::gamepad2 = {env->NewGlobalRef(localGamepad2)};
+            env->DeleteLocalRef(localGamepad2);
+
+            jobject localTelemetry = env->GetObjectField(currentOpMode,
+                                                         env->GetFieldID(
+                                                                 CurrentOpMode,
+                                                                 "telemetry",
+                                                                 "Lorg/firstinspires/ftc/robotcore/external/Telemetry;"));
+            telemetry::telemetry = env->NewGlobalRef(localTelemetry);
+            env->DeleteLocalRef(localTelemetry);
         }
 
         void wait_for_start() {

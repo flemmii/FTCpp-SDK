@@ -15,15 +15,18 @@ namespace sdk::hardware_map {
         jclass HardwareMap = env->GetObjectClass(hardwareMap);
         jstring jstr = env->NewStringUTF(device_name.c_str());
 
-        jobject result = env->NewGlobalRef(
+        jobject device =
                 env->CallObjectMethod(hardwareMap,
                                       env->GetMethodID(HardwareMap, "get",
                                                        "(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/Object;"),
                                       jclazz,
-                                      jstr));
+                                      jstr);
+
+        jobject result = env->NewGlobalRef(device);
 
         env->DeleteLocalRef(HardwareMap);
         env->DeleteLocalRef(jstr);
+        env->DeleteLocalRef(device);
         return result;
     }
 }
