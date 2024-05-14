@@ -146,11 +146,10 @@ namespace sdk {
     }
 
     BNO055IMU::BNO055IMU(jobject imu, BNO055IMU::Parameters parameters,
-                         Vec3d::Vec3d_remap_order axis_remap_order) {
-        attach_thread
-        bno055imu = env->NewGlobalRef(imu);
+                         Vec3d::Vec3d_remap_order axis_remap_order) : bno055imu(imu),
+                                                                      axis_remap_order(
+                                                                              axis_remap_order) {
         this->initialize(parameters);
-        this->axis_remap_order = axis_remap_order;
         this->start_acceleration_integration(100);
     }
 

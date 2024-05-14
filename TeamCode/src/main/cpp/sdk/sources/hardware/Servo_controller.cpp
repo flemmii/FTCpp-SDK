@@ -10,10 +10,8 @@ namespace sdk {
     jclass ServoController;
     jclass ServoController_PwmStatus;
 
-    Servo_controller::Servo_controller(jobject servoController) {
-        attach_thread
-        this->servoController = env->NewGlobalRef(servoController);
-    }
+    Servo_controller::Servo_controller(jobject servoController) : servoController(
+            servoController) {}
 
     void Servo_controller::pwm_enable() const {
         attach_thread

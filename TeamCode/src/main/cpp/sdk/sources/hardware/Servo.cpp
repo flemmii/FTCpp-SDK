@@ -10,10 +10,7 @@ namespace sdk {
     jclass Servo;
     jclass Servo_Direction;
 
-    Servo::Servo(jobject servo) {
-        attach_thread
-        this->servo = env->NewGlobalRef(servo);
-    }
+    Servo::Servo(jobject servo) : servo(servo) {}
 
     Servo_controller Servo::get_controller() const {
         attach_thread

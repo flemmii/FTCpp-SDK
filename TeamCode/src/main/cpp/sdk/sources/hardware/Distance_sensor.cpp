@@ -5,10 +5,7 @@ namespace sdk {
     jclass DistanceSensor;
     jclass DistanceUnit;
 
-    Distance_sensor::Distance_sensor(jobject distanceSensor) {
-        attach_thread
-        this->distanceSensor = env->NewGlobalRef(distanceSensor);
-    }
+    Distance_sensor::Distance_sensor(jobject distanceSensor) : distanceSensor(distanceSensor) {}
 
     double Distance_sensor::get_distance() {
         attach_thread

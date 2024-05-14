@@ -3,10 +3,7 @@
 namespace sdk {
     jclass Gamepad;
 
-    Gamepad::Gamepad(jobject gamepad) {
-        attach_thread
-        this->gamepad = env->NewGlobalRef(gamepad);
-    }
+    Gamepad::Gamepad(jobject gamepad) : gamepad(gamepad) {}
 
     void Gamepad::update() {
         attach_thread

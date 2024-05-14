@@ -8,10 +8,7 @@ namespace sdk {
     jclass DcMotorSimple;
     jclass DcMotorSimple_Direction;
 
-    Dc_motor_simple::Dc_motor_simple(jobject dcMotorSimple) {
-        attach_thread
-        this->dcMotorSimple = env->NewGlobalRef(dcMotorSimple);
-    }
+    Dc_motor_simple::Dc_motor_simple(jobject dcMotorSimple) : dcMotorSimple(dcMotorSimple) {}
 
     void Dc_motor_simple::set_direction(Dc_motor_simple::Direction direction) const {
         attach_thread

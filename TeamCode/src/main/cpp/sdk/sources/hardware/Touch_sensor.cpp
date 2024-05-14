@@ -7,10 +7,7 @@
 namespace sdk {
     jclass TouchSensor;
 
-    Touch_sensor::Touch_sensor(jobject touchSensor) {
-        attach_thread
-        this->touchSensor = env->NewGlobalRef(touchSensor);
-    }
+    Touch_sensor::Touch_sensor(jobject touchSensor) : touchSensor(touchSensor) {}
 
     double Touch_sensor::get_value() const {
         attach_thread

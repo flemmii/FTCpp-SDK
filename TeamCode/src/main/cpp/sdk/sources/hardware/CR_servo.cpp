@@ -7,10 +7,7 @@
 namespace sdk {
     jclass CRServo;
 
-    CR_servo::CR_servo(jobject crServo) : Dc_motor_simple(crServo) {
-        attach_thread
-        this->crServo = env->NewGlobalRef(crServo);
-    }
+    CR_servo::CR_servo(jobject crServo) : crServo(crServo), Dc_motor_simple(crServo) {}
 
     Servo_controller CR_servo::get_controller() const {
         attach_thread

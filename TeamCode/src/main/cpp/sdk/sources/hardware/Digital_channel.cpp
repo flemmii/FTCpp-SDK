@@ -7,10 +7,7 @@
 namespace sdk {
     jclass DigitalChannel;
 
-    Digital_channel::Digital_channel(jobject digitalChannel) {
-        attach_thread
-        this->digitalChannel = env->NewGlobalRef(digitalChannel);
-    }
+    Digital_channel::Digital_channel(jobject digitalChannel) : digitalChannel(digitalChannel) {}
 
     Digital_channel::Mode Digital_channel::get_mode() const {
         attach_thread

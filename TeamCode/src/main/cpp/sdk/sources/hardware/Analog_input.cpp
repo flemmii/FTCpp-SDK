@@ -7,10 +7,7 @@
 namespace sdk {
     jclass AnalogInput;
 
-    Analog_input::Analog_input(jobject analogInput) {
-        attach_thread
-        this->analogInput = env->NewGlobalRef(analogInput);
-    }
+    Analog_input::Analog_input(jobject analogInput) : analogInput(analogInput) {}
 
     int Analog_input::get_voltage() const {
         attach_thread

@@ -7,10 +7,7 @@
 namespace sdk {
     jclass ColorSensor;
 
-    Color_sensor::Color_sensor(jobject colorSensor) {
-        attach_thread
-        this->colorSensor = env->NewGlobalRef(colorSensor);
-    }
+    Color_sensor::Color_sensor(jobject colorSensor) : colorSensor(colorSensor) {}
 
     int Color_sensor::red() const {
         attach_thread

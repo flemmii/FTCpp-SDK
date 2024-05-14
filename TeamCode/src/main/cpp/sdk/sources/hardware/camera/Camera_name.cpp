@@ -7,10 +7,7 @@
 namespace sdk {
     jclass CameraName;
 
-    Camera_name::Camera_name(jobject cameraName) {
-        attach_thread
-        this->cameraName = env->NewGlobalRef(cameraName);
-    }
+    Camera_name::Camera_name(jobject cameraName) : cameraName(cameraName) {}
 
     bool Camera_name::is_webcam() const {
         attach_thread

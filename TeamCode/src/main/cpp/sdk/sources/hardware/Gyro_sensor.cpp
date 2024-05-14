@@ -7,10 +7,7 @@
 namespace sdk {
     jclass GyroSensor;
 
-    Gyro_sensor::Gyro_sensor(jobject gyroSensor) {
-        attach_thread
-        this->gyroSensor = env->NewGlobalRef(gyroSensor);
-    }
+    Gyro_sensor::Gyro_sensor(jobject gyroSensor) : gyroSensor(gyroSensor) {}
 
     void Gyro_sensor::calibrate() const {
         attach_thread

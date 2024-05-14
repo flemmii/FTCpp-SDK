@@ -9,10 +9,7 @@ using namespace std;
 namespace sdk {
     jclass WebcamName;
 
-    Webcam_name::Webcam_name(jobject webcamName) {
-        attach_thread
-        this->webcamName = env->NewGlobalRef(webcamName);
-    }
+    Webcam_name::Webcam_name(jobject webcamName) : webcamName(webcamName) {}
 
     string Webcam_name::get_usb_device_name_if_attached() const {
         attach_thread
