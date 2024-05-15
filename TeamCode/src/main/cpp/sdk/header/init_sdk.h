@@ -26,10 +26,10 @@
     jobject localDcMotor_ZeroPowerBehavior = env->FindClass("com/qualcomm/robotcore/hardware/DcMotor$ZeroPowerBehavior");    \
     sdk::DcMotor_ZeroPowerBehavior = reinterpret_cast<jclass>(env->NewGlobalRef(localDcMotor_ZeroPowerBehavior));            \
     env->DeleteLocalRef(localDcMotor_ZeroPowerBehavior);                                                                     \
-    jobject localDcMotorSimple = env->FindClass("com/qualcomm/robotcore/hardware/DcMotorSimple$Direction");                  \
+    jobject localDcMotorSimple = env->FindClass("com/qualcomm/robotcore/hardware/DcMotorSimple");                            \
     sdk::DcMotorSimple = reinterpret_cast<jclass>(env->NewGlobalRef(localDcMotorSimple));                                    \
     env->DeleteLocalRef(localDcMotorSimple);                                                                                 \
-    jobject localDcMotorSimple_Direction = env->FindClass("com/qualcomm/robotcore/hardware/DcMotorSimple");                  \
+    jobject localDcMotorSimple_Direction = env->FindClass("com/qualcomm/robotcore/hardware/DcMotorSimple$Direction");        \
     sdk::DcMotorSimple_Direction = reinterpret_cast<jclass>(env->NewGlobalRef(localDcMotorSimple_Direction));                \
     env->DeleteLocalRef(localDcMotorSimple_Direction);                                                                       \
     jobject localGamepad = env->FindClass("com/qualcomm/robotcore/hardware/Gamepad");                                        \
