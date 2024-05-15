@@ -72,8 +72,8 @@ namespace sdk {
 
         auto jarray = (jintArray) (env->CallStaticObjectMethod(VisionPortal,
                                                                env->GetStaticMethodID(VisionPortal,
-                                                                                "makeMultiPortalView",
-                                                                                "(I;Lorg/firstinspires/ftc/vision$MultiPortalLayout)[I"),
+                                                                                      "makeMultiPortalView",
+                                                                                      "(ILorg/firstinspires/ftc/vision/VisionPortal$MultiPortalLayout;)[I"),
                                                                static_cast<jint>(numPortals),
                                                                jmpl));
         jint *elements = env->GetIntArrayElements(jarray, nullptr);
