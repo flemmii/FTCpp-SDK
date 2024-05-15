@@ -15,6 +15,12 @@ namespace sdk {
         id = last_id++;
     }
 
+    void Vision_processor::init(int width, int height) const {}
+
+    Mat Vision_processor::process_frame(const Mat &input, long capture_time_nanos) const {
+        return input;
+    }
+
     bool operator==(const Vision_processor &lhs, const Vision_processor &rhs) {
         return lhs.id == rhs.id;
     }
@@ -55,8 +61,7 @@ namespace vision_processor {
                 jlong capture_time_nanos) {
             Mat input = *(Mat *) frame;
             Mat output = input.clone();
-
-            for_each(processors->begin(), processors->end(), [&](const auto &processor) {
+            for_each(processors->begin(), processors->end(), [input, capture_time_nanos, output](const auto &processor) {
                 if (processor.second) {
                     Mat result = processor.first.process_frame(input, capture_time_nanos);
 
@@ -227,15 +232,13 @@ namespace vision_processor {
                     if (first_processor_output.cols > second_processor_output.cols) {
                         double scale = static_cast<double>(first_processor_output.cols) /
                                        second_processor_output.cols;
-                        second_processor_output.copyTo(second_final);
-                        resize(second_final, second_final, Size(), scale, scale,
+                        resize(second_processor_output, second_final, Size(), scale, scale,
                                cv::INTER_LINEAR);
                         vconcat(first_processor_output, second_final, picture);
                     } else {
                         double scale = static_cast<double>(second_processor_output.cols) /
                                        first_processor_output.cols;
-                        first_processor_output.copyTo(first_final);
-                        resize(first_final, first_final, Size(), scale, scale,
+                        resize(first_processor_output, first_final, Size(), scale, scale,
                                cv::INTER_LINEAR);
                         vconcat(first_final, second_processor_output, picture);
                     }

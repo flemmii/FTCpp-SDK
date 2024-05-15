@@ -17,10 +17,10 @@ namespace sdk {
     public:
         Vision_processor();
 
-        virtual void init(int width, int height) const {}
+        virtual void init(int width, int height) const;
 
         [[nodiscard]] virtual cv::Mat
-        process_frame(const cv::Mat &input, long capture_time_nanos) const { return input; }
+        process_frame(const cv::Mat &input, long capture_time_nanos) const;
 
         friend bool operator==(const Vision_processor &lhs, const Vision_processor &rhs);
     };
