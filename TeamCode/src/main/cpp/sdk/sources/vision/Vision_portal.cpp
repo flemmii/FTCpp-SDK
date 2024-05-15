@@ -305,7 +305,7 @@ namespace sdk {
         env->DeleteLocalRef(env->CallObjectMethod(builder,
                                                   env->GetMethodID(VisionPortal_Builder,
                                                                    "setCameraResolution",
-                                                                   "(Lorg/firstinspires/ftc/vision/VisionPortal$Builder$Size;)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"),
+                                                                   "(Landroid/util/Size;)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"),
                                                   jcameraResolution));
         env->DeleteLocalRef(jcameraResolution);
         return *this;
