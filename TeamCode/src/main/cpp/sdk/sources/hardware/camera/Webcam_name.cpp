@@ -9,7 +9,7 @@ using namespace std;
 namespace sdk {
     jclass WebcamName;
 
-    Webcam_name::Webcam_name(jobject webcamName) : webcamName(webcamName) {}
+    Webcam_name::Webcam_name(jobject webcamName) : webcamName(webcamName), Camera_name(webcamName) {}
 
     string Webcam_name::get_usb_device_name_if_attached() const {
         attach_thread

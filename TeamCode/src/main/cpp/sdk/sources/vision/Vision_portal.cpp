@@ -240,7 +240,7 @@ namespace sdk {
         env->DeleteLocalRef(env->CallObjectMethod(builder,
                                                   env->GetMethodID(VisionPortal_Builder,
                                                                    "setCamera",
-                                                                   "(Lorg/firstinspires/ftc/vision/CameraName;)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"),
+                                                                   "(Lorg/firstinspires/ftc/robotcore/external/hardware/camera/CameraName;)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"),
                                                   camera.cameraName));
 
         return *this;
