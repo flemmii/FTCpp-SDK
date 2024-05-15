@@ -21,7 +21,7 @@ namespace sdk {
     private:
         static int vision_portal_count;
     public:
-        std::vector<std::pair<sdk::Vision_processor, bool>> processors;
+        std::vector<std::pair<sdk::Vision_processor *, bool>> processors;
 
         jobject visionPortal;
 
@@ -99,7 +99,7 @@ namespace sdk {
 
         class Builder {
         private:
-            std::vector<std::pair<sdk::Vision_processor, bool>> processors;
+            std::vector<std::pair<sdk::Vision_processor *, bool>> processors;
 
             jobject builder;
         public:

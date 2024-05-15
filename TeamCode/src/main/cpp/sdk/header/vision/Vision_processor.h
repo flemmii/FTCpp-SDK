@@ -33,11 +33,11 @@ namespace vision_processor {
     extern bool dual_cam_view;
 
     namespace first_vision_processor {
-        extern const std::vector<std::pair<sdk::Vision_processor, bool>> *processors;
+        extern const std::vector<std::pair<sdk::Vision_processor *, bool>> *processors;
     }
 
     namespace second_vision_processor {
-        extern const std::vector<std::pair<sdk::Vision_processor, bool>> *processors;
+        extern const std::vector<std::pair<sdk::Vision_processor *, bool>> *processors;
     }
 } // vision_processor
 

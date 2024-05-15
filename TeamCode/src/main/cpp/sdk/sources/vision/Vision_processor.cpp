@@ -36,7 +36,7 @@ namespace vision_processor {
     Mat second_processor_output;
 
     namespace first_vision_processor {
-        const vector <pair<Vision_processor, bool>> *processors;
+        const vector <pair<Vision_processor *, bool>> *processors;
 
         extern "C"
         JNIEXPORT void JNICALL
@@ -48,7 +48,7 @@ namespace vision_processor {
                 jobject calibration) {
             for_each(processors->begin(), processors->end(), [&](const auto &processor) {
                 if (processor.second)
-                    processor.first.init(static_cast<int>(height), static_cast<int>(width));
+                    processor.first->init(static_cast<int>(height), static_cast<int>(width));
             });
         }
 
@@ -61,15 +61,16 @@ namespace vision_processor {
                 jlong capture_time_nanos) {
             Mat input = *(Mat *) frame;
             Mat output = input.clone();
-            for_each(processors->begin(), processors->end(), [input, capture_time_nanos, output](const auto &processor) {
-                if (processor.second) {
-                    Mat result = processor.first.process_frame(input, capture_time_nanos);
+            for_each(processors->begin(), processors->end(),
+                     [input, capture_time_nanos, output](const auto &processor) {
+                         if (processor.second) {
+                             Mat result = processor.first->process_frame(input, capture_time_nanos);
 
-                    Mat diff;
-                    absdiff(output, result, diff);
-                    cv::addWeighted(output, 0.3, diff, 0.7, 0, output);
-                }
-            });
+                             Mat diff;
+                             absdiff(output, result, diff);
+                             cv::addWeighted(output, 0.3, diff, 0.7, 0, output);
+                         }
+                     });
 
             output.copyTo(first_processor_output);
         }
@@ -168,7 +169,7 @@ namespace vision_processor {
 
 
     namespace second_vision_processor {
-        const vector <pair<Vision_processor, bool>> *processors;
+        const vector <pair<Vision_processor *, bool>> *processors;
 
         extern "C"
         JNIEXPORT void JNICALL
@@ -180,7 +181,7 @@ namespace vision_processor {
                 jobject calibration) {
             for_each(processors->begin(), processors->end(), [&](const auto &processor) {
                 if (processor.second)
-                    processor.first.init(static_cast<int>(height), static_cast<int>(width));
+                    processor.first->init(static_cast<int>(height), static_cast<int>(width));
             });
         }
 
@@ -196,7 +197,7 @@ namespace vision_processor {
 
             for_each(processors->begin(), processors->end(), [&](const auto &processor) {
                 if (processor.second) {
-                    Mat result = processor.first.process_frame(input, capture_time_nanos);
+                    Mat result = processor.first->process_frame(input, capture_time_nanos);
 
                     Mat diff;
                     absdiff(output, result, diff);

@@ -106,7 +106,7 @@ namespace sdk {
     Vision_portal::set_processor_enabled(const sdk::Vision_processor &processor,
                                          bool enabled) {
         for (auto &proc: processors) {
-            if (proc.first == processor) {
+            if (*proc.first == processor) {
                 proc.second = enabled;
                 return;
             }
@@ -116,7 +116,7 @@ namespace sdk {
     bool
     Vision_portal::get_processor_enabled(const sdk::Vision_processor &processor) {
         for (const auto &proc: processors) {
-            if (proc.first == processor)
+            if (*proc.first == processor)
                 return proc.second;
         }
         return false;
@@ -229,7 +229,9 @@ namespace sdk {
 
     Vision_portal::Builder::Builder() {
         attach_thread
-        jobject localBuilder = env->NewObject(VisionPortal_Builder, env->GetMethodID(VisionPortal_Builder, "<init>", "()V"));
+        jobject localBuilder = env->NewObject(VisionPortal_Builder,
+                                              env->GetMethodID(VisionPortal_Builder, "<init>",
+                                                               "()V"));
         builder = env->NewGlobalRef(localBuilder);
         env->DeleteLocalRef(localBuilder);
     }
@@ -312,36 +314,50 @@ namespace sdk {
 
     Vision_portal::Builder &
     Vision_portal::Builder::add_processor(const Vision_processor &processor) {
-        this->processors.emplace_back(processor, true);
+        this->processors.emplace_back(const_cast<Vision_processor *>(&processor), true);
 
         jobject jprocessor;
         attach_thread
 
         if (Vision_portal::vision_portal_count == 0)
-            jprocessor = env->NewObject(vision_processor::FirstVisionProcessor, env->GetMethodID(vision_processor::FirstVisionProcessor, "<init>", "()V"));
+            jprocessor = env->NewObject(vision_processor::FirstVisionProcessor,
+                                        env->GetMethodID(vision_processor::FirstVisionProcessor,
+                                                         "<init>", "()V"));
         else
-            jprocessor = env->NewObject(vision_processor::SecondVisionProcessor, env->GetMethodID(vision_processor::SecondVisionProcessor, "<init>", "()V"));
+            jprocessor = env->NewObject(vision_processor::SecondVisionProcessor,
+                                        env->GetMethodID(vision_processor::SecondVisionProcessor,
+                                                         "<init>", "()V"));
 
-        env->DeleteLocalRef(env->CallObjectMethod(builder, env->GetMethodID(VisionPortal_Builder, "addProcessor", "(Lorg/firstinspires/ftc/vision/VisionProcessor;)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"), jprocessor));
+        env->DeleteLocalRef(env->CallObjectMethod(builder, env->GetMethodID(VisionPortal_Builder,
+                                                                            "addProcessor",
+                                                                            "(Lorg/firstinspires/ftc/vision/VisionProcessor;)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"),
+                                                  jprocessor));
         env->DeleteLocalRef(jprocessor);
 
         return *this;
     }
 
     Vision_portal::Builder &Vision_portal::Builder::add_processors(
-            const vector <Vision_processor> &processors) {
+            const vector<Vision_processor> &processors) {
         for (const auto &processor: processors)
-            this->processors.emplace_back(processor, true);
+            this->processors.emplace_back(const_cast<Vision_processor *>(&processor), true);
 
         jobject jprocessor;
         attach_thread
 
         if (Vision_portal::vision_portal_count == 0)
-            jprocessor = env->NewObject(vision_processor::FirstVisionProcessor, env->GetMethodID(vision_processor::FirstVisionProcessor, "<init>", "()V"));
+            jprocessor = env->NewObject(vision_processor::FirstVisionProcessor,
+                                        env->GetMethodID(vision_processor::FirstVisionProcessor,
+                                                         "<init>", "()V"));
         else
-            jprocessor = env->NewObject(vision_processor::SecondVisionProcessor, env->GetMethodID(vision_processor::SecondVisionProcessor, "<init>", "()V"));
+            jprocessor = env->NewObject(vision_processor::SecondVisionProcessor,
+                                        env->GetMethodID(vision_processor::SecondVisionProcessor,
+                                                         "<init>", "()V"));
 
-        env->DeleteLocalRef(env->CallObjectMethod(builder, env->GetMethodID(VisionPortal_Builder, "addProcessor", "(Lorg/firstinspires/ftc/vision/VisionProcessor;)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"), jprocessor));
+        env->DeleteLocalRef(env->CallObjectMethod(builder, env->GetMethodID(VisionPortal_Builder,
+                                                                            "addProcessor",
+                                                                            "(Lorg/firstinspires/ftc/vision/VisionProcessor;)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"),
+                                                  jprocessor));
         env->DeleteLocalRef(jprocessor);
 
         return *this;
