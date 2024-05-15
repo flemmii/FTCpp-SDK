@@ -230,12 +230,9 @@ namespace sdk {
     Vision_portal::Builder::Builder() {
         attach_thread
         jmethodID constructor = env->GetMethodID(VisionPortal_Builder, "<init>", "()V");
-        builder = env->NewGlobalRef(env->NewObject(VisionPortal, constructor));
-    }
-
-    Vision_portal::Builder::~Builder() {
-        attach_thread
-        env->DeleteGlobalRef(builder);
+        jobject localBuilder = env->NewObject(VisionPortal_Builder, constructor);
+        builder = env->NewGlobalRef(localBuilder);
+        env->DeleteLocalRef(localBuilder);
     }
 
     Vision_portal::Builder &Vision_portal::Builder::set_camera(const Camera_name &camera) {

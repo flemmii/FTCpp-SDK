@@ -106,8 +106,6 @@ namespace sdk {
 
             Builder();
 
-            ~Builder();
-
             Builder &set_camera(const Camera_name &camera);
 
             Builder &set_stream_format(Stream_format stream_format);
