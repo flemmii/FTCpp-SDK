@@ -38,7 +38,7 @@ namespace sdk {
         }
     }
 
-    Vision_portal::Vision_portal(jobject visionPortal) {
+    Vision_portal::Vision_portal(jobject visionPortal) : visionPortal(visionPortal) {
         // Normally you just need 2 Vision_portals and more than 2 Vision_portals have also a high risk to crash the control hub
         if (vision_portal_count > 2)
             throw runtime_error("Only 2 Vision_portals are allowed to exist at a time");
@@ -50,7 +50,6 @@ namespace sdk {
             vision_processor::second_vision_processor::processors = &processors;
 
         attach_thread
-        Vision_portal::visionPortal = env->NewGlobalRef(visionPortal);
 
         DEFAULT_VIEW_CONTAINER_ID = env->GetStaticIntField(VisionPortal,
                                                            env->GetStaticFieldID(VisionPortal,
@@ -72,7 +71,7 @@ namespace sdk {
                                                          "Lorg/firstinspires/ftc/vision/VisionPortal$MultiPortalLayout;"));
 
         auto jarray = (jintArray) (env->CallStaticObjectMethod(VisionPortal,
-                                                               env->GetMethodID(VisionPortal,
+                                                               env->GetStaticMethodID(VisionPortal,
                                                                                 "makeMultiPortalView",
                                                                                 "(I;Lorg/firstinspires/ftc/vision$MultiPortalLayout)[I"),
                                                                static_cast<jint>(numPortals),
