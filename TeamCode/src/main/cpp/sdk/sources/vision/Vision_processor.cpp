@@ -38,6 +38,9 @@ namespace vision_processor {
     namespace first_vision_processor {
         const vector <pair<Vision_processor *, bool>> *processors;
 
+        int width = 0;
+        int height = 0;
+
         extern "C"
         JNIEXPORT void JNICALL
         Java_org_firstinspires_ftc_teamcode_VisionProcessor_FirstVisionProcessor_nativeInit(
@@ -46,9 +49,11 @@ namespace vision_processor {
                 jint width,
                 jint height,
                 jobject calibration) {
+            first_vision_processor::width = static_cast<int>(width);
+            first_vision_processor::height = static_cast<int>(height);
             for_each(processors->begin(), processors->end(), [&](const auto &processor) {
                 if (processor.second)
-                    processor.first->init(static_cast<int>(height), static_cast<int>(width));
+                    processor.first->init(first_vision_processor::width, first_vision_processor::height);
             });
         }
 
@@ -150,14 +155,12 @@ namespace vision_processor {
                                                                         "createScaledBitmap",
                                                                         "(Landroid/graphics/Bitmap;IIZ)Landroid/graphics/Bitmap;");
 
-            Size picture_size = picture.size();
-
             jobject scaledBitmap = env->CallStaticObjectMethod(bitmapClass,
                                                                createScaledBitmapMethod,
                                                                bitmap,
-                                                               (jint) (picture_size.width *
+                                                               (jint) (width *
                                                                        scale_bmp_px_to_canvas_px),
-                                                               (jint) (picture_size.height *
+                                                               (jint) (height *
                                                                        scale_bmp_px_to_canvas_px),
                                                                true);
 
@@ -182,6 +185,9 @@ namespace vision_processor {
     namespace second_vision_processor {
         const vector <pair<Vision_processor *, bool>> *processors;
 
+        int width = 0;
+        int height = 0;
+
         extern "C"
         JNIEXPORT void JNICALL
         Java_org_firstinspires_ftc_teamcode_VisionProcessor_SecondVisionProcessor_nativeInit(
@@ -190,9 +196,12 @@ namespace vision_processor {
                 jint width,
                 jint height,
                 jobject calibration) {
+            second_vision_processor::width = static_cast<int>(width);
+            second_vision_processor::height = static_cast<int>(height);
+
             for_each(processors->begin(), processors->end(), [&](const auto &processor) {
                 if (processor.second)
-                    processor.first->init(static_cast<int>(height), static_cast<int>(width));
+                    processor.first->init(second_vision_processor::width, second_vision_processor::height);
             });
         }
 
@@ -293,14 +302,12 @@ namespace vision_processor {
                                                                         "createScaledBitmap",
                                                                         "(Landroid/graphics/Bitmap;IIZ)Landroid/graphics/Bitmap;");
 
-            Size picture_size = picture.size();
-
             jobject scaledBitmap = env->CallStaticObjectMethod(bitmapClass,
                                                                createScaledBitmapMethod,
                                                                bitmap,
-                                                               (jint) (picture_size.width *
+                                                               (jint) (width *
                                                                        scale_bmp_px_to_canvas_px),
-                                                               (jint) (picture_size.height *
+                                                               (jint) (height *
                                                                        scale_bmp_px_to_canvas_px),
                                                                true);
 
