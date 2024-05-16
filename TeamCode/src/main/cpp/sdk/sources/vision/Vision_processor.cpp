@@ -63,14 +63,28 @@ namespace vision_processor {
             Mat output = input.clone();
             for_each(processors->begin(), processors->end(),
                      [input, capture_time_nanos, output](const auto &processor) {
-                         if (processor.second) {
-                             Mat result = processor.first->process_frame(input, capture_time_nanos);
+                if (processor.second) {
+                    Mat edited_frame = processor.first->process_frame(input,
+                                                                      capture_time_nanos);
 
-                             Mat diff;
-                             absdiff(output, result, diff);
-                             cv::addWeighted(output, 0.3, diff, 0.7, 0, output);
-                         }
-                     });
+                    if (edited_frame.size() != output.size())
+                        resize(edited_frame, edited_frame, output.size()); // Resize result to the same size as output
+                        if (edited_frame.type() != output.type())
+                            edited_frame.convertTo(edited_frame, output.type()); // Convert result to the same type as output
+                            
+                    // TODO: Maybe change this
+                    Mat diff;
+                    absdiff(input, edited_frame, diff);
+
+                    Mat mask;
+                    threshold(diff, mask, 1, 255, THRESH_BINARY);
+
+                    Mat temp;
+                    addWeighted(output, 0.3, diff, 0.7, 0, temp);
+
+                    temp.copyTo(output, mask);
+                }
+        });
 
             output.copyTo(first_processor_output);
         }
@@ -101,14 +115,14 @@ namespace vision_processor {
                                        second_processor_output.cols;
                         second_processor_output.copyTo(second_final);
                         resize(second_final, second_final, Size(), scale, scale,
-                               cv::INTER_LINEAR);
+                               INTER_LINEAR);
                         vconcat(first_processor_output, second_final, picture);
                     } else {
                         double scale = static_cast<double>(second_processor_output.cols) /
                                        first_processor_output.cols;
                         first_processor_output.copyTo(first_final);
                         resize(first_final, first_final, Size(), scale, scale,
-                               cv::INTER_LINEAR);
+                               INTER_LINEAR);
                         vconcat(first_final, second_processor_output, picture);
                     }
                 }
@@ -197,11 +211,25 @@ namespace vision_processor {
 
             for_each(processors->begin(), processors->end(), [&](const auto &processor) {
                 if (processor.second) {
-                    Mat result = processor.first->process_frame(input, capture_time_nanos);
+                    Mat edited_frame = processor.first->process_frame(input,
+                                                                      capture_time_nanos);
 
+                    if (edited_frame.size() != output.size())
+                        resize(edited_frame, edited_frame, output.size()); // Resize result to the same size as output
+                    if (edited_frame.type() != output.type())
+                        edited_frame.convertTo(edited_frame, output.type()); // Convert result to the same type as output
+
+                    // TODO: Maybe change this
                     Mat diff;
-                    absdiff(output, result, diff);
-                    cv::addWeighted(output, 0.3, diff, 0.7, 0, output);
+                    absdiff(input, edited_frame, diff);
+
+                    Mat mask;
+                    threshold(diff, mask, 1, 255, THRESH_BINARY);
+
+                    Mat temp;
+                    addWeighted(output, 0.3, diff, 0.7, 0, temp);
+
+                    temp.copyTo(output, mask);
                 }
             });
 
@@ -234,13 +262,13 @@ namespace vision_processor {
                         double scale = static_cast<double>(first_processor_output.cols) /
                                        second_processor_output.cols;
                         resize(second_processor_output, second_final, Size(), scale, scale,
-                               cv::INTER_LINEAR);
+                               INTER_LINEAR);
                         vconcat(first_processor_output, second_final, picture);
                     } else {
                         double scale = static_cast<double>(second_processor_output.cols) /
                                        first_processor_output.cols;
                         resize(first_processor_output, first_final, Size(), scale, scale,
-                               cv::INTER_LINEAR);
+                               INTER_LINEAR);
                         vconcat(first_final, second_processor_output, picture);
                     }
                 }
@@ -248,7 +276,7 @@ namespace vision_processor {
                 second_processor_output.copyTo(picture);
             }
 
-            cvtColor(picture, picture, cv::COLOR_BGR2RGB); // OpenCV uses BGR instead of RGB
+            cvtColor(picture, picture, COLOR_BGR2RGB); // OpenCV uses BGR instead of RGB
             imencode(".bmp", picture, buf);
             jbyteArray byteArray = env->NewByteArray(static_cast<int>(buf.size()));
             env->SetByteArrayRegion(byteArray, 0, static_cast<int>(buf.size()),
