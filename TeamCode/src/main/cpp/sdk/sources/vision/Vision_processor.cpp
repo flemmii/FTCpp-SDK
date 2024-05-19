@@ -38,6 +38,9 @@ namespace vision_processor {
     namespace first_vision_processor {
         const vector <pair<Vision_processor *, bool>> *processors;
 
+        int width = 0;
+        int height = 0;
+
         extern "C"
         JNIEXPORT void JNICALL
         Java_org_firstinspires_ftc_teamcode_VisionProcessor_FirstVisionProcessor_nativeInit(
@@ -46,9 +49,11 @@ namespace vision_processor {
                 jint width,
                 jint height,
                 jobject calibration) {
+            first_vision_processor::width = static_cast<int>(width);
+            first_vision_processor::height = static_cast<int>(height);
             for_each(processors->begin(), processors->end(), [&](const auto &processor) {
                 if (processor.second)
-                    processor.first->init(static_cast<int>(height), static_cast<int>(width));
+                    processor.first->init(first_vision_processor::width, first_vision_processor::height);
             });
         }
 
@@ -64,11 +69,24 @@ namespace vision_processor {
             for_each(processors->begin(), processors->end(),
                      [input, capture_time_nanos, output](const auto &processor) {
                          if (processor.second) {
-                             Mat result = processor.first->process_frame(input, capture_time_nanos);
+                             Mat edited_frame = processor.first->process_frame(input, capture_time_nanos);
 
+                             if (edited_frame.size() != output.size())
+                                 resize(edited_frame, edited_frame, output.size()); // Resize result to the same size as output
+                             if (edited_frame.type() != output.type())
+                                 edited_frame.convertTo(edited_frame, output.type()); // Convert result to the same type as output
+
+                             // TODO: Maybe change this
                              Mat diff;
-                             absdiff(output, result, diff);
-                             cv::addWeighted(output, 0.3, diff, 0.7, 0, output);
+                             absdiff(input, edited_frame, diff);
+
+                             Mat mask;
+                             threshold(diff, mask, 1, 255, THRESH_BINARY);
+
+                             Mat temp;
+                             addWeighted(output, 0.3, diff, 0.7, 0, temp);
+
+                             temp.copyTo(output, mask);
                          }
                      });
 
@@ -90,30 +108,25 @@ namespace vision_processor {
             vector<uchar> buf;
 
             Mat picture;
-            if (dual_cam_view && !second_processor_output.empty()) {
-                Mat first_final;
-                Mat second_final;
+
+            Mat first_final = first_processor_output.clone();
+            Mat second_final = second_processor_output.clone();
+
+            if (dual_cam_view && !second_final.empty()) {
 
                 // Ensure both images have the same number of columns
-                if (first_processor_output.cols != second_processor_output.cols) {
-                    if (first_processor_output.cols > second_processor_output.cols) {
-                        double scale = static_cast<double>(first_processor_output.cols) /
-                                       second_processor_output.cols;
-                        second_processor_output.copyTo(second_final);
-                        resize(second_final, second_final, Size(), scale, scale,
-                               cv::INTER_LINEAR);
-                        vconcat(first_processor_output, second_final, picture);
+                if (first_final.cols != second_final.cols) {
+                    if (first_final.cols > second_final.cols) {
+                        double scale = static_cast<double>(first_final.cols) / second_final.cols;
+                        resize(second_final, second_final, Size(), scale, scale, INTER_LINEAR);
                     } else {
-                        double scale = static_cast<double>(second_processor_output.cols) /
-                                       first_processor_output.cols;
-                        first_processor_output.copyTo(first_final);
-                        resize(first_final, first_final, Size(), scale, scale,
-                               cv::INTER_LINEAR);
-                        vconcat(first_final, second_processor_output, picture);
+                        double scale = static_cast<double>(second_final.cols) / first_final.cols;
+                        resize(first_final, first_final, Size(), scale, scale, INTER_LINEAR);
                     }
                 }
+                vconcat(first_final, second_final, picture);
             } else {
-                first_processor_output.copyTo(picture);
+                first_final.copyTo(picture);
             }
 
             cvtColor(picture, picture, COLOR_BGR2RGB); // OpenCV uses BGR instead of RGB
@@ -141,12 +154,13 @@ namespace vision_processor {
             jmethodID createScaledBitmapMethod = env->GetStaticMethodID(bitmapClass,
                                                                         "createScaledBitmap",
                                                                         "(Landroid/graphics/Bitmap;IIZ)Landroid/graphics/Bitmap;");
+
             jobject scaledBitmap = env->CallStaticObjectMethod(bitmapClass,
                                                                createScaledBitmapMethod,
                                                                bitmap,
-                                                               (jint) (640 *
+                                                               (jint) (width *
                                                                        scale_bmp_px_to_canvas_px),
-                                                               (jint) (480 *
+                                                               (jint) (height *
                                                                        scale_bmp_px_to_canvas_px),
                                                                true);
 
@@ -171,6 +185,9 @@ namespace vision_processor {
     namespace second_vision_processor {
         const vector <pair<Vision_processor *, bool>> *processors;
 
+        int width = 0;
+        int height = 0;
+
         extern "C"
         JNIEXPORT void JNICALL
         Java_org_firstinspires_ftc_teamcode_VisionProcessor_SecondVisionProcessor_nativeInit(
@@ -179,9 +196,12 @@ namespace vision_processor {
                 jint width,
                 jint height,
                 jobject calibration) {
+            second_vision_processor::width = static_cast<int>(width);
+            second_vision_processor::height = static_cast<int>(height);
+
             for_each(processors->begin(), processors->end(), [&](const auto &processor) {
                 if (processor.second)
-                    processor.first->init(static_cast<int>(height), static_cast<int>(width));
+                    processor.first->init(second_vision_processor::width, second_vision_processor::height);
             });
         }
 
@@ -197,11 +217,24 @@ namespace vision_processor {
 
             for_each(processors->begin(), processors->end(), [&](const auto &processor) {
                 if (processor.second) {
-                    Mat result = processor.first->process_frame(input, capture_time_nanos);
+                    Mat edited_frame = processor.first->process_frame(input, capture_time_nanos);
 
+                    if (edited_frame.size() != output.size())
+                        resize(edited_frame, edited_frame, output.size()); // Resize result to the same size as output
+                    if (edited_frame.type() != output.type())
+                        edited_frame.convertTo(edited_frame, output.type()); // Convert result to the same type as output
+
+                    // TODO: Maybe change this
                     Mat diff;
-                    absdiff(output, result, diff);
-                    cv::addWeighted(output, 0.3, diff, 0.7, 0, output);
+                    absdiff(input, edited_frame, diff);
+
+                    Mat mask;
+                    threshold(diff, mask, 1, 255, THRESH_BINARY);
+
+                    Mat temp;
+                    addWeighted(output, 0.3, diff, 0.7, 0, temp);
+
+                    temp.copyTo(output, mask);
                 }
             });
 
@@ -224,31 +257,26 @@ namespace vision_processor {
 
             Mat picture;
 
-            if (dual_cam_view && !first_processor_output.empty()) {
-                Mat first_final;
-                Mat second_final;
+            Mat first_final = first_processor_output.clone();
+            Mat second_final = second_processor_output.clone();
 
+            if (dual_cam_view && !first_final.empty()) {
                 // Ensure both images have the same number of columns
-                if (first_processor_output.cols != second_processor_output.cols) {
-                    if (first_processor_output.cols > second_processor_output.cols) {
-                        double scale = static_cast<double>(first_processor_output.cols) /
-                                       second_processor_output.cols;
-                        resize(second_processor_output, second_final, Size(), scale, scale,
-                               cv::INTER_LINEAR);
-                        vconcat(first_processor_output, second_final, picture);
+                if (first_final.cols != second_final.cols) {
+                    if (first_final.cols > second_final.cols) {
+                        double scale = static_cast<double>(first_final.cols) / second_final.cols;
+                        resize(second_final, second_final, Size(), scale, scale, INTER_LINEAR);
                     } else {
-                        double scale = static_cast<double>(second_processor_output.cols) /
-                                       first_processor_output.cols;
-                        resize(first_processor_output, first_final, Size(), scale, scale,
-                               cv::INTER_LINEAR);
-                        vconcat(first_final, second_processor_output, picture);
+                        double scale = static_cast<double>(second_final.cols) / first_final.cols;
+                        resize(first_final, first_final, Size(), scale, scale, INTER_LINEAR);
                     }
                 }
+                vconcat(first_final, second_final, picture);
             } else {
-                second_processor_output.copyTo(picture);
+                second_final.copyTo(picture);
             }
 
-            cvtColor(picture, picture, cv::COLOR_BGR2RGB); // OpenCV uses BGR instead of RGB
+            cvtColor(picture, picture, COLOR_BGR2RGB); // OpenCV uses BGR instead of RGB
             imencode(".bmp", picture, buf);
             jbyteArray byteArray = env->NewByteArray(static_cast<int>(buf.size()));
             env->SetByteArrayRegion(byteArray, 0, static_cast<int>(buf.size()),
@@ -273,12 +301,13 @@ namespace vision_processor {
             jmethodID createScaledBitmapMethod = env->GetStaticMethodID(bitmapClass,
                                                                         "createScaledBitmap",
                                                                         "(Landroid/graphics/Bitmap;IIZ)Landroid/graphics/Bitmap;");
+
             jobject scaledBitmap = env->CallStaticObjectMethod(bitmapClass,
                                                                createScaledBitmapMethod,
                                                                bitmap,
-                                                               (jint) (640 *
+                                                               (jint) (width *
                                                                        scale_bmp_px_to_canvas_px),
-                                                               (jint) (480 *
+                                                               (jint) (height *
                                                                        scale_bmp_px_to_canvas_px),
                                                                true);
 
