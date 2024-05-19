@@ -23,7 +23,8 @@ file(GLOB_RECURSE TEAMCODE_SOURCES CONFIGURE_DEPENDS ${TEAMCODE_SOURCES_DIR}/*.c
 file(GLOB_RECURSE SDK_SOURCES CONFIGURE_DEPENDS ${SDK_SOURCES_DIR}/*.cpp)
 
 # Aktualisiere die vorhandenen Dateien im Build
-add_library(native-lib SHARED ${TEAMCODE_SOURCES} ${SDK_SOURCES})
+add_library(teamcode SHARED ${TEAMCODE_SOURCES})
+add_library(sdk SHARED ${SDK_SOURCES})
 
 # Für armeabi-v7a
 add_library(april_tag_v7a SHARED IMPORTED)
@@ -55,7 +56,7 @@ find_library(log-lib log)
 
 # Linken der Bibliotheken
 target_link_libraries(
-        native-lib
+        sdk
         ${log-lib}
         $<$<STREQUAL:${ANDROID_ABI},armeabi-v7a>:april_tag_v7a>
         $<$<STREQUAL:${ANDROID_ABI},armeabi-v7a>:image_utils_v7a>
@@ -65,6 +66,11 @@ target_link_libraries(
         $<$<STREQUAL:${ANDROID_ABI},arm64-v8a>:image_utils_v8a>
         $<$<STREQUAL:${ANDROID_ABI},arm64-v8a>:object_tracking_v8a>
         $<$<STREQUAL:${ANDROID_ABI},arm64-v8a>:opencv_java4_v8a>
+)
+
+target_link_libraries(
+        teamcode
+        sdk
 )
 
 # Specifies a path to native header files.
