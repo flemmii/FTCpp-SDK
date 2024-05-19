@@ -28,6 +28,10 @@ namespace sdk {
 
         Servo(jobject servo);
 
+        ~Servo();
+
+        Servo &operator=(jobject servo);
+
         [[nodiscard]] Servo_controller get_controller() const;
 
         [[nodiscard]] int get_port_number() const;

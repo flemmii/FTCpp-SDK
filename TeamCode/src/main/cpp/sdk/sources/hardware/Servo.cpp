@@ -12,6 +12,22 @@ namespace sdk {
 
     Servo::Servo(jobject servo) : servo(servo) {}
 
+    Servo::~Servo() {
+        logcat_log(ANDROID_LOG_DEBUG, "Servo", "Servo object destroyed");
+        if (servo) {
+            attach_thread
+            env->DeleteGlobalRef(servo);
+            servo = nullptr;
+        }
+    }
+
+    class Servo &Servo::operator=(jobject servo) {
+        attach_thread
+        env->DeleteGlobalRef(this->servo);
+        this->servo = servo;
+        return *this;
+    }
+
     Servo_controller Servo::get_controller() const {
         attach_thread
         return {env->CallObjectMethod(servo, env->GetMethodID(sdk::Servo, "getController",
@@ -31,7 +47,7 @@ namespace sdk {
                                                        env->GetStaticFieldID(sdk::Servo_Direction,
                                                                              direction_to_string(
                                                                                      direction),
-                                                                             "Lcom/qualcomm/robotcore/hardware/DcMotorSimple$Direction;"));
+                                                                             "Lcom/qualcomm/robotcore/hardware/Servo$Direction;"));
         env->CallVoidMethod(servo, env->GetMethodID(sdk::Servo, "setDirection",
                                                     "(Lcom/qualcomm/robotcore/hardware/Servo$Direction;)V"),
                             jdirection);
@@ -43,17 +59,17 @@ namespace sdk {
 
         jobject direction = env->CallObjectMethod(servo, env->GetMethodID(sdk::Servo,
                                                                           "getDirection",
-                                                                          "()Lcom/qualcomm/robotcore/hardware/DcMotorSimple$Direction;"));
+                                                                          "()Lcom/qualcomm/robotcore/hardware/Servo$Direction;"));
+
 
         auto name = (jstring) env->CallObjectMethod(direction,
-                                                    env->GetMethodID(env->GetObjectClass(direction),
+                                                    env->GetMethodID(Servo_Direction,
                                                                      "name",
                                                                      "()Ljava/lang/String;"));
 
         const char *directionName = env->GetStringUTFChars(name, nullptr);
         std::string strDirectionName(directionName);
-        env->ReleaseStringUTFChars(name, directionName);
-
+        env->DeleteLocalRef(name);
         env->DeleteLocalRef(direction);
 
         if (strDirectionName == "FORWARD")
