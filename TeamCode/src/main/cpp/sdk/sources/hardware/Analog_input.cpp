@@ -32,7 +32,7 @@ namespace sdk {
 
         const char *cStr = env->GetStringUTFChars(jStr, nullptr);
         std::string str(cStr);
-        env->ReleaseStringUTFChars(jStr, cStr);
+        env->DeleteLocalRef(jStr);
 
         return str;
     }
@@ -46,7 +46,7 @@ namespace sdk {
 
         const char *cStr = env->GetStringUTFChars(jStr, nullptr);
         std::string str(cStr);
-        env->ReleaseStringUTFChars(jStr, cStr);
+        env->DeleteLocalRef(jStr);
 
         return str;
     }

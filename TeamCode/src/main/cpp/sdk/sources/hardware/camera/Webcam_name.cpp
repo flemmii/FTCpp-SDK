@@ -9,7 +9,8 @@ using namespace std;
 namespace sdk {
     jclass WebcamName;
 
-    Webcam_name::Webcam_name(jobject webcamName) : webcamName(webcamName), Camera_name(webcamName) {}
+    Webcam_name::Webcam_name(jobject webcamName) : webcamName(webcamName),
+                                                   Camera_name(webcamName) {}
 
     string Webcam_name::get_usb_device_name_if_attached() const {
         attach_thread
@@ -20,7 +21,7 @@ namespace sdk {
         const char *cstr = env->GetStringUTFChars(jstr, nullptr);
         string result(cstr);
 
-        env->ReleaseStringUTFChars(jstr, cstr);
+        env->DeleteLocalRef(jstr);
         return result;
     }
 

@@ -85,6 +85,7 @@ namespace sdk {
 
         env->DeleteLocalRef(jmpl);
         env->ReleaseIntArrayElements(jarray, elements, JNI_ABORT);
+        env->DeleteLocalRef(jarray);
 
         return array;
     }
@@ -133,7 +134,7 @@ namespace sdk {
 
         const char *nameCStr = env->GetStringUTFChars(name, nullptr);
         std::string nameStr(nameCStr);
-        env->ReleaseStringUTFChars(name, nameCStr);
+        env->DeleteLocalRef(name);
 
         if (nameStr == "OPENING_CAMERA_DEVICE")
             return Vision_portal::Camera_state::OPENING_CAMERA_DEVICE;

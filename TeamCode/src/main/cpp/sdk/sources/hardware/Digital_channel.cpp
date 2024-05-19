@@ -22,7 +22,7 @@ namespace sdk {
 
         const char *modeName = env->GetStringUTFChars(name, nullptr);
         std::string strModeName(modeName);
-        env->ReleaseStringUTFChars(name, modeName);
+        env->DeleteLocalRef(name);
 
         env->DeleteLocalRef(mode);
 

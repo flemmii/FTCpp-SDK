@@ -37,7 +37,7 @@ namespace sdk {
 
         const char *directionName = env->GetStringUTFChars(name, nullptr);
         std::string strDirectionName(directionName);
-        env->ReleaseStringUTFChars(name, directionName);
+        env->DeleteLocalRef(name);
 
         env->DeleteLocalRef(direction);
 

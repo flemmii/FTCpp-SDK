@@ -155,7 +155,7 @@ namespace sdk {
 
         const char *modeName = env->GetStringUTFChars(name, nullptr);
         std::string strModeName(modeName);
-        env->ReleaseStringUTFChars(name, modeName);
+        env->DeleteLocalRef(name);
 
         env->DeleteLocalRef(mode);
 
@@ -214,7 +214,7 @@ namespace sdk {
 
         const char *zeroPowerBehaviorName = env->GetStringUTFChars(name, nullptr);
         std::string strZeroPowerBehaviorName(zeroPowerBehaviorName);
-        env->ReleaseStringUTFChars(name, zeroPowerBehaviorName);
+        env->DeleteLocalRef(name);
 
         env->DeleteLocalRef(zeroPowerBehavior);
 

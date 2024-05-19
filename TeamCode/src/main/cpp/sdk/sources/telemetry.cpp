@@ -98,7 +98,7 @@ namespace sdk {
 
             const char *utf_chars = env->GetStringUTFChars(jstr, nullptr);
             std::string caption(utf_chars);
-            env->ReleaseStringUTFChars(jstr, utf_chars);
+            env->DeleteLocalRef(jstr);
             return caption;
         }
 
@@ -129,7 +129,7 @@ namespace sdk {
                                                                           "()Ljava/lang/String;")));
             const char *utf_chars = env->GetStringUTFChars(jstr, &isCopy);
             std::string item_separator(utf_chars);
-            env->ReleaseStringUTFChars(jstr, utf_chars);
+            env->DeleteLocalRef(jstr);
             return item_separator;
         }
 
@@ -152,7 +152,7 @@ namespace sdk {
                                                                           "()Ljava/lang/String;")));
             const char *utf_chars = env->GetStringUTFChars(jstr, &isCopy);
             std::string caption_value_separator(utf_chars);
-            env->ReleaseStringUTFChars(jstr, utf_chars);
+            env->DeleteLocalRef(jstr);
             return caption_value_separator;
         }
 

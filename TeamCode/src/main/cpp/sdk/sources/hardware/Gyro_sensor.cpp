@@ -66,7 +66,7 @@ namespace sdk {
 
         const char *cStr = env->GetStringUTFChars(jstr, nullptr);
         std::string str(cStr);
-        env->ReleaseStringUTFChars(jstr, cStr);
+        env->DeleteLocalRef(jstr);
 
         return str;
     }

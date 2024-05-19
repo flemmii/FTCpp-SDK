@@ -53,7 +53,8 @@ namespace vision_processor {
             first_vision_processor::height = static_cast<int>(height);
             for_each(processors->begin(), processors->end(), [&](const auto &processor) {
                 if (processor.second)
-                    processor.first->init(first_vision_processor::width, first_vision_processor::height);
+                    processor.first->init(first_vision_processor::width,
+                                          first_vision_processor::height);
             });
         }
 
@@ -69,12 +70,15 @@ namespace vision_processor {
             for_each(processors->begin(), processors->end(),
                      [input, capture_time_nanos, output](const auto &processor) {
                          if (processor.second) {
-                             Mat edited_frame = processor.first->process_frame(input, capture_time_nanos);
+                             Mat edited_frame = processor.first->process_frame(input,
+                                                                               capture_time_nanos);
 
                              if (edited_frame.size() != output.size())
-                                 resize(edited_frame, edited_frame, output.size()); // Resize result to the same size as output
+                                 resize(edited_frame, edited_frame,
+                                        output.size()); // Resize result to the same size as output
                              if (edited_frame.type() != output.type())
-                                 edited_frame.convertTo(edited_frame, output.type()); // Convert result to the same type as output
+                                 edited_frame.convertTo(edited_frame,
+                                                        output.type()); // Convert result to the same type as output
 
                              // TODO: Maybe change this
                              Mat diff;
@@ -165,7 +169,8 @@ namespace vision_processor {
                                                                true);
 
             // Find the Canvas class and the drawBitmap method
-            jmethodID drawBitmapMethod = env->GetMethodID(env->GetObjectClass(canvas),
+            jclass Canvas = env->GetObjectClass(canvas);
+            jmethodID drawBitmapMethod = env->GetMethodID(Canvas,
                                                           "drawBitmap",
                                                           "(Landroid/graphics/Bitmap;FFLandroid/graphics/Paint;)V");
 
@@ -178,6 +183,7 @@ namespace vision_processor {
             env->DeleteLocalRef(scaledBitmap);
             env->DeleteLocalRef(bitmapFactoryClass);
             env->DeleteLocalRef(bitmapClass);
+            env->DeleteLocalRef(Canvas);
         }
     }
 
@@ -201,7 +207,8 @@ namespace vision_processor {
 
             for_each(processors->begin(), processors->end(), [&](const auto &processor) {
                 if (processor.second)
-                    processor.first->init(second_vision_processor::width, second_vision_processor::height);
+                    processor.first->init(second_vision_processor::width,
+                                          second_vision_processor::height);
             });
         }
 
@@ -220,9 +227,11 @@ namespace vision_processor {
                     Mat edited_frame = processor.first->process_frame(input, capture_time_nanos);
 
                     if (edited_frame.size() != output.size())
-                        resize(edited_frame, edited_frame, output.size()); // Resize result to the same size as output
+                        resize(edited_frame, edited_frame,
+                               output.size()); // Resize result to the same size as output
                     if (edited_frame.type() != output.type())
-                        edited_frame.convertTo(edited_frame, output.type()); // Convert result to the same type as output
+                        edited_frame.convertTo(edited_frame,
+                                               output.type()); // Convert result to the same type as output
 
                     // TODO: Maybe change this
                     Mat diff;
@@ -312,7 +321,8 @@ namespace vision_processor {
                                                                true);
 
             // Find the Canvas class and the drawBitmap method
-            jmethodID drawBitmapMethod = env->GetMethodID(env->GetObjectClass(canvas),
+            jclass Canvas = env->GetObjectClass(canvas);
+            jmethodID drawBitmapMethod = env->GetMethodID(Canvas,
                                                           "drawBitmap",
                                                           "(Landroid/graphics/Bitmap;FFLandroid/graphics/Paint;)V");
 
@@ -325,6 +335,7 @@ namespace vision_processor {
             env->DeleteLocalRef(scaledBitmap);
             env->DeleteLocalRef(bitmapFactoryClass);
             env->DeleteLocalRef(bitmapClass);
+            env->DeleteLocalRef(Canvas);
         }
     }
 }
