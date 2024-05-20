@@ -5,9 +5,9 @@
 #ifndef FTCROBOTCONTROLLER_VISION_PROCESSOR_H
 #define FTCROBOTCONTROLLER_VISION_PROCESSOR_H
 
-#include <jni.h>
+#include <opencv2/opencv.hpp>
 
-#include "opencv2/opencv.hpp"
+#include "utils.h"
 
 namespace sdk {
     class Vision_processor {
@@ -19,8 +19,11 @@ namespace sdk {
 
         virtual void init(int width, int height) const;
 
-        [[nodiscard]] virtual cv::Mat
-        process_frame(const cv::Mat &input, long capture_time_nanos) const;
+        virtual void process_frame(const cv::Mat &input, long capture_time_nanos) const;
+
+        // Just draw on frame_to_draw_on using the methods given by OpenCV
+        virtual void
+        on_draw_frame(int onscreen_width, int onscreen_height, cv::Mat frame_to_draw_on) const;
 
         friend bool operator==(const Vision_processor &lhs, const Vision_processor &rhs);
     };
