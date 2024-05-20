@@ -22,6 +22,9 @@ namespace sdk {
     public:
         jobject bno055imu;
 
+        BNO055IMU() = default;
+
+        BNO055IMU(jobject bno055imu);
 
         enum class Angle_unit {
             DEGREES,

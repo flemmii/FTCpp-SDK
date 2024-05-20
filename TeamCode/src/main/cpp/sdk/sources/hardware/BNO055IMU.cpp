@@ -10,6 +10,8 @@ namespace sdk {
     jclass AngleUnit;
     jclass AccelUnit;
 
+    BNO055IMU::BNO055IMU(jobject bno055imu) : bno055imu(bno055imu) {}
+
     const char *BNO055IMU::angle_unit_to_string(BNO055IMU::Angle_unit angle_unit) {
         switch (angle_unit) {
             case BNO055IMU::Angle_unit::DEGREES:
