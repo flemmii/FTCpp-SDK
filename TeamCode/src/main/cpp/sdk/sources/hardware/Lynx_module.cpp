@@ -20,6 +20,15 @@ namespace sdk {
         }
     }
 
+    Lynx_module &Lynx_module::operator=(jobject lynxModule) {
+        if (this->lynxModule) {
+            attach_thread
+            env->DeleteGlobalRef(this->lynxModule);
+        }
+        this->lynxModule = lynxModule;
+        return *this;
+    }
+
     const char *
     Lynx_module::bulk_caching_mode_to_string(Lynx_module::Bulk_caching_mode bulk_caching_mode) {
         switch (bulk_caching_mode) {
