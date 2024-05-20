@@ -12,8 +12,8 @@ Do_not_remove_this_string
 public class <className> extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        opMode();
+        <mainMethodName>();
     }
 
-    native void opMode();
+    native void <mainMethodName>();
 }

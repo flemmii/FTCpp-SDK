@@ -13,7 +13,7 @@ public class <className> extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        opMode();
+        <mainMethodName>();
     }
-    native void opMode();
+    native void <mainMethodName>();
 }

@@ -11,6 +11,7 @@ const Mode = {
 // Escapers
 const groupEscaper = "<group>";
 const preselectTeleOpEscaper = "<preselectTeleOp>";
+const mainMethodNameEscaper = "<mainMethodName>";
 
 // User input check
 const pascalCaseRegex = /^[A-Z][a-zA-Z0-9]*$/;
@@ -56,7 +57,6 @@ function getAllFiles(dir, fileArray) {
 // Cpp file extraction
 const javaPathPrefix = path.join(__dirname, "..", "..", "java");
 const javaPathRegex = /(org_firstinspires_[a-zA-Z0-9_]+)/;
-const ignorableSuffixingParts = "_opMode";
 const javaFileSuffix = ".java";
 
 const ignoreFlagRegex = /@Disabled/;
@@ -84,9 +84,8 @@ function mapCppFilesToBeingJavaFileInformation(filePathArray) {
       return;
     }
     console.log(matchResult);
-    let javaPathSuffix = matchResult[0]
-      .replaceAll(ignorableSuffixingParts, "")
-      .split("_");
+    let javaPathSuffix = matchResult[0].split("_");
+    let mainMethodName = javaPathSuffix.pop();
     let javaClassName = javaPathSuffix.pop();
     let package = javaPathSuffix.join(".");
     javaPathSuffix = javaPathSuffix.join("/");
@@ -143,6 +142,7 @@ function mapCppFilesToBeingJavaFileInformation(filePathArray) {
       javaClassName,
       javaFileName,
       package,
+      mainMethodName,
     });
   });
   return javaPathArray;
@@ -155,7 +155,8 @@ function insertIntoTemplates(
   mode,
   package,
   group,
-  preselectTeleOp
+  preselectTeleOp,
+  mainMethodName
 ) {
   let filePath = path.join(__dirname, mode);
   let template = fs.readFileSync(filePath, "utf-8");
@@ -176,7 +177,8 @@ function insertIntoTemplates(
     .replaceAll(displayNameEscaper, displayNameContent)
     .replaceAll(classNameEscaper, classNameContent)
     .replaceAll(preselectTeleOpEscaper, preselectTeleOp)
-    .replaceAll(groupEscaper, group);
+    .replaceAll(groupEscaper, group)
+    .replaceAll(mainMethodNameEscaper, mainMethodName);
 }
 
 // General File Creator
@@ -222,6 +224,7 @@ fileInformationArray.forEach((fileInformation) => {
     javaClassName,
     javaFileName,
     package,
+    mainMethodName,
   } = fileInformation;
   let javaFileContent = insertIntoTemplates(
     displayName,
@@ -229,7 +232,8 @@ fileInformationArray.forEach((fileInformation) => {
     Mode[mode],
     package,
     group,
-    preselectTeleOp
+    preselectTeleOp,
+    mainMethodName
   );
   createFile(javaFileContent, javaFileName, javaFilePath);
 });
