@@ -9,6 +9,8 @@ git clone https://github.com/flemmii/FTCpp-SDK.git
 Remember you need to merge this repository into your own repository to get the latest
 updates.
 
+Also make sure that you have node installed, otherwise [download it here](https://nodejs.org/en/download/prebuilt-installer)
+
 ## Excluding the example from downloading
 
 If you don't want the example to be downloaded to your repository ever time you pull you can
