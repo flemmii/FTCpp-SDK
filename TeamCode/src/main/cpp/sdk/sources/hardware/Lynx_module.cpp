@@ -52,19 +52,19 @@ namespace sdk {
                                                                    "()Lcom/qualcomm/hardware/lynx/LynxModule$BulkData;")));
     }
 
-    double Lynx_module::get_input_voltage(voltage_unit::voltage_unit_type unit) const {
+    double Lynx_module::get_input_voltage(Voltage_unit unit) const {
         attach_thread
         string unit_string = "NO_TYPE";
         switch (unit) {
-            case voltage_unit::voltage_unit_type::MILLIVOLTS:
+            case Voltage_unit::MILLIVOLTS:
                 unit_string = "MILLIVOLTS";
-            case sdk::voltage_unit::voltage_unit_type::VOLTS:
+            case Voltage_unit::VOLTS:
                 unit_string = "VOLTS";
         }
 
-        jobject voltageUnit = env->GetStaticObjectField(voltage_unit::VoltageUnit,
+        jobject voltageUnit = env->GetStaticObjectField(VoltageUnit,
                                                         env->GetStaticFieldID(
-                                                                voltage_unit::VoltageUnit,
+                                                                VoltageUnit,
                                                                 unit_string.c_str(),
                                                                 "Lorg/firstinspires/ftc/robotcore/external/navigation/VoltageUnit;"));
 

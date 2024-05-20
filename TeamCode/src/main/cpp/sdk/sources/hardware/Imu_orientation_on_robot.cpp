@@ -2,8 +2,7 @@
 // Created by fnlg on 20.05.2024.
 //
 
-#include "navigation/Voltage_unit.h"
+#include "hardware/Imu_orientation_on_robot.h"
 
 namespace sdk {
-    jclass VoltageUnit;
 } // sdk

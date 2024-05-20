@@ -6,7 +6,7 @@
 #define FTCROBOTCONTROLLER_LYNX_MODULE_H
 
 #include <string>
-#include "../navigation/Voltage_unit.h"
+#include "navigation/Voltage_unit.h"
 #include "utils.h"
 
 namespace sdk {
@@ -35,7 +35,7 @@ namespace sdk {
 
         void get_bulk_data() const;
 
-        [[nodiscard]] double get_input_voltage(voltage_unit::voltage_unit_type unit) const;
+        [[nodiscard]] double get_input_voltage(Voltage_unit unit) const;
     };
 
 } // sdk

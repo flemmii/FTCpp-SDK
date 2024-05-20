@@ -13,9 +13,9 @@
 
 namespace sdk {
     extern jclass BNO055IMU;
-    extern jclass Parameters;
-    extern jclass AngleUnit;
-    extern jclass AccelUnit;
+    extern jclass BNO055IMU_Parameters;
+    extern jclass BNO055IMU_AngleUnit;
+    extern jclass BNO055IMU_AccelUnit;
 
     class BNO055IMU {
         //TODO: This is not complete

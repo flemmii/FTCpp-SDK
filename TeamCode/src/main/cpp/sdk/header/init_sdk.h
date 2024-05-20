@@ -47,15 +47,18 @@
     jclass localBNO055IMU = env->FindClass("com/qualcomm/hardware/bosch/BNO055IMU");                                        \
     sdk::BNO055IMU = reinterpret_cast<jclass>(env->NewGlobalRef(localBNO055IMU));                                            \
     env->DeleteLocalRef(localBNO055IMU);                                                                                     \
-    jclass localParameters = env->FindClass("com/qualcomm/hardware/bosch/BNO055IMU$Parameters");                            \
-    sdk::Parameters = reinterpret_cast<jclass>(env->NewGlobalRef(localParameters));                                          \
-    env->DeleteLocalRef(localParameters);                                                                                    \
-    jclass localAngleUnit = env->FindClass("com/qualcomm/hardware/bosch/BNO055IMU$AngleUnit");                              \
-    sdk::AngleUnit = reinterpret_cast<jclass>(env->NewGlobalRef(localAngleUnit));                                            \
-    env->DeleteLocalRef(localAngleUnit);                                                                                     \
-    jclass localAccelUnit = env->FindClass("com/qualcomm/hardware/bosch/BNO055IMU$AccelUnit");                              \
-    sdk::AccelUnit = reinterpret_cast<jclass>(env->NewGlobalRef(localAccelUnit));                                            \
-    env->DeleteLocalRef(localAccelUnit);                                                                                     \
+    jclass localBNO055IMU_Parameters = env->FindClass("com/qualcomm/hardware/bosch/BNO055IMU$Parameters");                            \
+    sdk::BNO055IMU_Parameters = reinterpret_cast<jclass>(env->NewGlobalRef(localBNO055IMU_Parameters));                                          \
+    env->DeleteLocalRef(localBNO055IMU_Parameters);                                                                                    \
+    jclass localBNO055IMU_AngleUnit = env->FindClass("com/qualcomm/hardware/bosch/BNO055IMU$AngleUnit");                              \
+    sdk::BNO055IMU_AngleUnit = reinterpret_cast<jclass>(env->NewGlobalRef(localBNO055IMU_AngleUnit));                                            \
+    env->DeleteLocalRef(localBNO055IMU_AngleUnit);                                                                                     \
+    jclass localBNO055IMU_AccelUnit = env->FindClass("com/qualcomm/hardware/bosch/BNO055IMU$AccelUnit");                              \
+    sdk::BNO055IMU_AccelUnit = reinterpret_cast<jclass>(env->NewGlobalRef(localBNO055IMU_AccelUnit));                                            \
+    env->DeleteLocalRef(localBNO055IMU_AccelUnit);                                                                                     \
+    jclass localIMU = env->FindClass("com/qualcomm/hardware/IMU");                                                          \
+    sdk::IMU = reinterpret_cast<jclass>(env->NewGlobalRef(localIMU));                                                       \
+    env->DeleteLocalRef(localIMU);                                                                                           \
     jclass localDistanceSensor = env->FindClass("com/qualcomm/robotcore/hardware/DistanceSensor");                          \
     sdk::DistanceSensor = reinterpret_cast<jclass>(env->NewGlobalRef(localDistanceSensor));                                  \
     env->DeleteLocalRef(localDistanceSensor);                                                                                \
@@ -75,8 +78,11 @@
     sdk::ServoController_PwmStatus = reinterpret_cast<jclass>(env->NewGlobalRef(localServoController_PwmStatus));            \
     env->DeleteLocalRef(localServoController_PwmStatus);                                                                     \
     jclass localVoltageUnit = env->FindClass("org/firstinspires/ftc/robotcore/external/navigation/VoltageUnit");            \
-    sdk::voltage_unit::VoltageUnit = reinterpret_cast<jclass>(env->NewGlobalRef(localVoltageUnit));                          \
+    sdk::VoltageUnit = reinterpret_cast<jclass>(env->NewGlobalRef(localVoltageUnit));                                       \
     env->DeleteLocalRef(localVoltageUnit);                                                                                   \
+    jclass localAngleUnit = env->FindClass("org/firstinspires/ftc/robotcore/external/navigation/AngleUnit");            \
+    sdk::AngleUnit = reinterpret_cast<jclass>(env->NewGlobalRef(localAngleUnit));                                       \
+    env->DeleteLocalRef(localAngleUnit);                                                                                  \
     jclass localVisionPortal = env->FindClass("org/firstinspires/ftc/vision/VisionPortal");                                 \
     sdk::VisionPortal = reinterpret_cast<jclass>(env->NewGlobalRef(localVisionPortal));                                      \
     env->DeleteLocalRef(localVisionPortal);                                                                                  \

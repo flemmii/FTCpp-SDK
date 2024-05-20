@@ -3,18 +3,13 @@
 
 #include <jni.h>
 
-namespace sdk::voltage_unit {
+namespace sdk {
     extern jclass VoltageUnit;
-    enum class voltage_unit_type {
+    enum class Voltage_unit {
+        // TODO: This is not complete
         VOLTS,
         MILLIVOLTS
     };
-
-    double toVolts(double value, double voltsPerUnit);
-
-    double toMilliVolts(double value, double voltsPerUnit);
-
-    double convert(double value, voltage_unit_type unit, double voltsPerUnit);
 }
 
 

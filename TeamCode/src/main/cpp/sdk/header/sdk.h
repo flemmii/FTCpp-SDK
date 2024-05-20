@@ -20,6 +20,7 @@
 #include "hardware/Distance_sensor.h"
 #include "hardware/Gyro_sensor.h"
 #include "hardware/hardware_map.h"
+#include "hardware/IMU.h"
 #include "hardware/Lynx_module.h"
 #include "hardware/PIDF_coefficients.h"
 #include "hardware/Servo.h"
@@ -35,7 +36,12 @@
 #include "hardware/Gamepad/Gamepad.h"
 #include "hardware/Gamepad/Trigger.h"
 
+#include "navigation/Acceleration.h"
+#include "navigation/Angle_unit.h"
+#include "navigation/Angular_velocity.h"
+#include "navigation/Orientation.h"
 #include "navigation/Voltage_unit.h"
+#include "navigation/Yaw_pitch_roll_angles.h"
 
 #include "opmode/linear_op_mode.h"
 

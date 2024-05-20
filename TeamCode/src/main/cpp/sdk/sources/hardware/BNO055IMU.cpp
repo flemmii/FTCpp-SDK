@@ -6,9 +6,9 @@
 
 namespace sdk {
     jclass BNO055IMU;
-    jclass Parameters;
-    jclass AngleUnit;
-    jclass AccelUnit;
+    jclass BNO055IMU_Parameters;
+    jclass BNO055IMU_AngleUnit;
+    jclass BNO055IMU_AccelUnit;
 
     BNO055IMU::BNO055IMU(jobject bno055imu) : bno055imu(bno055imu) {}
 
@@ -36,22 +36,25 @@ namespace sdk {
 
     bool BNO055IMU::initialize(sdk::BNO055IMU::Parameters parameters) {
         attach_thread
-        jobject parametersJava = env->NewObject(sdk::Parameters,
-                                                env->GetMethodID(sdk::Parameters, "<init>", "()V"));
-        jobject angleUnit = env->GetStaticObjectField(sdk::AngleUnit,
-                                                      env->GetStaticFieldID(sdk::AngleUnit,
-                                                                            angle_unit_to_string(
-                                                                                    parameters.angle_unit),
-                                                                            "Lcom/qualcomm/hardware/bosch/BNO055IMU$AngleUnit;"));
-        jobject accelUnit = env->GetStaticObjectField(sdk::AccelUnit,
-                                                      env->GetStaticFieldID(sdk::AccelUnit,
-                                                                            accel_unit_to_string(
-                                                                                    parameters.accel_unit),
-                                                                            "Lcom/qualcomm/hardware/bosch/BNO055IMU$AccelUnit;"));
-        env->SetObjectField(parametersJava, env->GetFieldID(sdk::Parameters, "angleUnit",
+        jobject parametersJava = env->NewObject(sdk::BNO055IMU_Parameters,
+                                                env->GetMethodID(sdk::BNO055IMU_Parameters,
+                                                                 "<init>", "()V"));
+        jobject angleUnit = env->GetStaticObjectField(sdk::BNO055IMU_AngleUnit,
+                                                      env->GetStaticFieldID(
+                                                              sdk::BNO055IMU_AngleUnit,
+                                                              angle_unit_to_string(
+                                                                      parameters.angle_unit),
+                                                              "Lcom/qualcomm/hardware/bosch/BNO055IMU$AngleUnit;"));
+        jobject accelUnit = env->GetStaticObjectField(sdk::BNO055IMU_AccelUnit,
+                                                      env->GetStaticFieldID(
+                                                              sdk::BNO055IMU_AccelUnit,
+                                                              accel_unit_to_string(
+                                                                      parameters.accel_unit),
+                                                              "Lcom/qualcomm/hardware/bosch/BNO055IMU$AccelUnit;"));
+        env->SetObjectField(parametersJava, env->GetFieldID(sdk::BNO055IMU_Parameters, "angleUnit",
                                                             "Lcom/qualcomm/hardware/bosch/BNO055IMU$AngleUnit;"),
                             angleUnit);
-        env->SetObjectField(parametersJava, env->GetFieldID(sdk::Parameters, "accelUnit",
+        env->SetObjectField(parametersJava, env->GetFieldID(sdk::BNO055IMU_Parameters, "accelUnit",
                                                             "Lcom/qualcomm/hardware/bosch/BNO055IMU$AccelUnit;"),
                             accelUnit);
 
