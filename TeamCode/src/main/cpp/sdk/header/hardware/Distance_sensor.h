@@ -1,7 +1,7 @@
 #ifndef FTC_FROG_DISTANCE_SENSOR_H
 #define FTC_FROG_DISTANCE_SENSOR_H
 
-#include "extras/utils.h"
+#include "utils.h"
 
 namespace sdk {
     extern jclass DistanceSensor;

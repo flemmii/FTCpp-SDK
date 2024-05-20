@@ -5,7 +5,7 @@
 #ifndef FTCROBOTCONTROLLER_COLOR_SENSOR_H
 #define FTCROBOTCONTROLLER_COLOR_SENSOR_H
 
-#include "extras/utils.h"
+#include "utils.h"
 
 namespace sdk {
     extern jclass ColorSensor;

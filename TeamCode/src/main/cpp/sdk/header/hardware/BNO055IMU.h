@@ -5,8 +5,11 @@
 #ifndef FTCROBOTCONTROLLER_BNO055IMU_H
 #define FTCROBOTCONTROLLER_BNO055IMU_H
 
-#include "extras/utils.h"
-#include "extras/Vec3d.h"
+#include "utils.h"
+
+#include "navigation/Orientation.h"
+#include "navigation/Acceleration.h"
+#include "navigation/Angular_velocity.h"
 
 namespace sdk {
     extern jclass BNO055IMU;
@@ -15,9 +18,9 @@ namespace sdk {
     extern jclass AccelUnit;
 
     class BNO055IMU {
-        jobject bno055imu;
-        Vec3d::Vec3d_remap_order axis_remap_order;
+        //TODO: This is not complete
     public:
+        jobject bno055imu;
 
 
         enum class Angle_unit {
@@ -53,22 +56,11 @@ namespace sdk {
         // There are more parameters in Java but I am to lazy to implement them
         void start_acceleration_integration(int ms_poll_interval);
 
-        Vec3d get_rotation();
+        Orientation get_angular_orientation();
 
-        Vec3d get_acceleration();
+        Acceleration get_acceleration();
 
-        Vec3d get_angular_velocity();
-
-        static sdk::BNO055IMU::Parameters defaultParameters();
-
-        BNO055IMU(jobject imu, BNO055IMU::Parameters parameters,
-                  Vec3d::Vec3d_remap_order axis_remap_order);
-
-        BNO055IMU(jobject imu, Vec3d::Vec3d_remap_order axis_remap_order);
-
-        BNO055IMU(jobject imu);
-
-        BNO055IMU() = default;
+        Angular_velocity get_angular_velocity();
     };
 
 } // sdk

@@ -5,7 +5,7 @@
 #ifndef FTCROBOTCONTROLLER_GAMEPAD_H
 #define FTCROBOTCONTROLLER_GAMEPAD_H
 
-#include "extras/utils.h"
+#include "utils.h"
 #include "Analog_stick.h"
 #include "Analog_sticks.h"
 #include "Button.h"

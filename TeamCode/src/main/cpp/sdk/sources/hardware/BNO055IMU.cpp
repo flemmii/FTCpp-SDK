@@ -72,7 +72,7 @@ namespace sdk {
                             NULL, NULL, static_cast<jint>(ms_poll_interval));
     }
 
-    Vec3d BNO055IMU::get_rotation() {
+    Orientation BNO055IMU::get_angular_orientation() {
         attach_thread
         jobject orientation = env->CallObjectMethod(bno055imu, env->GetMethodID(sdk::BNO055IMU,
                                                                                 "getAngularOrientation",
@@ -90,10 +90,10 @@ namespace sdk {
 
         env->DeleteLocalRef(orientation);
         env->DeleteLocalRef(Orientation);
-        return Vec3d(x, y, z).remap(axis_remap_order);
+        return {x, y, z};
     }
 
-    Vec3d BNO055IMU::get_acceleration() {
+    Acceleration BNO055IMU::get_acceleration() {
         attach_thread
         jobject acceleration = env->CallObjectMethod(bno055imu, env->GetMethodID(sdk::BNO055IMU,
                                                                                  "getAcceleration",
@@ -111,10 +111,10 @@ namespace sdk {
 
         env->DeleteLocalRef(acceleration);
         env->DeleteLocalRef(Acceleration);
-        return Vec3d(x, y, z).remap(axis_remap_order);
+        return {x, y, z};
     }
 
-    Vec3d BNO055IMU::get_angular_velocity() {
+    Angular_velocity BNO055IMU::get_angular_velocity() {
         attach_thread
         jobject angularVelocity = env->CallObjectMethod(bno055imu, env->GetMethodID(sdk::BNO055IMU,
                                                                                     "getAngularVelocity",
@@ -135,28 +135,6 @@ namespace sdk {
 
         env->DeleteLocalRef(angularVelocity);
         env->DeleteLocalRef(AngularVelocity);
-        return Vec3d(x, y, z).remap(axis_remap_order);
+        return {x, y, z};
     }
-
-    BNO055IMU::Parameters BNO055IMU::defaultParameters() {
-        BNO055IMU::Parameters parameters{};
-        parameters.accel_unit = BNO055IMU::Accel_unit::METERS_PERSEC_PERSEC;
-        parameters.angle_unit = BNO055IMU::Angle_unit::RADIANS;
-        return parameters;
-    }
-
-    BNO055IMU::BNO055IMU(jobject imu, BNO055IMU::Parameters parameters,
-                         Vec3d::Vec3d_remap_order axis_remap_order) : bno055imu(imu),
-                                                                      axis_remap_order(
-                                                                              axis_remap_order) {
-        this->initialize(parameters);
-        this->start_acceleration_integration(100);
-    }
-
-    BNO055IMU::BNO055IMU(jobject imu, Vec3d::Vec3d_remap_order axis_remap_order) : BNO055IMU(imu,
-                                                                                             defaultParameters(),
-                                                                                             axis_remap_order) {}
-
-    BNO055IMU::BNO055IMU(jobject imu) : BNO055IMU(
-            BNO055IMU(imu, defaultParameters(), Vec3d::Vec3d_remap_order::XYZ_XYZ)) {}
 } // sdk

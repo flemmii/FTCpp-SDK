@@ -7,13 +7,14 @@
 
 #include <string>
 #include "../navigation/Voltage_unit.h"
-#include "extras/utils.h"
+#include "utils.h"
 
 namespace sdk {
     extern jclass LynxModule;
     extern jclass BulkCachingMode;
 
     class Lynx_module {
+        // TODO: This is not complete
     public:
         jobject lynxModule{};
         enum Bulk_caching_mode {

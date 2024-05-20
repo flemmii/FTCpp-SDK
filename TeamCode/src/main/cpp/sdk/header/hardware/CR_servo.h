@@ -5,7 +5,7 @@
 #ifndef FTCROBOTCONTROLLER_CR_SERVO_H
 #define FTCROBOTCONTROLLER_CR_SERVO_H
 
-#include "extras/utils.h"
+#include "utils.h"
 #include "Servo_controller.h"
 #include "Dc_motor_simple.h"
 

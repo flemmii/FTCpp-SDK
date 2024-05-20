@@ -5,7 +5,7 @@
 #ifndef FTCROBOTCONTROLLER_CAMERA_NAME_H
 #define FTCROBOTCONTROLLER_CAMERA_NAME_H
 
-#include "extras/utils.h"
+#include "utils.h"
 
 namespace sdk {
     extern jclass CameraName;

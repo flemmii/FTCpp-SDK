@@ -5,7 +5,7 @@
 #ifndef FTCROBOTCONTROLLER_TOUCH_SENSOR_H
 #define FTCROBOTCONTROLLER_TOUCH_SENSOR_H
 
-#include "extras/utils.h"
+#include "utils.h"
 
 namespace sdk {
     extern jclass TouchSensor;

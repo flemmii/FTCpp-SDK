@@ -5,7 +5,7 @@
 #ifndef FTCROBOTCONTROLLER_SERVO_CONTROLLER_H
 #define FTCROBOTCONTROLLER_SERVO_CONTROLLER_H
 
-#include "extras/utils.h"
+#include "utils.h"
 
 namespace sdk {
     extern jclass ServoController;

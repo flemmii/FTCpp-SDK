@@ -3,7 +3,7 @@
 
 #include <sstream>
 
-#include "extras/utils.h"
+#include "utils.h"
 
 namespace sdk {
     extern jclass Telemetry;

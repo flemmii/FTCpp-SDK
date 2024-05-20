@@ -5,7 +5,7 @@
 #ifndef FTCROBOTCONTROLLER_LINEAR_OP_MODE_H
 #define FTCROBOTCONTROLLER_LINEAR_OP_MODE_H
 
-#include "extras/utils.h"
+#include "utils.h"
 #include "../hardware/hardware_map.h"
 #include "../hardware/Gamepad/Gamepad.h"
 #include "../telemetry.h"

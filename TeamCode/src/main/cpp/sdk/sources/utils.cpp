@@ -2,7 +2,7 @@
 // Created by fnlg on 09.05.2024.
 //
 
-#include "extras/utils.h"
+#include "utils.h"
 
 using namespace std;
 
