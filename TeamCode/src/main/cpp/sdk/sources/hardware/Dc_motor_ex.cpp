@@ -15,6 +15,16 @@ namespace sdk {
     Dc_motor_ex::Dc_motor_ex(jobject dcMotorEx) : dcMotorEx(dcMotorEx),
                                                   Dc_motor_simple(dcMotorEx) {}
 
+    Dc_motor_ex::~Dc_motor_ex() {
+        dcMotorEx = nullptr;
+    }
+
+    Dc_motor_ex &Dc_motor_ex::operator=(jobject dcMotorEx) {
+        Dc_motor_simple::operator=(dcMotorEx);
+        this->dcMotorEx = dcMotorEx;
+        return *this;
+    }
+
     void Dc_motor_ex::set_motor_enable() const {
         attach_thread
         env->CallVoidMethod(dcMotorEx, env->GetMethodID(DcMotorEx, "setMotorEnable", "()V"));

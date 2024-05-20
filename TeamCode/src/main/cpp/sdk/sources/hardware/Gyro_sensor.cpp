@@ -9,6 +9,24 @@ namespace sdk {
 
     Gyro_sensor::Gyro_sensor(jobject gyroSensor) : gyroSensor(gyroSensor) {}
 
+    Gyro_sensor::~Gyro_sensor() {
+        if (gyroSensor) {
+            attach_thread
+            env->DeleteGlobalRef(gyroSensor);
+            gyroSensor = nullptr;
+        }
+    }
+
+    Gyro_sensor &Gyro_sensor::operator=(jobject gyroSensor) {
+        if (this->gyroSensor) {
+            attach_thread
+            env->DeleteGlobalRef(this->gyroSensor);
+        }
+        this->gyroSensor = gyroSensor;
+        return *this;
+    }
+
+
     void Gyro_sensor::calibrate() const {
         attach_thread
         env->CallVoidMethod(gyroSensor, env->GetMethodID(GyroSensor, "calibrate", "()V"));

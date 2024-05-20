@@ -62,6 +62,8 @@ namespace sdk {
 
         ~Vision_portal();
 
+        Vision_portal &operator=(jobject visionPortal);
+
         static std::vector<int> makeMultiPortalView(int numPortals, Multi_portal_layout mpl);
 
         static Vision_portal easy_create_with_defaults(const Camera_name &camera_name,
@@ -105,6 +107,10 @@ namespace sdk {
         public:
 
             Builder();
+
+            ~Builder();
+
+            Builder &operator=(jobject builder);
 
             Builder &set_camera(const Camera_name &camera);
 

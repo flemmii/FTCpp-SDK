@@ -13,7 +13,6 @@ namespace sdk {
     Servo::Servo(jobject servo) : servo(servo) {}
 
     Servo::~Servo() {
-        logcat_log(ANDROID_LOG_DEBUG, "Servo", "Servo object destroyed");
         if (servo) {
             attach_thread
             env->DeleteGlobalRef(servo);
@@ -22,8 +21,10 @@ namespace sdk {
     }
 
     class Servo &Servo::operator=(jobject servo) {
-        attach_thread
-        env->DeleteGlobalRef(this->servo);
+        if (this->servo) {
+            attach_thread
+            env->DeleteGlobalRef(this->servo);
+        }
         this->servo = servo;
         return *this;
     }

@@ -10,6 +10,23 @@ namespace sdk {
 
     Dc_motor_simple::Dc_motor_simple(jobject dcMotorSimple) : dcMotorSimple(dcMotorSimple) {}
 
+    Dc_motor_simple::~Dc_motor_simple() {
+        if (dcMotorSimple) {
+            attach_thread
+            env->DeleteGlobalRef(dcMotorSimple);
+            dcMotorSimple = nullptr;
+        }
+    }
+
+    Dc_motor_simple &Dc_motor_simple::operator=(jobject dcMotorSimple) {
+        if (this->dcMotorSimple) {
+            attach_thread
+            env->DeleteGlobalRef(this->dcMotorSimple);
+        }
+        this->dcMotorSimple = dcMotorSimple;
+        return *this;
+    }
+
     void Dc_motor_simple::set_direction(Dc_motor_simple::Direction direction) const {
         attach_thread
         jobject jdirection = env->GetStaticObjectField(DcMotorSimple_Direction,

@@ -9,6 +9,23 @@ namespace sdk {
 
     Color_sensor::Color_sensor(jobject colorSensor) : colorSensor(colorSensor) {}
 
+    Color_sensor::~Color_sensor() {
+        if (colorSensor) {
+            attach_thread
+            env->DeleteGlobalRef(colorSensor);
+            colorSensor = nullptr;
+        }
+    }
+
+    Color_sensor &Color_sensor::operator=(jobject colorSensor) {
+        if (this->colorSensor) {
+            attach_thread
+            env->DeleteGlobalRef(this->colorSensor);
+        }
+        this->colorSensor = colorSensor;
+        return *this;
+    }
+
     int Color_sensor::red() const {
         attach_thread
         return static_cast<int>(env->CallIntMethod(colorSensor,

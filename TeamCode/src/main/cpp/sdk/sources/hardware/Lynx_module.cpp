@@ -12,6 +12,14 @@ namespace sdk {
 
     Lynx_module::Lynx_module(jobject lynxModule) : lynxModule(lynxModule) {}
 
+    Lynx_module::~Lynx_module() {
+        if (lynxModule) {
+            attach_thread
+            env->DeleteGlobalRef(lynxModule);
+            lynxModule = nullptr;
+        }
+    }
+
     const char *
     Lynx_module::bulk_caching_mode_to_string(Lynx_module::Bulk_caching_mode bulk_caching_mode) {
         switch (bulk_caching_mode) {

@@ -22,6 +22,10 @@ namespace sdk {
 
         Webcam_name(jobject webcamName);
 
+        ~Webcam_name();
+
+        Webcam_name &operator=(jobject webcamName) override;
+
         [[nodiscard]] std::string get_usb_device_name_if_attached() const;
 
         [[nodiscard]] bool is_attached() const;

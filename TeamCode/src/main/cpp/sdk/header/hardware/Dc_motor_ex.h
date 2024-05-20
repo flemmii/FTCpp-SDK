@@ -38,6 +38,10 @@ namespace sdk {
 
         Dc_motor_ex(jobject dcMotorEx);
 
+        ~Dc_motor_ex();
+
+        Dc_motor_ex &operator=(jobject dcMotorEx);
+
         // DcMotorEx
 
         void set_motor_enable() const;

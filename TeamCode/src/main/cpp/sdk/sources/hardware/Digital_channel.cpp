@@ -9,6 +9,23 @@ namespace sdk {
 
     Digital_channel::Digital_channel(jobject digitalChannel) : digitalChannel(digitalChannel) {}
 
+    Digital_channel::~Digital_channel() {
+        if (digitalChannel) {
+            attach_thread
+            env->DeleteGlobalRef(digitalChannel);
+            digitalChannel = nullptr;
+        }
+    }
+
+    Digital_channel &Digital_channel::operator=(jobject digitalChannel) {
+        if (this->digitalChannel) {
+            attach_thread
+            env->DeleteGlobalRef(this->digitalChannel);
+        }
+        this->digitalChannel = digitalChannel;
+        return *this;
+    }
+
     Digital_channel::Mode Digital_channel::get_mode() const {
         attach_thread
         jobject mode = env->CallObjectMethod(digitalChannel,

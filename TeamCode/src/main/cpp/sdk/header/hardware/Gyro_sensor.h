@@ -20,6 +20,10 @@ namespace sdk {
 
         Gyro_sensor(jobject gyroSensor);
 
+        ~Gyro_sensor();
+
+        Gyro_sensor &operator=(jobject gyroSensor);
+
         void calibrate() const;
 
         [[nodiscard]] bool is_calibrating() const;

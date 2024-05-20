@@ -9,6 +9,16 @@ namespace sdk {
 
     CR_servo::CR_servo(jobject crServo) : crServo(crServo), Dc_motor_simple(crServo) {}
 
+    CR_servo::~CR_servo() {
+        crServo = nullptr;
+    }
+
+    CR_servo &CR_servo::operator=(jobject crServo) {
+        Dc_motor_simple::operator=(crServo);
+        this->crServo = crServo;
+        return *this;
+    }
+
     Servo_controller CR_servo::get_controller() const {
         attach_thread
         jobject jcontroller = env->CallObjectMethod(crServo,

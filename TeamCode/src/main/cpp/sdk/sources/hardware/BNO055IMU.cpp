@@ -12,6 +12,23 @@ namespace sdk {
 
     BNO055IMU::BNO055IMU(jobject bno055imu) : bno055imu(bno055imu) {}
 
+    BNO055IMU::~BNO055IMU() {
+        if (bno055imu) {
+            attach_thread
+            env->DeleteGlobalRef(bno055imu);
+            bno055imu = nullptr;
+        }
+    }
+
+    class BNO055IMU &BNO055IMU::operator=(jobject bno055imu) {
+        if (this->bno055imu) {
+            attach_thread
+            env->DeleteGlobalRef(this->bno055imu);
+        }
+        this->bno055imu = bno055imu;
+        return *this;
+    }
+
     const char *BNO055IMU::angle_unit_to_string(BNO055IMU::Angle_unit angle_unit) {
         switch (angle_unit) {
             case BNO055IMU::Angle_unit::DEGREES:

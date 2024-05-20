@@ -9,6 +9,23 @@ namespace sdk {
 
     Analog_input::Analog_input(jobject analogInput) : analogInput(analogInput) {}
 
+    Analog_input::~Analog_input() {
+        if (analogInput) {
+            attach_thread
+            env->DeleteGlobalRef(analogInput);
+            analogInput = nullptr;
+        }
+    }
+
+    Analog_input &Analog_input::operator=(jobject analogInput) {
+        if (this->analogInput) {
+            attach_thread
+            env->DeleteGlobalRef(this->analogInput);
+        }
+        this->analogInput = analogInput;
+        return *this;
+    }
+
     int Analog_input::get_voltage() const {
         attach_thread
         return static_cast<int>(env->CallIntMethod(analogInput,

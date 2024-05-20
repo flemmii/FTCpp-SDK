@@ -9,6 +9,23 @@ namespace sdk {
 
     Camera_name::Camera_name(jobject cameraName) : cameraName(cameraName) {}
 
+    Camera_name::~Camera_name() {
+        if (cameraName) {
+            attach_thread
+            env->DeleteGlobalRef(cameraName);
+            cameraName = nullptr;
+        }
+    }
+
+    Camera_name &Camera_name::operator=(jobject cameraName) {
+        if (this->cameraName) {
+            attach_thread
+            env->DeleteGlobalRef(this->cameraName);
+        }
+        this->cameraName = cameraName;
+        return *this;
+    }
+
     bool Camera_name::is_webcam() const {
         attach_thread
         return env->CallBooleanMethod(cameraName, env->GetMethodID(CameraName, "isWebcam", "()Z"));

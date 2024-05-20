@@ -13,6 +13,24 @@ namespace sdk {
     Servo_controller::Servo_controller(jobject servoController) : servoController(
             servoController) {}
 
+    Servo_controller::~Servo_controller() {
+        if (servoController) {
+            attach_thread
+            env->DeleteGlobalRef(servoController);
+            servoController = nullptr;
+        }
+    }
+
+    Servo_controller &Servo_controller::operator=(jobject servoController) {
+        if (this->servoController) {
+            attach_thread
+            env->DeleteGlobalRef(this->servoController);
+        }
+        this->servoController = servoController;
+        return *this;
+    }
+
+
     void Servo_controller::pwm_enable() const {
         attach_thread
         env->CallVoidMethod(servoController, env->GetMethodID(ServoController, "pwmEnable", "()V"));

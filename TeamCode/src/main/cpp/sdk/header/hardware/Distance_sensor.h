@@ -11,10 +11,15 @@ namespace sdk {
     private:
         jobject distanceSensor{};
     public:
-        Distance_sensor() = default; // Constructor declaration
+        Distance_sensor() = default;
 
         Distance_sensor(jobject distanceSensor);
 
+        ~Distance_sensor();
+
+        Distance_sensor &operator=(jobject distanceSensor);
+
+        // TODO: Add Distance_unit
         // Returns the distance in mm
         double get_distance();
     };

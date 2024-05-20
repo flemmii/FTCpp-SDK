@@ -18,6 +18,10 @@ namespace sdk {
 
         Color_sensor(jobject colorSensor);
 
+        ~Color_sensor();
+
+        Color_sensor &operator=(jobject colorSensor);
+
         [[nodiscard]] int red() const;
 
         [[nodiscard]] int green() const;

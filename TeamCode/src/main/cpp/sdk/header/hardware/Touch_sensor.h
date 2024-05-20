@@ -18,6 +18,10 @@ namespace sdk {
 
         Touch_sensor(jobject touchSensor);
 
+        ~Touch_sensor();
+
+        Touch_sensor &operator=(jobject touchSensor);
+
         [[nodiscard]] double get_value() const;
 
         [[nodiscard]] bool is_pressed() const;

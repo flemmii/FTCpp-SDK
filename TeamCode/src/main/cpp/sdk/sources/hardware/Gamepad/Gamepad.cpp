@@ -5,6 +5,23 @@ namespace sdk {
 
     Gamepad::Gamepad(jobject gamepad) : gamepad(gamepad) {}
 
+    Gamepad::~Gamepad() {
+        if (gamepad) {
+            attach_thread
+            env->DeleteGlobalRef(gamepad);
+            gamepad = nullptr;
+        }
+    }
+
+    class Gamepad &Gamepad::operator=(jobject gamepad) {
+        if (this->gamepad) {
+            attach_thread
+            env->DeleteGlobalRef(this->gamepad);
+        }
+        this->gamepad = gamepad;
+        return *this;
+    }
+
     void Gamepad::update() {
         attach_thread
 

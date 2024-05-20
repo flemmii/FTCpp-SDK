@@ -26,6 +26,10 @@ namespace sdk {
 
         BNO055IMU(jobject bno055imu);
 
+        ~BNO055IMU();
+
+        BNO055IMU &operator=(jobject bno055imu);
+
         enum class Angle_unit {
             DEGREES,
             RADIANS

@@ -12,6 +12,16 @@ namespace sdk {
     Webcam_name::Webcam_name(jobject webcamName) : webcamName(webcamName),
                                                    Camera_name(webcamName) {}
 
+    Webcam_name::~Webcam_name() {
+        webcamName = nullptr;
+    }
+
+    Webcam_name &Webcam_name::operator=(jobject webcamName) {
+        Camera_name::operator=(webcamName);
+        this->webcamName = webcamName;
+        return *this;
+    }
+
     string Webcam_name::get_usb_device_name_if_attached() const {
         attach_thread
         auto jstr = (jstring) (env->CallObjectMethod(webcamName,

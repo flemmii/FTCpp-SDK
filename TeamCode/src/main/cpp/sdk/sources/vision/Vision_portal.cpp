@@ -59,7 +59,22 @@ namespace sdk {
 
     Vision_portal::~Vision_portal() {
         vision_portal_count--;
+        if (visionPortal) {
+            attach_thread
+            env->DeleteGlobalRef(visionPortal);
+            visionPortal = nullptr;
+        }
     }
+
+    Vision_portal &Vision_portal::operator=(jobject visionPortal) {
+        if (this->visionPortal) {
+            attach_thread
+            env->DeleteGlobalRef(this->visionPortal);
+        }
+        this->visionPortal = visionPortal;
+        return *this;
+    }
+
 
     vector<int>
     Vision_portal::makeMultiPortalView(int numPortals, Vision_portal::Multi_portal_layout mpl) {
@@ -235,6 +250,23 @@ namespace sdk {
                                                                "()V"));
         builder = env->NewGlobalRef(localBuilder);
         env->DeleteLocalRef(localBuilder);
+    }
+
+    Vision_portal::Builder::~Builder() {
+        if (builder) {
+            attach_thread
+            env->DeleteGlobalRef(builder);
+            builder = nullptr;
+        }
+    }
+
+    Vision_portal::Builder &Vision_portal::Builder::operator=(jobject builder) {
+        if (this->builder) {
+            attach_thread
+            env->DeleteGlobalRef(this->builder);
+        }
+        this->builder = builder;
+        return *this;
     }
 
     Vision_portal::Builder &Vision_portal::Builder::set_camera(const Camera_name &camera) {
