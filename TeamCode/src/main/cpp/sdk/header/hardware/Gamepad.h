@@ -6,10 +6,6 @@
 #define FTCROBOTCONTROLLER_GAMEPAD_H
 
 #include "utils.h"
-#include "Analog_stick.h"
-#include "Analog_sticks.h"
-#include "Button.h"
-#include "Trigger.h"
 
 namespace sdk {
 
@@ -19,36 +15,34 @@ namespace sdk {
     public:
         jobject gamepad{};
 
-        Analog_stick left_stick{};
-        Analog_stick right_stick{};
+        float left_stick_x = 0;
+        float left_stick_y = 0;
+        float right_stick_x = 0;
+        float right_stick_y = 0;
 
-        Analog_sticks both_sticks{};
+        bool left_stick_button = false;
+        bool right_stick_button = false;
 
-        Button left_stick_button{};
+        float left_trigger = 0;
+        float right_trigger = 0;
 
-        Button right_stick_button{};
+        bool left_bumper = false;
+        bool right_bumper = false;
 
-        Trigger left_trigger{};
-        Trigger right_trigger{};
+        bool a = false;
+        bool b = false;
+        bool x = false;
+        bool y = false;
 
-        Button left_bumper{};
-        Button right_bumper{};
+        bool dpad_up = false;
+        bool dpad_right = false;
+        bool dpad_down = false;
+        bool dpad_left = false;
 
-        Button a{};
-        Button b{};
-        Button x{};
-        Button y{};
+        bool guide = false;
+        bool start = false;
+        bool back = false;
 
-        Button dpad_up{};
-        Button dpad_right{};
-        Button dpad_down{};
-        Button dpad_left{};
-
-        Button guide{};
-        Button start{};
-        Button back{};
-
-        /*
         bool circle = false;
         bool cross = false;
         bool triangle = false;
@@ -66,7 +60,6 @@ namespace sdk {
         float touchpad_finger_2_y = 0;
 
         bool ps = false;
-        */
 
         Gamepad() = default;
 

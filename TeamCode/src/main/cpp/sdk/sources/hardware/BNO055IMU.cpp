@@ -4,6 +4,8 @@
 
 #include "hardware/BNO055IMU.h"
 
+using namespace std;
+
 namespace sdk {
     jclass BNO055IMU;
     jclass BNO055IMU_Parameters;

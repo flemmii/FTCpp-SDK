@@ -18,6 +18,7 @@
 #include "hardware/Dc_motor_simple.h"
 #include "hardware/Digital_channel.h"
 #include "hardware/Distance_sensor.h"
+#include "hardware/Gamepad.h"
 #include "hardware/Gyro_sensor.h"
 #include "hardware/hardware_map.h"
 #include "hardware/IMU.h"
@@ -29,12 +30,6 @@
 
 #include "hardware/camera/Webcam_name.h"
 #include "hardware/camera/Camera_name.h"
-
-#include "hardware/Gamepad/Analog_stick.h"
-#include "hardware/Gamepad/Analog_sticks.h"
-#include "hardware/Gamepad/Button.h"
-#include "hardware/Gamepad/Gamepad.h"
-#include "hardware/Gamepad/Trigger.h"
 
 #include "navigation/Acceleration.h"
 #include "navigation/Angle_unit.h"

@@ -7,7 +7,7 @@
 
 #include "utils.h"
 #include "../hardware/hardware_map.h"
-#include "../hardware/Gamepad/Gamepad.h"
+#include "hardware/Gamepad.h"
 #include "../telemetry.h"
 
 namespace sdk {
