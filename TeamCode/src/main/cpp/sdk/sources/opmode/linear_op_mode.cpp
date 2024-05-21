@@ -25,7 +25,7 @@ namespace sdk {
                                                                 CurrentOpMode,
                                                                 "gamepad1",
                                                                 "Lcom/qualcomm/robotcore/hardware/Gamepad;"));
-            gamepads::gamepad1 = {env->NewGlobalRef(localGamepad1)};
+            gamepads::gamepad1 = env->NewGlobalRef(localGamepad1);
             env->DeleteLocalRef(localGamepad1);
 
             jobject localGamepad2 = env->GetObjectField(currentOpMode,
@@ -33,7 +33,7 @@ namespace sdk {
                                                                 CurrentOpMode,
                                                                 "gamepad2",
                                                                 "Lcom/qualcomm/robotcore/hardware/Gamepad;"));
-            gamepads::gamepad2 = {env->NewGlobalRef(localGamepad2)};
+            gamepads::gamepad2 = env->NewGlobalRef(localGamepad2);
             env->DeleteLocalRef(localGamepad2);
 
             jobject localTelemetry = env->GetObjectField(currentOpMode,
