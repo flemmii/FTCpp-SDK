@@ -65,32 +65,33 @@ namespace sdk {
                                                                           run_mode_to_string(
                                                                                   mode),
                                                                           "Lcom/qualcomm/robotcore/hardware/DcMotor$RunMode;"));
-        jobject pidCoefficients = env->NewObject(PIDFCoefficients,
-                                                 env->GetMethodID(PIDFCoefficients, "<init>",
-                                                                  "(DDDD)V"),
-                                                 pid_coefficients.p, pid_coefficients.i,
-                                                 pid_coefficients.d, pid_coefficients.f);
+        jobject pidfCoefficients = env->NewObject(PIDFCoefficients,
+                                                  env->GetMethodID(PIDFCoefficients, "<init>",
+                                                                   "(DDDD)V"),
+                                                  pid_coefficients.p, pid_coefficients.i,
+                                                  pid_coefficients.d, pid_coefficients.f);
         env->CallVoidMethod(dcMotorEx,
-                            env->GetMethodID(DcMotorEx, "setPIDCoefficients",
+                            env->GetMethodID(DcMotorEx, "setPIDFCoefficients",
                                              "(Lcom/qualcomm/robotcore/hardware/DcMotor$RunMode;Lcom/qualcomm/robotcore/hardware/PIDFCoefficients;)V"),
                             runMode,
-                            pidCoefficients);
+                            pidfCoefficients);
         env->DeleteLocalRef(runMode);
-        env->DeleteLocalRef(pidCoefficients);
+        env->DeleteLocalRef(pidfCoefficients);
     }
 
     PIDF_coefficients Dc_motor_ex::get_PIDF_coefficients(Run_mode mode) const {
         attach_thread
+        jobject RunMode = env->GetStaticObjectField(DcMotor_RunMode,
+                                                    env->GetStaticFieldID(
+                                                            DcMotor_RunMode,
+                                                            run_mode_to_string(
+                                                                    mode),
+                                                            "Lcom/qualcomm/robotcore/hardware/DcMotor$RunMode;"));
 
         jobject coefficients = env->CallObjectMethod(dcMotorEx, env->GetMethodID(DcMotorEx,
                                                                                  "getPIDFCoefficients",
                                                                                  "(Lcom/qualcomm/robotcore/hardware/DcMotor$RunMode;)Lcom/qualcomm/robotcore/hardware/PIDFCoefficients;"),
-                                                     env->GetStaticObjectField(DcMotor_RunMode,
-                                                                               env->GetStaticFieldID(
-                                                                                       DcMotor_RunMode,
-                                                                                       run_mode_to_string(
-                                                                                               mode),
-                                                                                       "Lcom/qualcomm/robotcore/hardware/DcMotor$RunMode;")));
+                                                     RunMode);
 
         auto p = static_cast<double> (env->GetDoubleField(coefficients,
                                                           env->GetFieldID(PIDFCoefficients, "p",
@@ -105,6 +106,7 @@ namespace sdk {
                                                           env->GetFieldID(PIDFCoefficients, "f",
                                                                           "D")));
 
+        env->DeleteLocalRef(RunMode);
         env->DeleteLocalRef(coefficients);
 
         return {p, i, d, f};
@@ -135,7 +137,7 @@ namespace sdk {
     int Dc_motor_ex::get_port_number() const {
         attach_thread
         int result = static_cast<int> (env->CallIntMethod(dcMotorEx, env->GetMethodID(DcMotorEx,
-                                                                                      "get_port_number",
+                                                                                      "getPortNumber",
                                                                                       "()I")));
         return result;
     }
@@ -159,7 +161,7 @@ namespace sdk {
                                                                          "()Lcom/qualcomm/robotcore/hardware/DcMotor$RunMode;"));
 
         auto name = (jstring) env->CallObjectMethod(mode,
-                                                    env->GetMethodID(env->GetObjectClass(mode),
+                                                    env->GetMethodID(DcMotor_RunMode,
                                                                      "name",
                                                                      "()Ljava/lang/String;"));
 
@@ -217,10 +219,9 @@ namespace sdk {
                                                                            "()Lcom/qualcomm/robotcore/hardware/DcMotor$ZeroPowerBehavior;"));
 
         auto name = (jstring) env->CallObjectMethod(zeroPowerBehavior,
-                                                    env->GetMethodID(
-                                                            env->GetObjectClass(zeroPowerBehavior),
-                                                            "name",
-                                                            "()Ljava/lang/String;"));
+                                                    env->GetMethodID(DcMotor_ZeroPowerBehavior,
+                                                                     "name",
+                                                                     "()Ljava/lang/String;"));
 
         const char *zeroPowerBehaviorName = env->GetStringUTFChars(name, nullptr);
         std::string strZeroPowerBehaviorName(zeroPowerBehaviorName);

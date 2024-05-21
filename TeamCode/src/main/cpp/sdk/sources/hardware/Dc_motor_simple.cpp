@@ -47,16 +47,19 @@ namespace sdk {
                                                                                   "getDirection",
                                                                                   "()Lcom/qualcomm/robotcore/hardware/DcMotorSimple$Direction;"));
 
+        jclass Direction = env->GetObjectClass(direction);
+
         auto name = (jstring) env->CallObjectMethod(direction,
-                                                    env->GetMethodID(env->GetObjectClass(direction),
+                                                    env->GetMethodID(Direction,
                                                                      "name",
                                                                      "()Ljava/lang/String;"));
 
         const char *directionName = env->GetStringUTFChars(name, nullptr);
         std::string strDirectionName(directionName);
-        env->DeleteLocalRef(name);
 
+        env->DeleteLocalRef(name);
         env->DeleteLocalRef(direction);
+        env->DeleteLocalRef(Direction);
 
         if (strDirectionName == "FORWARD")
             return Direction::FORWARD;
