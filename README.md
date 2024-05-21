@@ -146,7 +146,7 @@ If you want to contribute to this project, you can simply open a pull request on
 It doesn't matter if you want to add a new feature, fix a bug, add an example or just improve
 the documentation.
 
-If you want to help me even further multiple times consider to DM me on Discord (flemmii), so
+If you want to help me even further consider to DM me on Discord (flemmii), so
 I can add you to the project and you don't need to open pull request every time.
 
 ## Feature requests
