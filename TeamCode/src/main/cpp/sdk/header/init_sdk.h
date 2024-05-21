@@ -56,7 +56,7 @@
     jclass localBNO055IMU_AccelUnit = env->FindClass("com/qualcomm/hardware/bosch/BNO055IMU$AccelUnit");                              \
     sdk::BNO055IMU_AccelUnit = reinterpret_cast<jclass>(env->NewGlobalRef(localBNO055IMU_AccelUnit));                                            \
     env->DeleteLocalRef(localBNO055IMU_AccelUnit);                                                                                     \
-    jclass localIMU = env->FindClass("com/qualcomm/hardware/IMU");                                                          \
+    jclass localIMU = env->FindClass("com/qualcomm/robotcore/hardware/IMU");                                                          \
     sdk::IMU = reinterpret_cast<jclass>(env->NewGlobalRef(localIMU));                                                       \
     env->DeleteLocalRef(localIMU);                                                                                           \
     jclass localDistanceSensor = env->FindClass("com/qualcomm/robotcore/hardware/DistanceSensor");                          \

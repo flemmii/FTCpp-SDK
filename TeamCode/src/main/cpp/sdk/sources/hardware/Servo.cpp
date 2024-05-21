@@ -31,8 +31,13 @@ namespace sdk {
 
     Servo_controller Servo::get_controller() const {
         attach_thread
-        return {env->CallObjectMethod(servo, env->GetMethodID(sdk::Servo, "getController",
-                                                              "()Lcom/qualcomm/robotcore/hardware/ServoController;"))};
+        jobject jcontroller = env->CallObjectMethod(servo,
+                                                    env->GetMethodID(sdk::Servo, "getController",
+                                                                     "()Lcom/qualcomm/robotcore/hardware/ServoController;"));
+
+        Servo_controller controller(env->NewGlobalRef(jcontroller));
+        env->DeleteLocalRef(jcontroller);
+        return controller;
     }
 
     int Servo::get_port_number() const {

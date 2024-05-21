@@ -25,7 +25,7 @@ namespace sdk {
                                                     env->GetMethodID(CRServo, "getController",
                                                                      "()com/qualcomm/robotcore/hardware/ServoController;"));
 
-        Servo_controller controller(jcontroller);
+        Servo_controller controller(env->NewGlobalRef(jcontroller));
         env->DeleteLocalRef(jcontroller);
         return controller;
     }
