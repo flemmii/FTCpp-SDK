@@ -21,6 +21,11 @@ Java_org_firstinspires_ftc_teamcode_opmodes_teleop_Example_opMode(JNIEnv *env,
     Dc_motor_ex rear_right = hardware_map::get(DcMotorEx, "rear_right");
     Dc_motor_ex rear_left = hardware_map::get(DcMotorEx, "rear_left");
 
+    // Reverses two motors, so forward is all motors to positive power
+    // You may need to adjust this to meet your robots configuration
+    front_left.set_direction(Dc_motor_ex::Direction::REVERSE);
+    rear_left.set_direction(Dc_motor_ex::Direction::REVERSE);
+
     telemetry::add_line("Initialized");
     telemetry::update();
 
