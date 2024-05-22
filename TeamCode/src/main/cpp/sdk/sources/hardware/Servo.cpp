@@ -109,15 +109,9 @@ namespace sdk {
 
     void Servo::scale_range(double min, double max) {
         attach_thread
-        env->CallVoidMethod(servo, env->GetMethodID(sdk::Servo, "scaleRange", "(D;D)V"),
+        env->CallVoidMethod(servo, env->GetMethodID(sdk::Servo, "scaleRange", "(DD)V"),
                             static_cast<jdouble>(min), static_cast<jdouble>(max));
-        MIN_POSITION = static_cast<double>(env->GetDoubleField(servo,
-                                                               env->GetStaticFieldID(
-                                                                       sdk::Servo,
-                                                                       "MIN_POSITION", "D")));
-        MAX_POSITION = static_cast<double>(env->GetDoubleField(servo,
-                                                               env->GetStaticFieldID(
-                                                                       sdk::Servo,
-                                                                       "MAX_POSITION", "D")));
+        MIN_POSITION = min;
+        MAX_POSITION = max;
     }
 } // sdk

@@ -44,25 +44,37 @@ namespace sdk {
 
     Servo_controller::Pwm_status Servo_controller::get_pwm_status() const {
         attach_thread
-        switch (env->CallIntMethod(env->CallObjectMethod(servoController,
-                                                         env->GetMethodID(ServoController,
-                                                                          "getPwmStatus",
-                                                                          "()com/qualcomm/hardware/ServoController$PwmStatus")),
-                                   env->GetMethodID(ServoController_PwmStatus, "ordinal", "()I"))) {
-            case 0:
-                return Pwm_status::ENABLED;
-            case 1:
-                return Pwm_status::DISABLED;
-            case 2:
-                return Pwm_status::MIXED;
-        }
+        jobject pwmStatus = env->CallObjectMethod(servoController,
+                                                  env->GetMethodID(ServoController,
+                                                                   "getPwmStatus",
+                                                                   "()Lcom/qualcomm/robotcore/hardware/ServoController$PwmStatus;"));
+
+        jclass PwmStatus = env->GetObjectClass(pwmStatus);
+
+        auto name = (jstring) env->CallObjectMethod(pwmStatus,
+                                                    env->GetMethodID(PwmStatus,
+                                                                     "name",
+                                                                     "()Ljava/lang/String;"));
+
+        const char *pwmStatusName = env->GetStringUTFChars(name, nullptr);
+        std::string strPwmStatusName(pwmStatusName);
+        env->DeleteLocalRef(name);
+
+        env->DeleteLocalRef(PwmStatus);
+
+        if (strPwmStatusName == "ENABLED")
+            return Pwm_status::ENABLED;
+        else if (strPwmStatusName == "DISABLED")
+            return Pwm_status::DISABLED;
+        else if (strPwmStatusName == "MIXED")
+            return Pwm_status::MIXED;
         return Pwm_status::ENABLED;
     }
 
     void Servo_controller::set_servo_position(int servo, double position) const {
         attach_thread
         env->CallVoidMethod(servoController,
-                            env->GetMethodID(ServoController, "setServoPosition", "(I;D)V"),
+                            env->GetMethodID(ServoController, "setServoPosition", "(ID)V"),
                             static_cast<jint>(servo), static_cast<jdouble>(position));
     }
 
@@ -71,7 +83,7 @@ namespace sdk {
         return static_cast<jdouble> (env->CallDoubleMethod(servoController,
                                                            env->GetMethodID(ServoController,
                                                                             "getServoPosition",
-                                                                            "(I)V"),
+                                                                            "(I)D"),
                                                            static_cast<jint>(servo)));
     }
 } // sdk
