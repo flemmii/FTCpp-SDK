@@ -28,29 +28,29 @@ add_library(sdk SHARED ${SDK_SOURCES})
 
 # Für armeabi-v7a
 add_library(april_tag_v7a SHARED IMPORTED)
-set_target_properties(april_tag_v7a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}../../../../build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libapriltag.so")
+set_target_properties(april_tag_v7a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/../../../build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libapriltag.so")
 
 add_library(image_utils_v7a SHARED IMPORTED)
-set_target_properties(image_utils_v7a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}../../../../build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libimage_utils.so")
+set_target_properties(image_utils_v7a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/../../../build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libimage_utils.so")
 
 add_library(object_tracking_v7a SHARED IMPORTED)
-set_target_properties(object_tracking_v7a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}../../../../build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libobject_tracking.so")
+set_target_properties(object_tracking_v7a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/../../../build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libobject_tracking.so")
 
 add_library(opencv_java4_v7a SHARED IMPORTED)
-set_target_properties(opencv_java4_v7a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}../../../../build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libopencv_java4.so")
+set_target_properties(opencv_java4_v7a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/../../../build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libopencv_java4.so")
 
 # Für arm64-v8a
 add_library(april_tag_v8a SHARED IMPORTED)
-set_target_properties(april_tag_v8a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}../../../../build/intermediates/merged_native_libs/debug/out/lib/arm64-v8a/libapriltag.so")
+set_target_properties(april_tag_v8a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/../../../build/intermediates/merged_native_libs/debug/out/lib/arm64-v8a/libapriltag.so")
 
 add_library(image_utils_v8a SHARED IMPORTED)
-set_target_properties(image_utils_v8a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}../../../../build/intermediates/merged_native_libs/debug/out/lib/arm64-v8a/libimage_utils.so")
+set_target_properties(image_utils_v8a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/../../../build/intermediates/merged_native_libs/debug/out/lib/arm64-v8a/libimage_utils.so")
 
 add_library(object_tracking_v8a SHARED IMPORTED)
-set_target_properties(object_tracking_v8a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}../../../../build/intermediates/merged_native_libs/debug/out/lib/arm64-v8a/libobject_tracking.so")
+set_target_properties(object_tracking_v8a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/../../../build/intermediates/merged_native_libs/debug/out/lib/arm64-v8a/libobject_tracking.so")
 
 add_library(opencv_java4_v8a SHARED IMPORTED)
-set_target_properties(opencv_java4_v8a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}../../../../build/intermediates/merged_native_libs/debug/out/lib/arm64-v8a/libopencv_java4.so")
+set_target_properties(opencv_java4_v8a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/../../../build/intermediates/merged_native_libs/debug/out/lib/arm64-v8a/libopencv_java4.so")
 
 find_library(log-lib log)
 
