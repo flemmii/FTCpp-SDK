@@ -6,10 +6,14 @@ To download this repository, simply run the following command in your terminal:
 git clone https://github.com/flemmii/FTCpp-SDK.git
 ```
 
-Remember you need to merge this repository into your own repository to get the latest
-updates.
+After cloning you need to execute the build process once so after that everything is set up
+and you can download the code normally to your robot. Also after a clean you need to
+execute the build process once before downloading. (This will get changed later)
 
 Also make sure that you have node installed, otherwise [download it here](https://nodejs.org/en/download/prebuilt-installer)
+
+Remember you need to merge this repository into your own repository to get the latest
+updates.
 
 ## Excluding the example from downloading
 

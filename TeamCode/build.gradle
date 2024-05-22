@@ -1,3 +1,5 @@
+import com.android.build.gradle.tasks.ExternalNativeBuildTask
+
 //
 // build.gradle in TeamCode
 //
@@ -11,9 +13,17 @@
 
 // Custom definitions may go here
 
+// Funktion zum Überprüfen, ob eine Datei existiert
+def fileExists(String path) {
+    File file = file(path)
+    return file.exists()
+}
+
 // Include common definitions from above.
 apply from: '../build.common.gradle'
 apply from: '../build.dependencies.gradle'
+
+evaluationDependsOn(':FtcRobotController')
 
 android {
     namespace = 'org.firstinspires.ftc.teamcode'
@@ -24,12 +34,18 @@ android {
 
     ndkVersion '21.4.7075529'
 
-    externalNativeBuild {
-        cmake {
-            path "src/main/cpp/CMakeLists.txt"
+    // Überprüfen, ob die benötigten Bibliotheken vorhanden sind
+    if (fileExists("build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libapriltag.so") &&
+            fileExists("build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libimage_utils.so") &&
+            fileExists("build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libobject_tracking.so") &&
+            fileExists("build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libopencv_java4.so")) {
+        
+        externalNativeBuild {
+            cmake {
+                path "src/main/cpp/CMakeLists.txt"
+            }
         }
     }
-
 
     tasks.register('runJavaScript') {
         doLast {
