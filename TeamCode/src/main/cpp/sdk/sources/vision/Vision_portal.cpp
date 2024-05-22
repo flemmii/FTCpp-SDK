@@ -9,6 +9,7 @@ using namespace sdk;
 
 namespace sdk {
     jclass VisionPortal;
+    jclass VisionPortal_StreamFormat;
     jclass VisionPortal_MultiPortalLayout;
     jclass VisionPortal_Builder;
 
@@ -48,17 +49,11 @@ namespace sdk {
             vision_processor::first_vision_processor::processors = &processors;
         else
             vision_processor::second_vision_processor::processors = &processors;
-
-        attach_thread
-
-        DEFAULT_VIEW_CONTAINER_ID = env->GetStaticIntField(VisionPortal,
-                                                           env->GetStaticFieldID(VisionPortal,
-                                                                                 "DEFAULT_VIEW_CONTAINER_ID",
-                                                                                 "I"));
     }
 
     Vision_portal::~Vision_portal() {
         vision_portal_count--;
+        this->close();
         if (visionPortal) {
             attach_thread
             env->DeleteGlobalRef(visionPortal);
@@ -150,6 +145,8 @@ namespace sdk {
         const char *nameCStr = env->GetStringUTFChars(name, nullptr);
         std::string nameStr(nameCStr);
         env->DeleteLocalRef(name);
+        env->DeleteLocalRef(javaEnum);
+        env->DeleteLocalRef(enumClass);
 
         if (nameStr == "OPENING_CAMERA_DEVICE")
             return Vision_portal::Camera_state::OPENING_CAMERA_DEVICE;
@@ -220,7 +217,7 @@ namespace sdk {
         attach_thread
         env->CallVoidMethod(visionPortal,
                             env->GetMethodID(VisionPortal, "setActiveCamera",
-                                             "(Lorg/firstinspires/ftc/vision/WebcamName;)V"),
+                                             "(Lorg/firstinspires/ftc/robotcore/external/hardware/camera/WebcamName;)V"),
                             webcam.webcamName);
     }
 
@@ -229,8 +226,8 @@ namespace sdk {
         jobject jwebcamName = env->CallObjectMethod(visionPortal,
                                                     env->GetMethodID(VisionPortal,
                                                                      "getActiveCamera",
-                                                                     "()Lorg/firstinspires/ftc/vision/WebcamName;"));
-        Webcam_name webcamName(jwebcamName);
+                                                                     "()Lorg/firstinspires/ftc/robotcore/external/hardware/camera/WebcamName;"));
+        Webcam_name webcamName(env->NewGlobalRef(jwebcamName));
         env->DeleteLocalRef(jwebcamName);
         return webcamName;
     }
@@ -249,6 +246,11 @@ namespace sdk {
                                               env->GetMethodID(VisionPortal_Builder, "<init>",
                                                                "()V"));
         builder = env->NewGlobalRef(localBuilder);
+
+        DEFAULT_VIEW_CONTAINER_ID = env->GetStaticIntField(VisionPortal,
+                                                           env->GetStaticFieldID(VisionPortal,
+                                                                                 "DEFAULT_VIEW_CONTAINER_ID",
+                                                                                 "I"));
         env->DeleteLocalRef(localBuilder);
     }
 
@@ -282,11 +284,12 @@ namespace sdk {
 
     Vision_portal::Builder &Vision_portal::Builder::set_stream_format(Stream_format streamFormat) {
         attach_thread
-        jobject jstreamFormat = env->GetStaticObjectField(VisionPortal,
-                                                          env->GetStaticFieldID(VisionPortal,
-                                                                                stream_format_to_string(
-                                                                                        streamFormat),
-                                                                                "Lorg/firstinspires/ftc/vision/VisionPortal$StreamFormat;"));
+        jobject jstreamFormat = env->GetStaticObjectField(VisionPortal_StreamFormat,
+                                                          env->GetStaticFieldID(
+                                                                  VisionPortal_StreamFormat,
+                                                                  stream_format_to_string(
+                                                                          streamFormat),
+                                                                  "Lorg/firstinspires/ftc/vision/VisionPortal$StreamFormat;"));
         env->DeleteLocalRef(env->CallObjectMethod(builder,
                                                   env->GetMethodID(VisionPortal_Builder,
                                                                    "setStreamFormat",
@@ -330,9 +333,10 @@ namespace sdk {
 
     Vision_portal::Builder &Vision_portal::Builder::set_camera_resolution(Size camera_resolution) {
         attach_thread
-        jobject jcameraResolution = env->NewObject(env->FindClass("android/util/Size"),
+        jclass Size = env->FindClass("android/util/Size");
+        jobject jcameraResolution = env->NewObject(Size,
                                                    env->GetMethodID(
-                                                           env->FindClass("android/util/Size"),
+                                                           Size,
                                                            "<init>", "(II)V"),
                                                    static_cast<jint>(camera_resolution.width),
                                                    static_cast<jint>(camera_resolution.height));
@@ -341,6 +345,7 @@ namespace sdk {
                                                                    "setCameraResolution",
                                                                    "(Landroid/util/Size;)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"),
                                                   jcameraResolution));
+        env->DeleteLocalRef(Size);
         env->DeleteLocalRef(jcameraResolution);
         return *this;
     }
@@ -371,7 +376,7 @@ namespace sdk {
     }
 
     Vision_portal::Builder &Vision_portal::Builder::add_processors(
-            const vector<Vision_processor> &processors) {
+            const vector <Vision_processor> &processors) {
         for (const auto &processor: processors)
             this->processors.emplace_back(const_cast<Vision_processor *>(&processor), true);
 
@@ -425,7 +430,7 @@ namespace sdk {
                                                       env->GetMethodID(VisionPortal_Builder,
                                                                        "build",
                                                                        "()Lorg/firstinspires/ftc/vision/VisionPortal;"));
-        Vision_portal vision_portal(jvisionPortal);
+        Vision_portal vision_portal(env->NewGlobalRef(jvisionPortal));
         vision_portal.processors = processors;
         env->DeleteLocalRef(jvisionPortal);
         return vision_portal;

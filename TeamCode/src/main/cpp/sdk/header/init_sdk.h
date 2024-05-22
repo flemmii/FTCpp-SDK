@@ -91,7 +91,10 @@
     env->DeleteLocalRef(localVisionPortal_Builder);                                                                          \
     jclass localVisionPortal_MultiPortalLayout = env->FindClass("org/firstinspires/ftc/vision/VisionPortal$MultiPortalLayout");\
     sdk::VisionPortal_MultiPortalLayout = reinterpret_cast<jclass>(env->NewGlobalRef(localVisionPortal_MultiPortalLayout));  \
-    env->DeleteLocalRef(localVisionPortal_MultiPortalLayout);                                                               \
+    env->DeleteLocalRef(localVisionPortal_MultiPortalLayout);                                                                \
+    jclass localVisionPortal_StreamFormat = env->FindClass("org/firstinspires/ftc/vision/VisionPortal$StreamFormat");\
+    sdk::VisionPortal_StreamFormat = reinterpret_cast<jclass>(env->NewGlobalRef(localVisionPortal_StreamFormat));  \
+    env->DeleteLocalRef(localVisionPortal_StreamFormat);                                                                                                                         \
     jclass localColorSensor = env->FindClass("com/qualcomm/robotcore/hardware/ColorSensor");                                \
     sdk::ColorSensor = reinterpret_cast<jclass>(env->NewGlobalRef(localColorSensor));                                        \
     env->DeleteLocalRef(localColorSensor);                                                                                   \
