@@ -34,7 +34,7 @@ android {
     tasks.register('runJavaScript') {
         doLast {
             exec {
-                commandLine 'node', 'src\\main\\cpp\\createOpModeJava\\index.js'
+                commandLine 'node', 'src/main/cpp/createOpModeJava/index.js'
             }
         }
     }
