@@ -52,8 +52,7 @@ namespace sdk {
 
         static const char *accel_unit_to_string(Accel_unit accel_unit);
 
-        class Parameters {
-        public:
+        struct Parameters {
             Angle_unit angle_unit = Angle_unit::RADIANS;
             Accel_unit accel_unit = Accel_unit::METERS_PERSEC_PERSEC;
         };
@@ -63,11 +62,11 @@ namespace sdk {
         // There are more parameters in Java but I am to lazy to implement them
         void start_acceleration_integration(int ms_poll_interval);
 
-        Orientation get_angular_orientation();
+        [[nodiscard]] Orientation get_angular_orientation();
 
-        Acceleration get_acceleration();
+        [[nodiscard]] Acceleration get_acceleration();
 
-        Angular_velocity get_angular_velocity();
+        [[nodiscard]] Angular_velocity get_angular_velocity();
     };
 
 } // sdk

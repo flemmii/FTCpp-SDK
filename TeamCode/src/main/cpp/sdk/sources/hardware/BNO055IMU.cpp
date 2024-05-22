@@ -123,15 +123,15 @@ namespace sdk {
                                                                                  "getAcceleration",
                                                                                  "()Lorg/firstinspires/ftc/robotcore/external/navigation/Acceleration;"));
         jclass Acceleration = env->GetObjectClass(acceleration);
-        auto x = static_cast<float>(env->GetFloatField(acceleration,
-                                                       env->GetFieldID(Acceleration, "xAccel",
-                                                                       "F")));
-        auto y = static_cast<float>(env->GetFloatField(acceleration,
-                                                       env->GetFieldID(Acceleration, "yAccel",
-                                                                       "F")));
-        auto z = static_cast<float>(env->GetFloatField(acceleration,
-                                                       env->GetFieldID(Acceleration, "zAccel",
-                                                                       "F")));
+        auto x = static_cast<double>(env->GetDoubleField(acceleration,
+                                                         env->GetFieldID(Acceleration, "xAccel",
+                                                                         "D")));
+        auto y = static_cast<double>(env->GetDoubleField(acceleration,
+                                                         env->GetFieldID(Acceleration, "yAccel",
+                                                                         "D")));
+        auto z = static_cast<double>(env->GetDoubleField(acceleration,
+                                                         env->GetFieldID(Acceleration, "zAccel",
+                                                                         "D")));
 
         env->DeleteLocalRef(acceleration);
         env->DeleteLocalRef(Acceleration);
