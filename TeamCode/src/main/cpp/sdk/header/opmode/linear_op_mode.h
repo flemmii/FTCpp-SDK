@@ -15,8 +15,6 @@ namespace sdk {
     extern jclass CurrentOpMode;
 
     namespace linear_op_mode {
-        void init_cpp();
-
         // LinearOpMode
         void wait_for_start();
 
