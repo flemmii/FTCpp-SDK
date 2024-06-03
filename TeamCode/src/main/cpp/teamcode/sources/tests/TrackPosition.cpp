@@ -26,8 +26,8 @@ Java_org_firstinspires_ftc_teamcode_tests_cpp_TrackPositionCpp_opMode(JNIEnv *en
 
     Lynx_module control_hub = hardware_map::get(LynxModule, "Control Hub");
     Lynx_module expansion_hub = hardware_map::get(LynxModule, "Expansion Hub 2");
-    control_hub.set_bulk_caching_mode(Lynx_module::MANUAL);
-    expansion_hub.set_bulk_caching_mode(Lynx_module::MANUAL);
+    control_hub.set_bulk_caching_mode(Lynx_module::Bulk_caching_mode::MANUAL);
+    expansion_hub.set_bulk_caching_mode(Lynx_module::Bulk_caching_mode::MANUAL);
 
     class BNO055IMU imu = hardware_map::get(BNO055IMU, "imu1");
     BNO055IMU::Parameters parameters;
