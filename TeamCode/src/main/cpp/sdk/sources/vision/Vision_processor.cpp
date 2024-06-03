@@ -220,6 +220,7 @@ namespace vision_processor {
                 jobject thiz,
                 jlong frame,
                 jlong capture_time_nanos) {
+            second_processor_frame = *(Mat *) frame;
             native_process_frame(*(Mat *) frame, static_cast<long>(capture_time_nanos), processors);
         }
 
