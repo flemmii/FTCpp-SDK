@@ -119,6 +119,17 @@
     jclass localSecondVisionProcessor = env->FindClass("org/firstinspires/ftc/teamcode/VisionProcessor/SecondVisionProcessor");\
     vision_processor::SecondVisionProcessor = reinterpret_cast<jclass>(env->NewGlobalRef(localSecondVisionProcessor));       \
     env->DeleteLocalRef(localSecondVisionProcessor);                                                                         \
-    sdk::linear_op_mode::init_cpp();                                                                                                                            \
+    jobject localHardwareMap = env->GetObjectField(currentOpMode, env->GetFieldID(CurrentOpMode, "hardwareMap", "Lcom/qualcomm/robotcore/hardware/HardwareMap;"));               \
+    sdk::hardware_map::hardwareMap = env->NewGlobalRef(localHardwareMap);                                                    \
+    env->DeleteLocalRef(localHardwareMap); \
+    jobject localGamepad1 = env->GetObjectField(currentOpMode, env->GetFieldID(CurrentOpMode, "gamepad1", "Lcom/qualcomm/robotcore/hardware/Gamepad;")); \
+    sdk::gamepads::gamepad1 = env->NewGlobalRef(localGamepad1); \
+    env->DeleteLocalRef(localGamepad1); \
+    jobject localGamepad2 = env->GetObjectField(currentOpMode, env->GetFieldID(CurrentOpMode, "gamepad2", "Lcom/qualcomm/robotcore/hardware/Gamepad;")); \
+    sdk::gamepads::gamepad2 = env->NewGlobalRef(localGamepad2); \
+    env->DeleteLocalRef(localGamepad2); \
+    jobject localTelemetryObject = env->GetObjectField(currentOpMode, env->GetFieldID(CurrentOpMode, "telemetry", "Lorg/firstinspires/ftc/robotcore/external/Telemetry;")); \
+    sdk::telemetry::telemetry = env->NewGlobalRef(localTelemetryObject); \
+    env->DeleteLocalRef(localTelemetryObject);                                                                                                                           \
 
 #endif //FTCROBOTCONTROLLER_CPPENV_H
