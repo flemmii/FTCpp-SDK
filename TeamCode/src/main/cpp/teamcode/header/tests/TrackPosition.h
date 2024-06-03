@@ -14,12 +14,12 @@
 
 /*
  * This is NOT a comment. It tells the compiler how to create the java files
- * @TeleOp(name = "trackPosition", group = "tests")
+ * @TeleOp(name = "TrackPositionCpp", group = "tests")
  */
 extern "C"
 JNIEXPORT void JNICALL
-Java_org_firstinspires_ftc_teamcode_tests_cpp_TrackPosition_opMode(JNIEnv *env,
-                                                                   jobject thiz);
+Java_org_firstinspires_ftc_teamcode_tests_cpp_TrackPositionCpp_opMode(JNIEnv *env,
+                                                                      jobject thiz);
 
 
 #endif //FTCROBOTCONTROLLER_TEST_H
