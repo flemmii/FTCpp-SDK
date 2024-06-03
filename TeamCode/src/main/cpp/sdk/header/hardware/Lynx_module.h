@@ -17,7 +17,7 @@ namespace sdk {
         // TODO: This is not complete
     public:
         jobject lynxModule{};
-        enum Bulk_caching_mode {
+        enum class Bulk_caching_mode {
             OFF,
             MANUAL,
             AUTO
