@@ -2,7 +2,7 @@
 // Created by fnlg on 03.06.2024.
 //
 
-#include "tests/trackPosition.h"
+#include "tests/TrackPosition.h"
 
 using namespace std;
 
@@ -11,8 +11,8 @@ using namespace linear_op_mode;
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_org_firstinspires_ftc_teamcode_test_cpp_trackPosition_opMode(JNIEnv *env,
-                                                                  jobject thiz) {
+Java_org_firstinspires_ftc_teamcode_tests_cpp_TrackPosition_opMode(JNIEnv *env,
+                                                                   jobject thiz) {
     init_sdk
 
     sdk::Dc_motor_ex dead_wheel_forwards = hardware_map::get(DcMotorEx, "rear_left");

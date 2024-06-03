@@ -18,8 +18,8 @@
  */
 extern "C"
 JNIEXPORT void JNICALL
-Java_org_firstinspires_ftc_teamcode_test_cpp_trackPosition_opMode(JNIEnv *env,
-                                                                  jobject thiz);
+Java_org_firstinspires_ftc_teamcode_tests_cpp_TrackPosition_opMode(JNIEnv *env,
+                                                                   jobject thiz);
 
 
 #endif //FTCROBOTCONTROLLER_TEST_H
