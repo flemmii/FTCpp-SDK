@@ -1,5 +1,6 @@
 /java/*
 
 !/java/org/firstinspires/ftc/teamcode/VisionsProcessors/*
+!/java/org/firstinspires/ftc/teamcode/tests/java/*
 !/java/org/firstinspires/ftc/teamcode/LibLoader.java
 !/java/org/firstinspires/ftc/teamcode/readme.md
