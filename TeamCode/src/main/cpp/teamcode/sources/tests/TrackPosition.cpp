@@ -48,6 +48,7 @@ Java_org_firstinspires_ftc_teamcode_tests_cpp_TrackPositionCpp_opMode(JNIEnv *en
     int extra_degrees = 0;
 
     chrono::high_resolution_clock::time_point last_time_millis = chrono::high_resolution_clock::now();
+    chrono::high_resolution_clock::time_point start_time = chrono::high_resolution_clock::now();
     int loop_time;
     vector<int> loop_times;
     int min_loop_time = 1000000000;
@@ -65,9 +66,10 @@ Java_org_firstinspires_ftc_teamcode_tests_cpp_TrackPositionCpp_opMode(JNIEnv *en
 
     wait_for_start();
 
+    start_time = chrono::high_resolution_clock::now();
     last_time_millis = chrono::high_resolution_clock::now();
 
-    while (!is_stop_requested()) {
+    while (!is_stop_requested() && chrono::duration_cast<chrono::milliseconds>(chrono::high_resolution_clock::now() - start_time).count() < 60000) {
         // Getting all the data of the hubs
         control_hub.get_bulk_data();
         if (control_hub.is_not_responding())
@@ -174,6 +176,8 @@ Java_org_firstinspires_ftc_teamcode_tests_cpp_TrackPositionCpp_opMode(JNIEnv *en
         telemetry::add_data("Min loop time", min_loop_time);
         telemetry::update();
     }
+
+    while (!is_stop_requested());
 
     stop();
 }

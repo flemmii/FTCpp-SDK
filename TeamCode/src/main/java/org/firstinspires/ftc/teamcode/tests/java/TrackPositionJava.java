@@ -54,6 +54,7 @@ public class TrackPositionJava extends LinearOpMode {
         int extraDegrees = 0;
 
         long lastTimeMicros = System.nanoTime() / 1000;
+        long startTime = System.currentTimeMillis();
         int loopTime;
         ArrayList<Integer> loopTimes = new ArrayList<>();
         int minLoopTime = 1000000000;
@@ -71,9 +72,10 @@ public class TrackPositionJava extends LinearOpMode {
 
         waitForStart();
 
+        startTime = System.currentTimeMillis();
         lastTimeMicros = System.nanoTime() / 1000;
 
-        while (!isStopRequested()) {
+        while (!isStopRequested() && (System.currentTimeMillis() - startTime) < 60000) {
             // Getting all the data of the hubs
             controlHub.getBulkData();
             if (controlHub.isNotResponding())
@@ -178,5 +180,8 @@ public class TrackPositionJava extends LinearOpMode {
             telemetry.addData("Min loop time", minLoopTime);
             telemetry.update();
         }
+        while (!isStopRequested());
+
+        stop();
     }
 }
