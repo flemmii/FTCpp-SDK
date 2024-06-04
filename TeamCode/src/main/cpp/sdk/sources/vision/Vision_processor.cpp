@@ -136,9 +136,6 @@ namespace vision_processor {
                                                            (jint) (output.rows * scale_bmp_px_to_canvas_px),
                                                            true);
 
-        logcat_log(ANDROID_LOG_DEBUG, "Vision_processor", "on_screen_width: %d, on_screen_height: %d, scale_bmp: %d",onscreen_width, onscreen_height, scale_bmp_px_to_canvas_px);
-        logcat_log(ANDROID_LOG_DEBUG, "Vision_processor", "output.rows: %d, output.cols: %d",output.rows, output.cols);
-
         // Find the Canvas class
         jclass Canvas = env->GetObjectClass(canvas);
 
