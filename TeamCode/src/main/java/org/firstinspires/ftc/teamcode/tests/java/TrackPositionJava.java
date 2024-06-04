@@ -53,12 +53,12 @@ public class TrackPositionJava extends LinearOpMode {
         double extraRad = 0;
         int extraDegrees = 0;
 
-        long lastTimeMillis = System.currentTimeMillis();
+        long lastTimeMicros = System.nanoTime() / 1000;
         int loopTime;
         ArrayList<Integer> loopTimes = new ArrayList<>();
-        int minLoopTime = 1000;
+        int minLoopTime = 1000000000;
         int maxLoopTime = 0;
-        int avarageLoopTime;
+        double avarageLoopTime;
 
         ArrayList<Double> ringBufferXSpeed = new ArrayList<>(Collections.nCopies(5, 0.0));
         ArrayList<Double> ringBufferYSpeed = new ArrayList<>(Collections.nCopies(5, 0.0));
@@ -66,9 +66,12 @@ public class TrackPositionJava extends LinearOpMode {
         double ySpeed;
         double xSpeed;
 
+        telemetry.addLine("Initialized");
+        telemetry.update();
+
         waitForStart();
 
-        lastTimeMillis = System.currentTimeMillis();
+        lastTimeMicros = System.nanoTime() / 1000;
 
         while (!isStopRequested()) {
             // Getting all the data of the hubs
@@ -90,7 +93,7 @@ public class TrackPositionJava extends LinearOpMode {
             rotationRad = -imu.getAngularOrientation().thirdAngle + extraRad;
             encoderForwardPos = -deadWheelForwards.getCurrentPosition();
             encoderSidewardsPos = deadWheelSidewards.getCurrentPosition();
-            double delta_t = (double) (System.currentTimeMillis() - lastTimeMillis) / 1000;
+            double delta_t = (double) (System.nanoTime() / 1000 - lastTimeMicros) / 1000;
 
             // Converting radians to degrees and continuous degree system
             rotationDeg = (rotationRad * 180) / Math.PI;
@@ -151,16 +154,16 @@ public class TrackPositionJava extends LinearOpMode {
             // and then dividing them through n. This way the speeds get normalized and
             // we don't get completely wrong values
             ySpeed = ringBufferXSpeed.stream().mapToDouble(Double::doubleValue).sum() /
-                    ringBufferYSpeed.size();
-            xSpeed = ringBufferYSpeed.stream().mapToDouble(Double::doubleValue).sum() /
                     ringBufferXSpeed.size();
+            xSpeed = ringBufferYSpeed.stream().mapToDouble(Double::doubleValue).sum() /
+                    ringBufferYSpeed.size();
 
             // Calculating loop times
-            loopTime = (int) (System.currentTimeMillis() - lastTimeMillis);
-            lastTimeMillis = System.currentTimeMillis();
+            loopTime = (int) (System.nanoTime() / 1000 - lastTimeMicros);
+            lastTimeMicros = System.nanoTime() / 1000;
 
             loopTimes.add(loopTime);
-            avarageLoopTime = loopTimes.stream().mapToInt(Integer::intValue).sum() / loopTimes.size();
+            avarageLoopTime = loopTimes.stream().mapToInt(Integer::intValue).sum() / (double) (loopTimes.size());
 
             if (loopTime > maxLoopTime)
                 maxLoopTime = loopTime;
@@ -169,6 +172,7 @@ public class TrackPositionJava extends LinearOpMode {
                 minLoopTime = loopTime;
 
             telemetry.addData("Loop time", loopTime);
+            telemetry.addData("Loop times size", (double) (loopTimes.size()));
             telemetry.addData("Avarage loop time", avarageLoopTime);
             telemetry.addData("Max loop time", maxLoopTime);
             telemetry.addData("Min loop time", minLoopTime);

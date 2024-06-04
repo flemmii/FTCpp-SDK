@@ -50,15 +50,18 @@ Java_org_firstinspires_ftc_teamcode_tests_cpp_TrackPositionCpp_opMode(JNIEnv *en
     chrono::high_resolution_clock::time_point last_time_millis = chrono::high_resolution_clock::now();
     int loop_time;
     vector<int> loop_times;
-    int min_loop_time = 1000;
+    int min_loop_time = 1000000000;
     int max_loop_time = 0;
-    int avarage_loop_time;
+    double avarage_loop_time;
 
     vector<double> ring_buffer_x_speed(5, 0);
     vector<double> ring_buffer_y_speed(5, 0);
 
     double y_speed;
     double x_speed;
+
+    telemetry::add_line("Initialized");
+    telemetry::update();
 
     wait_for_start();
 
@@ -151,12 +154,12 @@ Java_org_firstinspires_ftc_teamcode_tests_cpp_TrackPositionCpp_opMode(JNIEnv *en
                   ring_buffer_x_speed.size();
 
         // Calculating loop times
-        loop_time = chrono::duration_cast<chrono::milliseconds>(
+        loop_time = chrono::duration_cast<chrono::microseconds>(
                 chrono::high_resolution_clock::now() - last_time_millis).count();
         last_time_millis = chrono::high_resolution_clock::now();
 
         loop_times.push_back(loop_time);
-        avarage_loop_time = accumulate(loop_times.begin(), loop_times.end(), 0) / loop_times.size();
+        avarage_loop_time = accumulate(loop_times.begin(), loop_times.end(), 0) / (double) (loop_times.size());
 
         if (loop_time > max_loop_time)
             max_loop_time = loop_time;
@@ -165,6 +168,7 @@ Java_org_firstinspires_ftc_teamcode_tests_cpp_TrackPositionCpp_opMode(JNIEnv *en
             min_loop_time = loop_time;
 
         telemetry::add_data("Loop time", loop_time);
+        telemetry::add_data("Loop times size", (double) (loop_times.size()));
         telemetry::add_data("Avarage loop time", avarage_loop_time);
         telemetry::add_data("Max loop time", max_loop_time);
         telemetry::add_data("Min loop time", min_loop_time);
