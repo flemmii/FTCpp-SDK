@@ -47,7 +47,7 @@ Java_org_firstinspires_ftc_teamcode_tests_cpp_TrackPositionCpp_opMode(JNIEnv *en
     double extra_rad = 0;
     int extra_degrees = 0;
 
-    chrono::high_resolution_clock::time_point last_time_millis = chrono::high_resolution_clock::now();
+    chrono::high_resolution_clock::time_point last_time = chrono::high_resolution_clock::now();
     chrono::high_resolution_clock::time_point start_time = chrono::high_resolution_clock::now();
     int loop_time;
     vector<int> loop_times;
@@ -67,7 +67,7 @@ Java_org_firstinspires_ftc_teamcode_tests_cpp_TrackPositionCpp_opMode(JNIEnv *en
     wait_for_start();
 
     start_time = chrono::high_resolution_clock::now();
-    last_time_millis = chrono::high_resolution_clock::now();
+    last_time = chrono::high_resolution_clock::now();
 
     while (!is_stop_requested() && chrono::duration_cast<chrono::milliseconds>(chrono::high_resolution_clock::now() - start_time).count() < 60000) {
         // Getting all the data of the hubs
@@ -90,7 +90,7 @@ Java_org_firstinspires_ftc_teamcode_tests_cpp_TrackPositionCpp_opMode(JNIEnv *en
         encoder_forward_pos = -dead_wheel_forwards.get_current_position();
         encoder_sidewards_pos = dead_wheel_sidewards.get_current_position();
         double delta_t = (double) (chrono::duration_cast<chrono::milliseconds>(
-                chrono::high_resolution_clock::now() - last_time_millis).count()) / 1000;
+                chrono::high_resolution_clock::now() - last_time).count()) / 1000;
 
         // Converting radians to degrees and continuous degree system
         rotation_deg = (rotation_rad * 180) / M_PI;
@@ -157,8 +157,8 @@ Java_org_firstinspires_ftc_teamcode_tests_cpp_TrackPositionCpp_opMode(JNIEnv *en
 
         // Calculating loop times
         loop_time = chrono::duration_cast<chrono::microseconds>(
-                chrono::high_resolution_clock::now() - last_time_millis).count();
-        last_time_millis = chrono::high_resolution_clock::now();
+                chrono::high_resolution_clock::now() - last_time).count();
+        last_time = chrono::high_resolution_clock::now();
 
         loop_times.push_back(loop_time);
         avarage_loop_time = accumulate(loop_times.begin(), loop_times.end(), 0) / (double) (loop_times.size());

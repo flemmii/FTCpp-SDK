@@ -10,7 +10,7 @@ using namespace sdk;
 using namespace cv;
 using namespace team_prop_detection;
 
-chrono::high_resolution_clock::time_point last_time_millis = chrono::high_resolution_clock::now();
+chrono::high_resolution_clock::time_point last_time = chrono::high_resolution_clock::now();
 chrono::high_resolution_clock::time_point start_time = chrono::high_resolution_clock::now();
 int loop_time;
 vector<int> loop_times;
@@ -24,22 +24,18 @@ Java_org_firstinspires_ftc_teamcode_tests_cpp_TeamPropDetectionCpp_opMode(JNIEnv
                                                                       jobject thiz) {
     init_sdk
 
-    Team_prop_detection detection;
-    Vision_portal portal = Vision_portal::easy_create_with_defaults({hardware_map::get(WebcamName, "front_webcam")}, {detection});
-    portal.set_processor_enabled(detection, false);
-
-    while (portal.get_camera_state() != Vision_portal::Camera_state::STREAMING);
-
     telemetry::add_line("Initialized");
     telemetry::update();
 
     wait_for_start();
 
     start_time = chrono::high_resolution_clock::now();
-    last_time_millis = chrono::high_resolution_clock::now();
-    portal.set_processor_enabled(detection, true);
+    last_time = chrono::high_resolution_clock::now();
 
-    while (!is_stop_requested() && duration_cast<chrono::milliseconds>(chrono::high_resolution_clock::now() - start_time).count() < 60000);
+    Team_prop_detection detection;
+    Vision_portal portal = Vision_portal::Builder().add_processor(detection).set_camera(hardware_map::get(WebcamName, "front_webcam")).build();
+
+    while (!is_stop_requested() && chrono::duration_cast<chrono::milliseconds>(chrono::high_resolution_clock::now() - start_time).count() < 60000);
     portal.set_processor_enabled(detection, false);
     while (!is_stop_requested());
 
@@ -58,36 +54,18 @@ Scalar largest_contour_color(255, 255, 255);
 Scalar second_largest_contour_color(255, 255, 255);
 Scalar arrow_color(255, 255, 255);
 
-#if red_alliance
-Scalar low_hsv1(0, 80, 50);
-Scalar high_hsv1(15, 255, 255);
-Scalar low_hsv2(165, 80, 50);
-Scalar high_hsv2(180, 255, 255);
 
-Scalar alliance_color(255, 0, 0);
-#else
 Scalar low_hsv1(90, 80, 80);
 Scalar high_hsv1(120, 255, 255);
 
 Scalar alliance_color(0, 0, 255);
-#endif
 
 void Team_prop_detection::process_frame(const Mat &input, long capture_time_nanos) const {
-
     Mat hsv;
     cvtColor(input, hsv, COLOR_RGB2HSV);
 
     Mat final_thresh;
-#if red_alliance
-    Mat thresh1;
-    Mat thresh2;
-
-    inRange(hsv, low_hsv1, high_hsv1, thresh1);
-    inRange(hsv, low_hsv2, high_hsv2, thresh2);
-    bitwise_or(thresh1, thresh2, final_thresh);
-#else
     inRange(hsv, low_hsv1, high_hsv1, final_thresh);
-#endif
 
     vector<vector<Point>> contours{};
     findContours(final_thresh, contours, OutputArray{},
@@ -168,8 +146,8 @@ void Team_prop_detection::process_frame(const Mat &input, long capture_time_nano
 
     // Calculating loop times
     loop_time = chrono::duration_cast<chrono::microseconds>(
-            chrono::high_resolution_clock::now() - last_time_millis).count();
-    last_time_millis = chrono::high_resolution_clock::now();
+            chrono::high_resolution_clock::now() - last_time).count();
+    last_time = chrono::high_resolution_clock::now();
 
     loop_times.push_back(loop_time);
     avarage_loop_time = accumulate(loop_times.begin(), loop_times.end(), 0) / (double) (loop_times.size());
