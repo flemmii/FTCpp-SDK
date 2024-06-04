@@ -1,3 +1,26 @@
+# What is this?
+
+This is a project that makes it possible to program in C++ in FTC. This is also 100%
+competition legal cause it still uses the SDK, it just accesses it from C++ via the
+Java Native Interface (JNI).
+
+## Advantages
+- Faster execution (Exact data from the [Test Results](https://github.com/flemmii/FTCpp-SDK/blob/Tests/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/tests/TestResults.md))
+- No forced object orientation
+- Compiler statements
+- Access to OpenCV as a native library
+- Access to other C++ libraries
+
+## Disadvantages
+- Not every feature from the SDK is included yet
+- More difficult debugging
+- No access to Java libraries such as Roadrunner
+
+## Who should use this?
+As you see above as a rookie team I wouldn't suggest you to use this. It is rather designed for
+more experienced teams who want to try something new and who want to push their software to the
+limit to get the best loop times possible.
+
 # Downloading this project
 
 To download this repository, simply run the following command in your terminal:
@@ -26,6 +49,8 @@ git update-index --assume-unchanged TeamCode/src/main/cpp/teamcode/sources/examp
 ```
 
 # The different folders
+
+You can find these folders in TeamCode/src/main/cpp
 
 ## createOpModeJava
 
