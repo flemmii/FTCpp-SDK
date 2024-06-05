@@ -167,43 +167,48 @@ and use the log function.
 
 <details close>
   <summary> How a log looks like </summary>
-  2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470] JNI DETECTED ERROR IN APPLICATION: JNI NewGlobalRef called with pending exception java.lang.IllegalArgumentException: Unable to find a hardware device with name "test" and type DcMotorEx
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   at java.lang.Object com.qualcomm.robotcore.hardware.HardwareMap.get(java.lang.Class, java.lang.String) (HardwareMap.java:213)
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   at void org.firstinspires.ftc.teamcode.opmodes.autonomous.AutoTest.opMode() (AutoTest.java:-2)
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   at void org.firstinspires.ftc.teamcode.opmodes.autonomous.AutoTest.runOpMode() (AutoTest.java:15)
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   at void com.qualcomm.robotcore.eventloop.opmode.LinearOpMode.internalRunOpMode() (LinearOpMode.java:199)
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   at void com.qualcomm.robotcore.eventloop.opmode.OpModeInternal.lambda$internalInit$1$com-qualcomm-robotcore-eventloop-opmode-OpModeInternal() (OpModeInternal.java:181)
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   at void com.qualcomm.robotcore.eventloop.opmode.OpModeInternal$$ExternalSyntheticLambda1.run() (D8$$SyntheticClass:-1)
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   at void com.qualcomm.robotcore.util.ThreadPool.logThreadLifeCycle(java.lang.String, java.lang.Runnable) (ThreadPool.java:737)
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   at void com.qualcomm.robotcore.eventloop.opmode.OpModeInternal.lambda$internalInit$2$com-qualcomm-robotcore-eventloop-opmode-OpModeInternal() (OpModeInternal.java:179)
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   at void com.qualcomm.robotcore.eventloop.opmode.OpModeInternal$$ExternalSyntheticLambda2.run() (D8$$SyntheticClass:-1)
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   at void java.util.concurrent.ThreadPoolExecutor.runWorker(java.util.concurrent.ThreadPoolExecutor$Worker) (ThreadPoolExecutor.java:1133)
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   at void java.util.concurrent.ThreadPoolExecutor$Worker.run() (ThreadPoolExecutor.java:607)
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   at void com.qualcomm.robotcore.util.ThreadPool$ThreadFactoryImpl$1.run() (ThreadPool.java:793)
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   at void java.lang.Thread.run() (Thread.java:761)
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470] 
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]     in call to NewGlobalRef
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]     from void org.firstinspires.ftc.teamcode.opmodes.autonomous.AutoTest.opMode()
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470] "OpModeThread" prio=5 tid=58 Runnable
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   | group="main" sCount=0 dsCount=0 obj=0x137fc280 self=0x782599e200
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   | sysTid=3589 nice=0 cgrp=default sched=0/0 handle=0x781fdf0450
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   | state=R schedstat=( 0 0 0 ) utm=106 stm=2 core=2 HZ=100
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   | stack=0x781fcee000-0x781fcf0000 stackSize=1037KB
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   | held mutexes= "mutator lock"(shared held)
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   native: #00 pc 000000000047ef3c  /system/lib64/libart.so (_ZN3art15DumpNativeStackERNSt3__113basic_ostreamIcNS0_11char_traitsIcEEEEiP12BacktraceMapPKcPNS_9ArtMethodEPv+220)
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   native: #01 pc 000000000047ef38  /system/lib64/libart.so (_ZN3art15DumpNativeStackERNSt3__113basic_ostreamIcNS0_11char_traitsIcEEEEiP12BacktraceMapPKcPNS_9ArtMethodEPv+216)
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   native: #02 pc 0000000000452fc4  /system/lib64/libart.so (_ZNK3art6Thread9DumpStackERNSt3__113basic_ostreamIcNS1_11char_traitsIcEEEEbP12BacktraceMap+480)
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   native: #03 pc 00000000002f04a4  /system/lib64/libart.so (_ZN3art9JavaVMExt8JniAbortEPKcS2_+1136)
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   native: #04 pc 00000000002f0bb4  /system/lib64/libart.so (_ZN3art9JavaVMExt9JniAbortVEPKcS2_St9__va_list+124)
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   native: #05 pc 0000000000102798  /system/lib64/libart.so (_ZN3art11ScopedCheck6AbortFEPKcz+156)
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   native: #06 pc 00000000001021a8  /system/lib64/libart.so (_ZN3art11ScopedCheck11CheckThreadEP7_JNIEnv+536)
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   native: #07 pc 00000000000ffce8  /system/lib64/libart.so (_ZN3art11ScopedCheck5CheckERNS_18ScopedObjectAccessEbPKcPNS_12JniValueTypeE+1124)
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   native: #08 pc 0000000000103a7c  /system/lib64/libart.so (_ZN3art8CheckJNI6NewRefEPKcP7_JNIEnvP8_jobjectNS_15IndirectRefKindE+624)
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   native: #09 pc 0000000000014648  /data/app/com.qualcomm.ftcrobotcontroller-1/lib/arm64/libsdk.so (_ZN7_JNIEnv12NewGlobalRefEP8_jobject+40)
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   native: #10 pc 000000000001c7f0  /data/app/com.qualcomm.ftcrobotcontroller-1/lib/arm64/libsdk.so (_ZN3sdk12hardware_map3getEP7_jclassRKNSt6__ndk112basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEE+236)
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   native: #11 pc 0000000000070f04  /data/app/com.qualcomm.ftcrobotcontroller-1/lib/arm64/libteamcode.so (Java_org_firstinspires_ftc_teamcode_opmodes_autonomous_AutoTest_opMode+3036)
-2024-06-05 14:16:51.067  3446-3589  art                     com.qualcomm.ftcrobotcontroller      A  art/runtime/java_vm_ext.cc:470]   native: #12 pc 000000000011e230  /data/app/com.qualcomm.ftcrobotcontroller-1/oat/arm64/base.odex (Java_org_firstinspires_ftc_teamcode_opmodes_autonomous_AutoTest_opMode__+124)
-</summary>
+  <span style="color:Red">
+  JNI DETECTED ERROR IN APPLICATION: JNI NewGlobalRef called with pending exception java.lang.IllegalArgumentException: Unable to find a hardware device with name "test" and type DcMotorEx  
+  at java.lang.Object com.qualcomm.robotcore.hardware.HardwareMap.get(java.lang.Class, java.lang.String) (HardwareMap.java:213)
+  at void org.firstinspires.ftc.teamcode.opmodes.autonomous.AutoTest.opMode() (AutoTest.java:-2)
+  at void org.firstinspires.ftc.teamcode.opmodes.autonomous.AutoTest.runOpMode() (AutoTest.java:15)
+  at void com.qualcomm.robotcore.eventloop.opmode.LinearOpMode.internalRunOpMode() (LinearOpMode.java:199)
+  at void com.qualcomm.robotcore.eventloop.opmode.OpModeInternal.lambda$internalInit$1$com-qualcomm-robotcore-eventloop-opmode-OpModeInternal() (OpModeInternal.java:181)
+  at void com.qualcomm.robotcore.eventloop.opmode.OpModeInternal$$ExternalSyntheticLambda1.run() (D8$$SyntheticClass:-1)
+  at void com.qualcomm.robotcore.util.ThreadPool.logThreadLifeCycle(java.lang.String, java.lang.Runnable) (ThreadPool.java:737)
+  at void com.qualcomm.robotcore.eventloop.opmode.OpModeInternal.lambda$internalInit$2$com-qualcomm-robotcore-eventloop-opmode-OpModeInternal() (OpModeInternal.java:179)
+  at void com.qualcomm.robotcore.eventloop.opmode.OpModeInternal$$ExternalSyntheticLambda2.run() (D8$$SyntheticClass:-1)
+  at void java.util.concurrent.ThreadPoolExecutor.runWorker(java.util.concurrent.ThreadPoolExecutor$Worker) (ThreadPoolExecutor.java:1133)
+  at void java.util.concurrent.ThreadPoolExecutor$Worker.run() (ThreadPoolExecutor.java:607)
+  at void com.qualcomm.robotcore.util.ThreadPool$ThreadFactoryImpl$1.run() (ThreadPool.java:793)
+  at void java.lang.Thread.run() (Thread.java:761)
+  in call to NewGlobalRef
+  from void org.firstinspires.ftc.teamcode.opmodes.autonomous.AutoTest.opMode()
+  "OpModeThread" prio=5 tid=58 Runnable
+  | group="main" sCount=0 dsCount=0 obj=0x137fc280 self=0x782599e200
+  | sysTid=3589 nice=0 cgrp=default sched=0/0 handle=0x781fdf0450
+  | state=R schedstat=( 0 0 0 ) utm=106 stm=2 core=2 HZ=100
+  | stack=0x781fcee000-0x781fcf0000 stackSize=1037KB
+  | held mutexes= "mutator lock"(shared held)
+  native: #00 pc 000000000047ef3c  /system/lib64/libart.so (_ZN3art15DumpNativeStackERNSt3__113basic_ostreamIcNS0_11char_traitsIcEEEEiP12BacktraceMapPKcPNS_9ArtMethodEPv+220)
+  native: #01 pc 000000000047ef38  /system/lib64/libart.so (_ZN3art15DumpNativeStackERNSt3__113basic_ostreamIcNS0_11char_traitsIcEEEEiP12BacktraceMapPKcPNS_9ArtMethodEPv+216)
+  native: #02 pc 0000000000452fc4  /system/lib64/libart.so (_ZNK3art6Thread9DumpStackERNSt3__113basic_ostreamIcNS1_11char_traitsIcEEEEbP12BacktraceMap+480)
+  native: #03 pc 00000000002f04a4  /system/lib64/libart.so (_ZN3art9JavaVMExt8JniAbortEPKcS2_+1136)
+  native: #04 pc 00000000002f0bb4  /system/lib64/libart.so (_ZN3art9JavaVMExt9JniAbortVEPKcS2_St9__va_list+124)
+  native: #05 pc 0000000000102798  /system/lib64/libart.so (_ZN3art11ScopedCheck6AbortFEPKcz+156)
+  native: #06 pc 00000000001021a8  /system/lib64/libart.so (_ZN3art11ScopedCheck11CheckThreadEP7_JNIEnv+536)
+  native: #07 pc 00000000000ffce8  /system/lib64/libart.so (_ZN3art11ScopedCheck5CheckERNS_18ScopedObjectAccessEbPKcPNS_12JniValueTypeE+1124)
+  native: #08 pc 0000000000103a7c  /system/lib64/libart.so (_ZN3art8CheckJNI6NewRefEPKcP7_JNIEnvP8_jobjectNS_15IndirectRefKindE+624)
+  native: #09 pc 0000000000014648  /data/app/com.qualcomm.ftcrobotcontroller-1/lib/arm64/libsdk.so (_ZN7_JNIEnv12NewGlobalRefEP8_jobject+40)
+  native: #10 pc 000000000001c7f0  /data/app/com.qualcomm.ftcrobotcontroller-1/lib/arm64/libsdk.so (_ZN3sdk12hardware_map3getEP7_jclassRKNSt6__ndk112basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEE+236)
+  native: #11 pc 0000000000070f04  /data/app/com.qualcomm.ftcrobotcontroller-1/lib/arm64/libteamcode.so (Java_org_firstinspires_ftc_teamcode_opmodes_autonomous_AutoTest_opMode+3036)
+  native: #12 pc 000000000011e230  /data/app/com.qualcomm.ftcrobotcontroller-1/oat/arm64/base.odex (Java_org_firstinspires_ftc_teamcode_opmodes_autonomous_AutoTest_opMode__+124)
+  </span>
+</details>
+&nbsp;
+
+This looks like a lot but if you look at specific lines you can find out where the issue is.
+The last line (this is just the last line in this excerpt it will be in somewhere hidden in the error normally) shows this: Java_org_firstinspires_ftc_teamcode_opmodes_autonomous_AutoTest_opMode__+124 and by that you can see that the error is in the AutoTest_opMode. The type of error and error description is at the top of the error.
 
 If it says anything with JNI and you have done nothing with JNI, its probably an error in the sdk.
 If that happens please open an issue on GitHub or write me on Discord (flemmii).
