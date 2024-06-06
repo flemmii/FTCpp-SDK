@@ -37,7 +37,7 @@ namespace sdk {
                                                                env->GetFieldID(sdk::Gamepad,
                                                                                "right_stick_x",
                                                                                "F")));
-        right_stick_y = static_cast<float> (-env->GetFloatField(gamepad,
+        right_stick_y = static_cast<float> (env->GetFloatField(gamepad,
                                                                 env->GetFieldID(sdk::Gamepad,
                                                                                 "right_stick_y",
                                                                                 "F")));
