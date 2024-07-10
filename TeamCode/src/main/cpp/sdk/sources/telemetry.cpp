@@ -8,6 +8,8 @@ namespace sdk {
     namespace telemetry {
         jobject telemetry;
 
+        // TODO: Try to get this to work with objects as well
+
         template<typename T>
         void add_data(const string &caption, T value) {
             attach_thread
@@ -23,15 +25,35 @@ namespace sdk {
             env->DeleteLocalRef(jvalue);
         }
 
+        template void add_data<bool>(const string &, bool);
+
+        template void add_data<short>(const string &, short);
+
         template void add_data<int>(const string &, int);
 
-        template void add_data<string>(const string &, string);
+        template void add_data<long>(const string &, long);
+
+        template void add_data<long long>(const string &, long long);
+
+        template void add_data<float>(const string &, float);
 
         template void add_data<double>(const string &, double);
 
-        template void add_data<const char *>(const string &, const char *);
+        template void add_data<char>(const string &, char);
 
-        template void add_data<bool>(const string &, bool);
+        template void add_data<string>(const string &, string);
+
+        template void add_data<unsigned short>(const string &, unsigned short);
+
+        template void add_data<unsigned int>(const string &, unsigned int);
+
+        template void add_data<unsigned long>(const string &, unsigned long);
+
+        template void
+        add_data<unsigned long long>(const string &, unsigned long long);
+
+        template void
+        add_data<unsigned char>(const string &, unsigned char);
 
 
         void add_line(const string &line_caption) {

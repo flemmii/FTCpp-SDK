@@ -1,6 +1,8 @@
 #ifndef FTCROBOTCONTROLLER_TELEMETRY_H
 #define FTCROBOTCONTROLLER_TELEMETRY_H
 
+#include <string>
+#include <type_traits>
 #include <sstream>
 
 #include "utils.h"
@@ -16,8 +18,17 @@ namespace sdk {
             HTML
         };
 
+        template<typename T, typename = void>
+        struct has_to_string : std::false_type {
+        };
+
         template<typename T>
-        void add_data(const string &caption, T value);
+        struct has_to_string<T, std::void_t<decltype(std::declval<T>().to_string())>>
+                : std::true_type {
+        };
+
+        template<typename T>
+        void add_data(const std::string &caption, T value);
 
         void add_line(const string &line_caption);
 
