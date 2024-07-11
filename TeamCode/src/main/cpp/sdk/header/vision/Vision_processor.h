@@ -27,21 +27,20 @@ namespace sdk {
 
         friend bool operator==(const Vision_processor &lhs, const Vision_processor &rhs);
     };
+
+    namespace vision_processor {
+        extern bool dual_cam_view;
+
+        namespace first_vision_processor {
+            extern jclass jclazz;
+            extern const std::vector<std::pair<sdk::Vision_processor *, bool>> *processors;
+        }
+
+        namespace second_vision_processor {
+            extern jclass jclazz;
+            extern const std::vector<std::pair<sdk::Vision_processor *, bool>> *processors;
+        }
+    } // vision_processor
 } // sdk
-
-namespace vision_processor {
-    extern jclass FirstVisionProcessor;
-    extern jclass SecondVisionProcessor;
-
-    extern bool dual_cam_view;
-
-    namespace first_vision_processor {
-        extern const std::vector<std::pair<sdk::Vision_processor *, bool>> *processors;
-    }
-
-    namespace second_vision_processor {
-        extern const std::vector<std::pair<sdk::Vision_processor *, bool>> *processors;
-    }
-} // vision_processor
 
 #endif //FTCROBOTCONTROLLER_VISION_PROCESSOR_H

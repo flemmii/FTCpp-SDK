@@ -12,10 +12,9 @@
 #include "Camera_name.h"
 
 namespace sdk {
-    extern jclass WebcamName;
-
     class Webcam_name : public Camera_name {
     public:
+        static jclass jclazz;
         jobject webcamName{};
 
         Webcam_name() = default;

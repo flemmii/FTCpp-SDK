@@ -8,10 +8,9 @@
 #include "utils.h"
 
 namespace sdk {
-    extern jclass TouchSensor;
-
     class Touch_sensor {
     public:
+        static jclass jclazz;
         jobject touchSensor{};
 
         Touch_sensor() = default;

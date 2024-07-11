@@ -5,9 +5,6 @@
 #include "hardware/Dc_motor_simple.h"
 
 namespace sdk {
-    jclass DcMotorSimple;
-    jclass DcMotorSimple_Direction;
-
     Dc_motor_simple::Dc_motor_simple(jobject dcMotorSimple) : dcMotorSimple(dcMotorSimple) {}
 
     Dc_motor_simple::~Dc_motor_simple() {
@@ -29,12 +26,12 @@ namespace sdk {
 
     void Dc_motor_simple::set_direction(Dc_motor_simple::Direction direction) const {
         attach_thread
-        jobject jdirection = env->GetStaticObjectField(DcMotorSimple_Direction,
+        jobject jdirection = env->GetStaticObjectField(jclazz_Direction,
                                                        env->GetStaticFieldID(
-                                                               DcMotorSimple_Direction,
+                                                               jclazz_Direction,
                                                                direction_to_string(direction),
                                                                "Lcom/qualcomm/robotcore/hardware/DcMotorSimple$Direction;"));
-        env->CallVoidMethod(dcMotorSimple, env->GetMethodID(DcMotorSimple, "setDirection",
+        env->CallVoidMethod(dcMotorSimple, env->GetMethodID(jclazz, "setDirection",
                                                             "(Lcom/qualcomm/robotcore/hardware/DcMotorSimple$Direction;)V"),
                             jdirection);
         env->DeleteLocalRef(jdirection);
@@ -43,7 +40,7 @@ namespace sdk {
     Dc_motor_simple::Direction Dc_motor_simple::get_direction() const {
         attach_thread
 
-        jobject direction = env->CallObjectMethod(dcMotorSimple, env->GetMethodID(DcMotorSimple,
+        jobject direction = env->CallObjectMethod(dcMotorSimple, env->GetMethodID(jclazz,
                                                                                   "getDirection",
                                                                                   "()Lcom/qualcomm/robotcore/hardware/DcMotorSimple$Direction;"));
 
@@ -79,14 +76,14 @@ namespace sdk {
 
     void Dc_motor_simple::set_power(double power) const {
         attach_thread
-        env->CallVoidMethod(dcMotorSimple, env->GetMethodID(DcMotorSimple, "setPower", "(D)V"),
+        env->CallVoidMethod(dcMotorSimple, env->GetMethodID(jclazz, "setPower", "(D)V"),
                             static_cast<jdouble> (power));
     }
 
     double Dc_motor_simple::get_power() const {
         attach_thread
         auto result = static_cast<double> (env->CallDoubleMethod(dcMotorSimple,
-                                                                 env->GetMethodID(DcMotorSimple,
+                                                                 env->GetMethodID(jclazz,
                                                                                   "getPower",
                                                                                   "()D")));
         return result;

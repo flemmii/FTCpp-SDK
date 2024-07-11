@@ -10,12 +10,11 @@
 #include "utils.h"
 
 namespace sdk {
-    extern jclass LynxModule;
-    extern jclass BulkCachingMode;
-
     class Lynx_module {
         // TODO: This is not complete
     public:
+        static jclass jclazz;
+        static jclass jclazz_BulkCachingMode;
         jobject lynxModule{};
         enum class Bulk_caching_mode {
             OFF,

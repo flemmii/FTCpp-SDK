@@ -8,10 +8,10 @@
 #include "utils.h"
 
 namespace sdk {
-    extern jclass Telemetry;
     namespace telemetry {
+        extern jclass jclazz;
         extern jobject telemetry;
-        using namespace std;
+
         enum class display_format {
             CLASSIC,
             MONOSPACE,
@@ -30,7 +30,7 @@ namespace sdk {
         template<typename T>
         void add_data(const std::string &caption, T value);
 
-        void add_line(const string &line_caption);
+        void add_line(const std::string &line_caption);
 
         void set_auto_clear(const bool &auto_clear);
 
@@ -40,26 +40,26 @@ namespace sdk {
 
         void clear_all();
 
-        void speak(const string &text, const string &language_code, const string &country_code);
+        void speak(const std::string &text, const std::string &language_code,
+                   const std::string &country_code);
 
-        void speak(const string &text);
+        void speak(const std::string &text);
 
+        std::string get_caption();
 
-        string get_caption();
-
-        void set_caption(const string &caption);
+        void set_caption(const std::string &caption);
 
         void set_display_format(display_format display_format);
 
         //TODO: FInd a way to implement setValue (because of args)
 
-        string get_item_separator();
+        std::string get_item_separator();
 
-        void set_item_separator(const string &item_separator);
+        void set_item_separator(const std::string &item_separator);
 
-        void set_caption_value_separator(const string &caption_value_separator);
+        void set_caption_value_separator(const std::string &caption_value_separator);
 
-        string get_caption_value_separator();
+        std::string get_caption_value_separator();
 
         bool is_auto_clear();
 

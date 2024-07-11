@@ -11,12 +11,12 @@
 #include "Servo_controller.h"
 
 namespace sdk {
-    extern jclass Servo;
-    extern jclass Servo_Direction;
-
     class Servo {
-        jobject servo{};
     public:
+        static jclass jclazz;
+        static jclass jclazz_Direction;
+        jobject servo{};
+
         double MIN_POSITION = 0.0;
         double MAX_POSITION = 1.0;
 

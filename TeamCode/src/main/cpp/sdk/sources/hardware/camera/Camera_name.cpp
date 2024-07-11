@@ -5,8 +5,6 @@
 #include "hardware/camera/Camera_name.h"
 
 namespace sdk {
-    jclass CameraName;
-
     Camera_name::Camera_name(jobject cameraName) : cameraName(cameraName) {}
 
     Camera_name::~Camera_name() {
@@ -28,23 +26,23 @@ namespace sdk {
 
     bool Camera_name::is_webcam() const {
         attach_thread
-        return env->CallBooleanMethod(cameraName, env->GetMethodID(CameraName, "isWebcam", "()Z"));
+        return env->CallBooleanMethod(cameraName, env->GetMethodID(jclazz, "isWebcam", "()Z"));
     }
 
     bool Camera_name::is_camera_direction() const {
         attach_thread
         return env->CallBooleanMethod(cameraName,
-                                      env->GetMethodID(CameraName, "isCameraDirection", "()Z"));
+                                      env->GetMethodID(jclazz, "isCameraDirection", "()Z"));
     }
 
     bool Camera_name::is_switchable() const {
         attach_thread
         return env->CallBooleanMethod(cameraName,
-                                      env->GetMethodID(CameraName, "isSwitchable", "()Z"));
+                                      env->GetMethodID(jclazz, "isSwitchable", "()Z"));
     }
 
     bool Camera_name::is_unknown() const {
         attach_thread
-        return env->CallBooleanMethod(cameraName, env->GetMethodID(CameraName, "isUnknown", "()Z"));
+        return env->CallBooleanMethod(cameraName, env->GetMethodID(jclazz, "isUnknown", "()Z"));
     }
 } // sdk

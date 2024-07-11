@@ -5,131 +5,68 @@
 #ifndef FTCROBOTCONTROLLER_CPPENV_H
 #define FTCROBOTCONTROLLER_CPPENV_H
 
+#define find_class_and_create_global_ref(name, globalRef) \
+    localRef = env->FindClass(name);                    \
+    sdk::globalRef = reinterpret_cast<jclass>(env->NewGlobalRef(localRef)); \
+    env->DeleteLocalRef(localRef);                             \
+
 // Macro to initialize the C++ environment for the FTC Robot Controller
 // This includes getting the JavaVM, creating global references to various Java classes,
 // and initializing the linear_op_mode namespace.
-#define init_sdk                                                                                                             \
+#define init_sdk \
+    jclass localRef;             \
     env->GetJavaVM(&sdk::jvm);                                                                                               \
-    sdk::currentOpMode = env->NewGlobalRef(thiz);                                                                            \
-    jclass localCurrentOpMode = env->GetObjectClass(thiz);                                                                  \
-    sdk::CurrentOpMode = reinterpret_cast<jclass>(env->NewGlobalRef(localCurrentOpMode));                                    \
-    env->DeleteLocalRef(localCurrentOpMode);                                                                                 \
-    jclass localDcMotorEx = env->FindClass("com/qualcomm/robotcore/hardware/DcMotorEx");                                    \
-    sdk::DcMotorEx = reinterpret_cast<jclass>(env->NewGlobalRef(localDcMotorEx));                                            \
-    env->DeleteLocalRef(localDcMotorEx);                                                                                     \
-    jclass localDcMotor_RunMode = env->FindClass("com/qualcomm/robotcore/hardware/DcMotor$RunMode");                        \
-    sdk::DcMotor_RunMode = reinterpret_cast<jclass>(env->NewGlobalRef(localDcMotor_RunMode));                                \
-    env->DeleteLocalRef(localDcMotor_RunMode);                                                                               \
-    jclass localPIDFCoefficients = env->FindClass("com/qualcomm/robotcore/hardware/PIDFCoefficients");                      \
-    sdk::PIDFCoefficients = reinterpret_cast<jclass>(env->NewGlobalRef(localPIDFCoefficients));                              \
-    env->DeleteLocalRef(localPIDFCoefficients);                                                                              \
-    jclass localDcMotor_ZeroPowerBehavior = env->FindClass("com/qualcomm/robotcore/hardware/DcMotor$ZeroPowerBehavior");    \
-    sdk::DcMotor_ZeroPowerBehavior = reinterpret_cast<jclass>(env->NewGlobalRef(localDcMotor_ZeroPowerBehavior));            \
-    env->DeleteLocalRef(localDcMotor_ZeroPowerBehavior);                                                                     \
-    jclass localDcMotorSimple = env->FindClass("com/qualcomm/robotcore/hardware/DcMotorSimple");                            \
-    sdk::DcMotorSimple = reinterpret_cast<jclass>(env->NewGlobalRef(localDcMotorSimple));                                    \
-    env->DeleteLocalRef(localDcMotorSimple);                                                                                 \
-    jclass localDcMotorSimple_Direction = env->FindClass("com/qualcomm/robotcore/hardware/DcMotorSimple$Direction");        \
-    sdk::DcMotorSimple_Direction = reinterpret_cast<jclass>(env->NewGlobalRef(localDcMotorSimple_Direction));                \
-    env->DeleteLocalRef(localDcMotorSimple_Direction);                                                                       \
-    jclass localGamepad = env->FindClass("com/qualcomm/robotcore/hardware/Gamepad");                                        \
-    sdk::Gamepad = reinterpret_cast<jclass>(env->NewGlobalRef(localGamepad));                                                \
-    env->DeleteLocalRef(localGamepad);                                                                                       \
-    jclass localTelemetry = env->FindClass("org/firstinspires/ftc/robotcore/external/Telemetry");                           \
-    sdk::Telemetry = reinterpret_cast<jclass>(env->NewGlobalRef(localTelemetry));                                            \
-    env->DeleteLocalRef(localTelemetry);                                                                                     \
-    jclass localLynxModule = env->FindClass("com/qualcomm/hardware/lynx/LynxModule");                                       \
-    sdk::LynxModule = reinterpret_cast<jclass>(env->NewGlobalRef(localLynxModule));                                          \
-    env->DeleteLocalRef(localLynxModule);                                                                                    \
-    jclass localBulkCachingMode = env->FindClass("com/qualcomm/hardware/lynx/LynxModule$BulkCachingMode");                  \
-    sdk::BulkCachingMode = reinterpret_cast<jclass>(env->NewGlobalRef(localBulkCachingMode));                                \
-    env->DeleteLocalRef(localBulkCachingMode);                                                                               \
-    jclass localBNO055IMU = env->FindClass("com/qualcomm/hardware/bosch/BNO055IMU");                                        \
-    sdk::BNO055IMU = reinterpret_cast<jclass>(env->NewGlobalRef(localBNO055IMU));                                            \
-    env->DeleteLocalRef(localBNO055IMU);                                                                                     \
-    jclass localBNO055IMU_Parameters = env->FindClass("com/qualcomm/hardware/bosch/BNO055IMU$Parameters");                            \
-    sdk::BNO055IMU_Parameters = reinterpret_cast<jclass>(env->NewGlobalRef(localBNO055IMU_Parameters));                                          \
-    env->DeleteLocalRef(localBNO055IMU_Parameters);                                                                                    \
-    jclass localBNO055IMU_AngleUnit = env->FindClass("com/qualcomm/hardware/bosch/BNO055IMU$AngleUnit");                              \
-    sdk::BNO055IMU_AngleUnit = reinterpret_cast<jclass>(env->NewGlobalRef(localBNO055IMU_AngleUnit));                                            \
-    env->DeleteLocalRef(localBNO055IMU_AngleUnit);                                                                                     \
-    jclass localBNO055IMU_AccelUnit = env->FindClass("com/qualcomm/hardware/bosch/BNO055IMU$AccelUnit");                              \
-    sdk::BNO055IMU_AccelUnit = reinterpret_cast<jclass>(env->NewGlobalRef(localBNO055IMU_AccelUnit));                                            \
-    env->DeleteLocalRef(localBNO055IMU_AccelUnit);                                                                                     \
-    jclass localIMU = env->FindClass("com/qualcomm/robotcore/hardware/IMU");                                                          \
-    sdk::IMU = reinterpret_cast<jclass>(env->NewGlobalRef(localIMU));                                                       \
-    env->DeleteLocalRef(localIMU);                                                                                           \
-    jclass localDistanceSensor = env->FindClass("com/qualcomm/robotcore/hardware/DistanceSensor");                          \
-    sdk::DistanceSensor = reinterpret_cast<jclass>(env->NewGlobalRef(localDistanceSensor));                                  \
-    env->DeleteLocalRef(localDistanceSensor);                                                                                \
-    jclass localDistanceUnit = env->FindClass("org/firstinspires/ftc/robotcore/external/navigation/DistanceUnit");          \
-    sdk::DistanceUnit = reinterpret_cast<jclass>(env->NewGlobalRef(localDistanceUnit));                                      \
-    env->DeleteLocalRef(localDistanceUnit);                                                                                  \
-    jclass localServo = env->FindClass("com/qualcomm/robotcore/hardware/Servo");                                            \
-    sdk::Servo = reinterpret_cast<jclass>(env->NewGlobalRef(localServo));                                                    \
-    env->DeleteLocalRef(localServo);                                                                                         \
-    jclass localServo_Direction = env->FindClass("com/qualcomm/robotcore/hardware/Servo$Direction");                        \
-    sdk::Servo_Direction = reinterpret_cast<jclass>(env->NewGlobalRef(localServo_Direction));                                \
-    env->DeleteLocalRef(localServo_Direction);                                                                               \
-    jclass localServoController = env->FindClass("com/qualcomm/robotcore/hardware/ServoController");                        \
-    sdk::ServoController = reinterpret_cast<jclass>(env->NewGlobalRef(localServoController));                                \
-    env->DeleteLocalRef(localServoController);                                                                               \
-    jclass localServoController_PwmStatus = env->FindClass("com/qualcomm/robotcore/hardware/ServoController$PwmStatus");    \
-    sdk::ServoController_PwmStatus = reinterpret_cast<jclass>(env->NewGlobalRef(localServoController_PwmStatus));            \
-    env->DeleteLocalRef(localServoController_PwmStatus);                                                                     \
-    jclass localVoltageUnit = env->FindClass("org/firstinspires/ftc/robotcore/external/navigation/VoltageUnit");            \
-    sdk::VoltageUnit = reinterpret_cast<jclass>(env->NewGlobalRef(localVoltageUnit));                                       \
-    env->DeleteLocalRef(localVoltageUnit);                                                                                   \
-    jclass localAngleUnit = env->FindClass("org/firstinspires/ftc/robotcore/external/navigation/AngleUnit");            \
-    sdk::AngleUnit = reinterpret_cast<jclass>(env->NewGlobalRef(localAngleUnit));                                       \
-    env->DeleteLocalRef(localAngleUnit);                                                                                  \
-    jclass localVisionPortal = env->FindClass("org/firstinspires/ftc/vision/VisionPortal");                                 \
-    sdk::VisionPortal = reinterpret_cast<jclass>(env->NewGlobalRef(localVisionPortal));                                      \
-    env->DeleteLocalRef(localVisionPortal);                                                                                  \
-    jclass localVisionPortal_Builder = env->FindClass("org/firstinspires/ftc/vision/VisionPortal$Builder");                 \
-    sdk::VisionPortal_Builder = reinterpret_cast<jclass>(env->NewGlobalRef(localVisionPortal_Builder));                      \
-    env->DeleteLocalRef(localVisionPortal_Builder);                                                                          \
-    jclass localVisionPortal_MultiPortalLayout = env->FindClass("org/firstinspires/ftc/vision/VisionPortal$MultiPortalLayout");\
-    sdk::VisionPortal_MultiPortalLayout = reinterpret_cast<jclass>(env->NewGlobalRef(localVisionPortal_MultiPortalLayout));  \
-    env->DeleteLocalRef(localVisionPortal_MultiPortalLayout);                                                                \
-    jclass localVisionPortal_StreamFormat = env->FindClass("org/firstinspires/ftc/vision/VisionPortal$StreamFormat");\
-    sdk::VisionPortal_StreamFormat = reinterpret_cast<jclass>(env->NewGlobalRef(localVisionPortal_StreamFormat));  \
-    env->DeleteLocalRef(localVisionPortal_StreamFormat);                                                                                                                         \
-    jclass localColorSensor = env->FindClass("com/qualcomm/robotcore/hardware/ColorSensor");                                \
-    sdk::ColorSensor = reinterpret_cast<jclass>(env->NewGlobalRef(localColorSensor));                                        \
-    env->DeleteLocalRef(localColorSensor);                                                                                   \
-    jclass localTouchSensor = env->FindClass("com/qualcomm/robotcore/hardware/TouchSensor");                                \
-    sdk::TouchSensor = reinterpret_cast<jclass>(env->NewGlobalRef(localTouchSensor));                                        \
-    env->DeleteLocalRef(localTouchSensor);                                                                                   \
-    jclass localAnalogInput = env->FindClass("com/qualcomm/robotcore/hardware/AnalogInput");                                \
-    sdk::AnalogInput = reinterpret_cast<jclass>(env->NewGlobalRef(localAnalogInput));                                        \
-    env->DeleteLocalRef(localAnalogInput);                                                                                   \
-    jclass localDigitalChannel = env->FindClass("com/qualcomm/robotcore/hardware/DigitalChannel");                          \
-    sdk::DigitalChannel = reinterpret_cast<jclass>(env->NewGlobalRef(localDigitalChannel));                                  \
-    env->DeleteLocalRef(localDigitalChannel);                                                                                \
-    jclass localWebcamName = env->FindClass("org/firstinspires/ftc/robotcore/external/hardware/camera/WebcamName");         \
-    sdk::WebcamName = reinterpret_cast<jclass>(env->NewGlobalRef(localWebcamName));                                          \
-    env->DeleteLocalRef(localWebcamName);                                                                                    \
-    jclass localCameraName = env->FindClass("org/firstinspires/ftc/robotcore/external/hardware/camera/CameraName");         \
-    sdk::CameraName = reinterpret_cast<jclass>(env->NewGlobalRef(localCameraName));                                          \
-    env->DeleteLocalRef(localCameraName);                                                                                    \
-    jclass localFirstVisionProcessor = env->FindClass("org/firstinspires/ftc/teamcode/VisionProcessor/FirstVisionProcessor");\
-    vision_processor::FirstVisionProcessor = reinterpret_cast<jclass>(env->NewGlobalRef(localFirstVisionProcessor));         \
-    env->DeleteLocalRef(localFirstVisionProcessor);                                                                          \
-    jclass localSecondVisionProcessor = env->FindClass("org/firstinspires/ftc/teamcode/VisionProcessor/SecondVisionProcessor");\
-    vision_processor::SecondVisionProcessor = reinterpret_cast<jclass>(env->NewGlobalRef(localSecondVisionProcessor));       \
-    env->DeleteLocalRef(localSecondVisionProcessor);                                                                         \
-    jobject localHardwareMap = env->GetObjectField(sdk::currentOpMode, env->GetFieldID(sdk::CurrentOpMode, "hardwareMap", "Lcom/qualcomm/robotcore/hardware/HardwareMap;"));               \
-    sdk::hardware_map::hardwareMap = env->NewGlobalRef(localHardwareMap);                                                    \
-    env->DeleteLocalRef(localHardwareMap); \
-    jobject localGamepad1 = env->GetObjectField(sdk::currentOpMode, env->GetFieldID(sdk::CurrentOpMode, "gamepad1", "Lcom/qualcomm/robotcore/hardware/Gamepad;")); \
+    sdk::linear_op_mode::thiz = env->NewGlobalRef(thiz);                                                                            \
+    jclass local_jclazz = env->GetObjectClass(thiz);                                                                  \
+    sdk::linear_op_mode::jclazz = reinterpret_cast<jclass>(env->NewGlobalRef(local_jclazz));                                    \
+    env->DeleteLocalRef(local_jclazz);                                                                                 \
+    find_class_and_create_global_ref("org/firstinspires/ftc/robotcore/external/Telemetry", telemetry::jclazz)                   \
+    jobject localTelemetryObject = env->GetObjectField(sdk::linear_op_mode::thiz, env->GetFieldID(sdk::linear_op_mode::jclazz, "telemetry", "Lorg/firstinspires/ftc/robotcore/external/Telemetry;")); \
+    sdk::telemetry::telemetry = env->NewGlobalRef(localTelemetryObject); \
+    env->DeleteLocalRef(localTelemetryObject);                                                                               \
+    find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/AnalogInput", Analog_input::jclazz)                     \
+    find_class_and_create_global_ref("com/qualcomm/hardware/bosch/BNO055IMU", BNO055IMU::jclazz)                             \
+    find_class_and_create_global_ref("com/qualcomm/hardware/bosch/BNO055IMU$AngleUnit", BNO055IMU::jclazz_AngleUnit)         \
+    find_class_and_create_global_ref("com/qualcomm/hardware/bosch/BNO055IMU$AccelUnit", BNO055IMU::jclazz_AccelUnit)         \
+    find_class_and_create_global_ref("com/qualcomm/hardware/bosch/BNO055IMU$Parameters", BNO055IMU::Parameters::jclazz)      \
+    find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/ColorSensor", Color_sensor::jclazz)                    \
+    find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/CRServo", CR_servo::jclazz)                            \
+    find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/DcMotorEx", Dc_motor_ex::jclazz);                        \
+    find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/DcMotor$RunMode", Dc_motor_ex::jclazz_RunMode);                                    \
+    find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/DcMotor$ZeroPowerBehavior", Dc_motor_ex::jclazz_ZeroPowerBehavior);                                               \
+    find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/DcMotorSimple", Dc_motor_simple::jclazz);                \
+    find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/DcMotorSimple$Direction", Dc_motor_simple::jclazz_Direction);   \
+    find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/DigitalChannel", Digital_channel::jclazz)              \
+    find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/DistanceSensor", Distance_sensor::jclazz)              \
+    find_class_and_create_global_ref("org/firstinspires/ftc/robotcore/external/navigation/DistanceUnit", Distance_sensor::DistanceUnit) \
+    find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/Gamepad", Gamepad::jclazz)                             \
+    jobject localGamepad1 = env->GetObjectField(sdk::linear_op_mode::thiz, env->GetFieldID(sdk::linear_op_mode::jclazz, "gamepad1", "Lcom/qualcomm/robotcore/hardware/Gamepad;")); \
     sdk::gamepads::gamepad1 = env->NewGlobalRef(localGamepad1); \
     env->DeleteLocalRef(localGamepad1); \
-    jobject localGamepad2 = env->GetObjectField(sdk::currentOpMode, env->GetFieldID(sdk::CurrentOpMode, "gamepad2", "Lcom/qualcomm/robotcore/hardware/Gamepad;")); \
+    jobject localGamepad2 = env->GetObjectField(sdk::linear_op_mode::thiz, env->GetFieldID(sdk::linear_op_mode::jclazz, "gamepad2", "Lcom/qualcomm/robotcore/hardware/Gamepad;")); \
     sdk::gamepads::gamepad2 = env->NewGlobalRef(localGamepad2); \
-    env->DeleteLocalRef(localGamepad2); \
-    jobject localTelemetryObject = env->GetObjectField(sdk::currentOpMode, env->GetFieldID(sdk::CurrentOpMode, "telemetry", "Lorg/firstinspires/ftc/robotcore/external/Telemetry;")); \
-    sdk::telemetry::telemetry = env->NewGlobalRef(localTelemetryObject); \
-    env->DeleteLocalRef(localTelemetryObject);                                                                                                                           \
+    env->DeleteLocalRef(localGamepad2);                                                                                      \
+    find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/GyroSensor", Gyro_sensor::jclazz)                      \
+    jobject localHardwareMap = env->GetObjectField(sdk::linear_op_mode::thiz, env->GetFieldID(sdk::linear_op_mode::jclazz, "hardwareMap", "Lcom/qualcomm/robotcore/hardware/HardwareMap;"));               \
+    sdk::hardware_map::hardwareMap = env->NewGlobalRef(localHardwareMap);                                                    \
+    env->DeleteLocalRef(localHardwareMap);                                                                                   \
+    find_class_and_create_global_ref("com/qualcomm/hardware/lynx/LynxModule", Lynx_module::jclazz)                                    \
+    find_class_and_create_global_ref("com/qualcomm/hardware/lynx/LynxModule$BulkCachingMode", Lynx_module::jclazz_BulkCachingMode)\
+    find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/PIDFCoefficients", PIDF_coefficients::jclazz)          \
+    find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/Servo", Servo::jclazz)                                  \
+    find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/Servo$Direction", Servo::jclazz_Direction)             \
+    find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/ServoController", Servo_controller::jclazz)            \
+    find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/ServoController$PwmStatus", Servo_controller::jclazz_PwmStatus)                                                 \
+    find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/TouchSensor", Touch_sensor::jclazz)                                           \
+    find_class_and_create_global_ref("org/firstinspires/ftc/robotcore/external/hardware/camera/CameraName", Camera_name::jclazz)    \
+    find_class_and_create_global_ref("org/firstinspires/ftc/robotcore/external/hardware/camera/WebcamName", Webcam_name::jclazz)    \
+    find_class_and_create_global_ref("org/firstinspires/ftc/robotcore/external/navigation/AngleUnit", AngleUnit)             \
+    find_class_and_create_global_ref("org/firstinspires/ftc/robotcore/external/navigation/VoltageUnit", VoltageUnit)         \
+    find_class_and_create_global_ref("org/firstinspires/ftc/vision/VisionPortal", Vision_portal::jclazz)                     \
+    find_class_and_create_global_ref("org/firstinspires/ftc/vision/VisionPortal$StreamFormat", Vision_portal::jclazz_StreamFormat)                                                 \
+    find_class_and_create_global_ref("org/firstinspires/ftc/vision/VisionPortal$MultiPortalLayout", Vision_portal::jclazz_MultiPortalLayout)                                          \
+    find_class_and_create_global_ref("org/firstinspires/ftc/vision/VisionPortal$Builder", Vision_portal::Builder::jclazz) \
+    find_class_and_create_global_ref("org/firstinspires/ftc/teamcode/VisionProcessor/FirstVisionProcessor", vision_processor::first_vision_processor::jclazz)              \
+    find_class_and_create_global_ref("org/firstinspires/ftc/teamcode/VisionProcessor/SecondVisionProcessor", vision_processor::second_vision_processor::jclazz)                                                                        \
 
 #endif //FTCROBOTCONTROLLER_CPPENV_H

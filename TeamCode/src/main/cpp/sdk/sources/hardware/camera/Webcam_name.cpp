@@ -7,8 +7,6 @@
 using namespace std;
 
 namespace sdk {
-    jclass WebcamName;
-
     Webcam_name::Webcam_name(jobject webcamName) : webcamName(webcamName),
                                                    Camera_name(webcamName) {}
 
@@ -25,7 +23,7 @@ namespace sdk {
     string Webcam_name::get_usb_device_name_if_attached() const {
         attach_thread
         auto jstr = (jstring) (env->CallObjectMethod(webcamName,
-                                                     env->GetMethodID(WebcamName,
+                                                     env->GetMethodID(jclazz,
                                                                       "getUsbDeviceNameIfAttached",
                                                                       "()Ljava/lang/String;")));
         const char *cstr = env->GetStringUTFChars(jstr, nullptr);
@@ -38,6 +36,6 @@ namespace sdk {
     bool Webcam_name::is_attached() const {
         attach_thread
         return env->CallBooleanMethod(webcamName,
-                                      env->GetMethodID(WebcamName, "isAttached", "()Z"));
+                                      env->GetMethodID(jclazz, "isAttached", "()Z"));
     }
 }

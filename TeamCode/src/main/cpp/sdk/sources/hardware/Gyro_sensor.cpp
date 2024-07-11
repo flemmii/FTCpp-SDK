@@ -5,8 +5,6 @@
 #include "hardware/Gyro_sensor.h"
 
 namespace sdk {
-    jclass GyroSensor;
-
     Gyro_sensor::Gyro_sensor(jobject gyroSensor) : gyroSensor(gyroSensor) {}
 
     Gyro_sensor::~Gyro_sensor() {
@@ -29,25 +27,25 @@ namespace sdk {
 
     void Gyro_sensor::calibrate() const {
         attach_thread
-        env->CallVoidMethod(gyroSensor, env->GetMethodID(GyroSensor, "calibrate", "()V"));
+        env->CallVoidMethod(gyroSensor, env->GetMethodID(jclazz, "calibrate", "()V"));
     }
 
     bool Gyro_sensor::is_calibrating() const {
         attach_thread
         return env->CallBooleanMethod(gyroSensor,
-                                      env->GetMethodID(GyroSensor, "isCalibrating", "()Z"));
+                                      env->GetMethodID(jclazz, "isCalibrating", "()Z"));
     }
 
     int Gyro_sensor::get_heading() const {
         attach_thread
         return static_cast<int>(env->CallIntMethod(gyroSensor,
-                                                   env->GetMethodID(GyroSensor, "getHeading",
+                                                   env->GetMethodID(jclazz, "getHeading",
                                                                     "()I")));
     }
 
     double Gyro_sensor::get_rotation_fraction() const {
         attach_thread
-        return static_cast<double >(env->CallDoubleMethod(gyroSensor, env->GetMethodID(GyroSensor,
+        return static_cast<double >(env->CallDoubleMethod(gyroSensor, env->GetMethodID(jclazz,
                                                                                        "getRotationFraction",
                                                                                        "()D")));
     }
@@ -55,31 +53,31 @@ namespace sdk {
     int Gyro_sensor::raw_x() const {
         attach_thread
         return static_cast<int>(env->CallIntMethod(gyroSensor,
-                                                   env->GetMethodID(GyroSensor, "rawX", "()I")));
+                                                   env->GetMethodID(jclazz, "rawX", "()I")));
     }
 
     int Gyro_sensor::raw_y() const {
         attach_thread
         return static_cast<int>(env->CallIntMethod(gyroSensor,
-                                                   env->GetMethodID(GyroSensor, "rawY", "()I")));
+                                                   env->GetMethodID(jclazz, "rawY", "()I")));
     }
 
     int Gyro_sensor::raw_z() const {
         attach_thread
         return static_cast<int>(env->CallIntMethod(gyroSensor,
-                                                   env->GetMethodID(GyroSensor, "rawZ", "()I")));
+                                                   env->GetMethodID(jclazz, "rawZ", "()I")));
     }
 
     void Gyro_sensor::reset_z_axis_integrator() const {
         attach_thread
         env->CallVoidMethod(gyroSensor,
-                            env->GetMethodID(GyroSensor, "resetZAxisIntegrator", "()V"));
+                            env->GetMethodID(jclazz, "resetZAxisIntegrator", "()V"));
     }
 
     std::string Gyro_sensor::status() const {
         attach_thread
         auto jstr = (jstring) (env->CallObjectMethod(gyroSensor,
-                                                     env->GetMethodID(GyroSensor, "status",
+                                                     env->GetMethodID(jclazz, "status",
                                                                       "()Ljava/lang/String;")));
 
         const char *cStr = env->GetStringUTFChars(jstr, nullptr);

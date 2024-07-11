@@ -10,10 +10,9 @@
 #include "utils.h"
 
 namespace sdk {
-    extern jclass GyroSensor;
-
     class Gyro_sensor {
     public:
+        static jclass jclazz;
         jobject gyroSensor{};
 
         Gyro_sensor() = default;

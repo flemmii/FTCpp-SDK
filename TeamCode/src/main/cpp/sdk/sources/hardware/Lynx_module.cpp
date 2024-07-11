@@ -7,8 +7,6 @@
 using namespace std;
 
 namespace sdk {
-    jclass LynxModule;
-    jclass BulkCachingMode;
 
     Lynx_module::Lynx_module(jobject lynxModule) : lynxModule(lynxModule) {}
 
@@ -46,17 +44,18 @@ namespace sdk {
     bool Lynx_module::is_not_responding() const {
         attach_thread
         return env->CallBooleanMethod(lynxModule,
-                                      env->GetMethodID(LynxModule, "isNotResponding", "()Z"));
+                                      env->GetMethodID(jclazz, "isNotResponding", "()Z"));
     }
 
     void Lynx_module::set_bulk_caching_mode(Bulk_caching_mode bulk_caching_mode) const {
         attach_thread
-        jobject bulkCachingMode = env->GetStaticObjectField(BulkCachingMode,
-                                                            env->GetStaticFieldID(BulkCachingMode,
-                                                                                  bulk_caching_mode_to_string(
-                                                                                          bulk_caching_mode),
-                                                                                  "Lcom/qualcomm/hardware/lynx/LynxModule$BulkCachingMode;"));
-        env->CallVoidMethod(lynxModule, env->GetMethodID(LynxModule, "setBulkCachingMode",
+        jobject bulkCachingMode = env->GetStaticObjectField(jclazz_BulkCachingMode,
+                                                            env->GetStaticFieldID(
+                                                                    jclazz_BulkCachingMode,
+                                                                    bulk_caching_mode_to_string(
+                                                                            bulk_caching_mode),
+                                                                    "Lcom/qualcomm/hardware/lynx/LynxModule$BulkCachingMode;"));
+        env->CallVoidMethod(lynxModule, env->GetMethodID(jclazz, "setBulkCachingMode",
                                                          "(Lcom/qualcomm/hardware/lynx/LynxModule$BulkCachingMode;)V"),
                             bulkCachingMode);
         env->DeleteLocalRef(bulkCachingMode);
@@ -65,7 +64,7 @@ namespace sdk {
     void Lynx_module::get_bulk_data() const {
         attach_thread
         env->DeleteLocalRef(env->CallObjectMethod(lynxModule,
-                                                  env->GetMethodID(LynxModule, "getBulkData",
+                                                  env->GetMethodID(jclazz, "getBulkData",
                                                                    "()Lcom/qualcomm/hardware/lynx/LynxModule$BulkData;")));
     }
 
@@ -87,7 +86,7 @@ namespace sdk {
 
         auto volt = static_cast<double>(env->CallDoubleMethod(lynxModule,
                                                               env->GetMethodID(
-                                                                      LynxModule,
+                                                                      jclazz,
                                                                       "getInputVoltage",
                                                                       "(Lorg/firstinspires/ftc/robotcore/external/navigation/VoltageUnit;)D"),
                                                               voltageUnit));

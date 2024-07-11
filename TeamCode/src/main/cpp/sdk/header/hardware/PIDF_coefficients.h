@@ -6,18 +6,23 @@
 #define FTCROBOTCONTROLLER_PIDF_COEFFICIENTS_H
 
 #include <string>
+#include <jni.h>
 
-struct PIDF_coefficients {
-    double p;
-    double i;
-    double d;
-    double f;
+namespace sdk {
+    struct PIDF_coefficients {
+        static jclass jclazz;
 
-    [[nodiscard]] std::string to_string() const;
+        double p;
+        double i;
+        double d;
+        double f;
 
-    PIDF_coefficients();
+        [[nodiscard]] std::string to_string() const;
 
-    PIDF_coefficients(double p, double i, double d, double f);
-};
+        PIDF_coefficients();
+
+        PIDF_coefficients(double p, double i, double d, double f);
+    };
+}
 
 #endif //FTCROBOTCONTROLLER_PIDF_COEFFICIENTS_H

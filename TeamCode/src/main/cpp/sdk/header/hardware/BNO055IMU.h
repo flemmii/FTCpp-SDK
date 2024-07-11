@@ -12,15 +12,13 @@
 #include "navigation/Angular_velocity.h"
 
 namespace sdk {
-    extern jclass BNO055IMU;
-    extern jclass BNO055IMU_Parameters;
-    extern jclass BNO055IMU_AngleUnit;
-    extern jclass BNO055IMU_AccelUnit;
-
     class BNO055IMU {
         //TODO: This is not complete
     public:
-        jobject bno055imu;
+        static jclass jclazz;
+        static jclass jclazz_AngleUnit;
+        static jclass jclazz_AccelUnit;
+        jobject bno055imu{};
 
         BNO055IMU() = default;
 
@@ -53,6 +51,8 @@ namespace sdk {
         static const char *accel_unit_to_string(Accel_unit accel_unit);
 
         struct Parameters {
+            static jclass jclazz;
+
             Angle_unit angle_unit = Angle_unit::RADIANS;
             Accel_unit accel_unit = Accel_unit::METERS_PERSEC_PERSEC;
         };

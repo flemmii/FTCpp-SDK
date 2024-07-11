@@ -5,76 +5,75 @@
 #include "opmode/linear_op_mode.h"
 
 namespace sdk {
-    jobject currentOpMode;
-    jclass CurrentOpMode;
-
     namespace linear_op_mode {
+        jclass jclazz;
+        jobject thiz;
 
         void wait_for_start() {
             attach_thread
-            env->CallVoidMethod(currentOpMode,
-                                env->GetMethodID(CurrentOpMode, "waitForStart", "()V"));
+            env->CallVoidMethod(thiz,
+                                env->GetMethodID(jclazz, "waitForStart", "()V"));
         }
 
         void idle() {
             attach_thread
-            env->CallVoidMethod(currentOpMode, env->GetMethodID(CurrentOpMode, "idle", "()V"));
+            env->CallVoidMethod(thiz, env->GetMethodID(jclazz, "idle", "()V"));
         }
 
         void sleep(int milliseconds) {
             attach_thread
-            env->CallVoidMethod(currentOpMode, env->GetMethodID(CurrentOpMode, "sleep", "(J)V"),
+            env->CallVoidMethod(thiz, env->GetMethodID(jclazz, "sleep", "(J)V"),
                                 static_cast<jlong> (milliseconds));
         }
 
         bool op_mode_is_active() {
             attach_thread
-            return env->CallBooleanMethod(currentOpMode,
-                                          env->GetMethodID(CurrentOpMode, "opModeIsActive", "()Z"));
+            return env->CallBooleanMethod(thiz,
+                                          env->GetMethodID(jclazz, "opModeIsActive", "()Z"));
         }
 
         bool op_mode_in_init() {
             attach_thread
-            return env->CallBooleanMethod(currentOpMode,
-                                          env->GetMethodID(CurrentOpMode, "opModeInInit", "()Z"));
+            return env->CallBooleanMethod(thiz,
+                                          env->GetMethodID(jclazz, "opModeInInit", "()Z"));
         }
 
         bool is_started() {
             attach_thread
-            return env->CallBooleanMethod(currentOpMode,
-                                          env->GetMethodID(CurrentOpMode, "isStarted", "()Z"));
+            return env->CallBooleanMethod(thiz,
+                                          env->GetMethodID(jclazz, "isStarted", "()Z"));
         }
 
         bool is_stop_requested() {
             attach_thread
-            return env->CallBooleanMethod(currentOpMode,
-                                          env->GetMethodID(CurrentOpMode, "isStopRequested",
+            return env->CallBooleanMethod(thiz,
+                                          env->GetMethodID(jclazz, "isStopRequested",
                                                            "()Z"));
         }
 
         void init() {
             attach_thread
-            env->CallVoidMethod(currentOpMode, env->GetMethodID(CurrentOpMode, "init", "()V"));
+            env->CallVoidMethod(thiz, env->GetMethodID(jclazz, "init", "()V"));
         }
 
         void init_loop() {
             attach_thread
-            env->CallVoidMethod(currentOpMode, env->GetMethodID(CurrentOpMode, "init_loop", "()V"));
+            env->CallVoidMethod(thiz, env->GetMethodID(jclazz, "init_loop", "()V"));
         }
 
         void start() {
             attach_thread
-            env->CallVoidMethod(currentOpMode, env->GetMethodID(CurrentOpMode, "start", "()V"));
+            env->CallVoidMethod(thiz, env->GetMethodID(jclazz, "start", "()V"));
         }
 
         void loop() {
             attach_thread
-            env->CallVoidMethod(currentOpMode, env->GetMethodID(CurrentOpMode, "loop", "()V"));
+            env->CallVoidMethod(thiz, env->GetMethodID(jclazz, "loop", "()V"));
         }
 
         void stop() {
             attach_thread
-            env->CallVoidMethod(currentOpMode, env->GetMethodID(CurrentOpMode, "stop", "()V"));
+            env->CallVoidMethod(thiz, env->GetMethodID(jclazz, "stop", "()V"));
         }
     }
 }

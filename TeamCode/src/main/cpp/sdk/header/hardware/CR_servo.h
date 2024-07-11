@@ -10,10 +10,9 @@
 #include "Dc_motor_simple.h"
 
 namespace sdk {
-    extern jclass CRServo;
-
     class CR_servo : public Dc_motor_simple {
     public:
+        static jclass jclazz;
         jobject crServo{};
 
         CR_servo() = default;

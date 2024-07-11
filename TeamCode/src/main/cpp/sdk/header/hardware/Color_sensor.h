@@ -8,10 +8,9 @@
 #include "utils.h"
 
 namespace sdk {
-    extern jclass ColorSensor;
-
     class Color_sensor {
     public:
+        static jclass jclazz;
         jobject colorSensor{};
 
         Color_sensor() = default;

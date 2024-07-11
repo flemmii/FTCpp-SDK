@@ -3,9 +3,8 @@
 using namespace std;
 
 namespace sdk {
-    jclass Telemetry;
-
     namespace telemetry {
+        jclass jclazz;
         jobject telemetry;
 
         // TODO: Try to get this to work with objects as well
@@ -18,7 +17,7 @@ namespace sdk {
             jstring jcaption = env->NewStringUTF(caption.c_str());
             jstring jvalue = env->NewStringUTF(os.str().c_str());
             env->DeleteLocalRef(env->CallObjectMethod(telemetry,
-                                                      env->GetMethodID(Telemetry, "addData",
+                                                      env->GetMethodID(jclazz, "addData",
                                                                        "(Ljava/lang/String;Ljava/lang/Object;)Lorg/firstinspires/ftc/robotcore/external/Telemetry$Item;"),
                                                       jcaption, jvalue));
             env->DeleteLocalRef(jcaption);
@@ -60,7 +59,7 @@ namespace sdk {
             attach_thread
             jstring jline_caption = env->NewStringUTF(line_caption.c_str());
             env->DeleteLocalRef(env->CallObjectMethod(telemetry,
-                                                      env->GetMethodID(Telemetry, "addLine",
+                                                      env->GetMethodID(jclazz, "addLine",
                                                                        "(Ljava/lang/String;)Lorg/firstinspires/ftc/robotcore/external/Telemetry$Line;"),
                                                       jline_caption));
             env->DeleteLocalRef(jline_caption);
@@ -68,25 +67,25 @@ namespace sdk {
 
         bool update() {
             attach_thread
-            return env->CallBooleanMethod(telemetry, env->GetMethodID(Telemetry, "update", "()Z"));
+            return env->CallBooleanMethod(telemetry, env->GetMethodID(jclazz, "update", "()Z"));
         }
 
         void set_auto_clear(const bool &auto_clear) {
             attach_thread
             jboolean jbool = auto_clear;
             env->DeleteLocalRef(env->CallObjectMethod(telemetry,
-                                                      env->GetMethodID(Telemetry, "setAutoClear",
+                                                      env->GetMethodID(jclazz, "setAutoClear",
                                                                        "(Z;)V"), jbool));
         }
 
         void clear() {
             attach_thread
-            env->CallVoidMethod(telemetry, env->GetMethodID(Telemetry, "clear", "()V"));
+            env->CallVoidMethod(telemetry, env->GetMethodID(jclazz, "clear", "()V"));
         }
 
         void clear_all() {
             attach_thread
-            env->CallVoidMethod(telemetry, env->GetMethodID(Telemetry, "clear_all", "()V"));
+            env->CallVoidMethod(telemetry, env->GetMethodID(jclazz, "clear_all", "()V"));
         }
 
         void speak(const string &text, const string &language_code, const string &country_code) {
@@ -94,7 +93,7 @@ namespace sdk {
             jstring jtext = env->NewStringUTF(text.c_str());
             jstring jlanguage_code = env->NewStringUTF(language_code.c_str());
             jstring jcountry_code = env->NewStringUTF(country_code.c_str());
-            env->CallVoidMethod(telemetry, env->GetMethodID(Telemetry, "speak",
+            env->CallVoidMethod(telemetry, env->GetMethodID(jclazz, "speak",
                                                             "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V"),
                                 jtext, jlanguage_code, jcountry_code);
             env->DeleteLocalRef(jlanguage_code);
@@ -106,7 +105,7 @@ namespace sdk {
             attach_thread
             jstring jtext = env->NewStringUTF(text.c_str());
             env->CallVoidMethod(telemetry,
-                                env->GetMethodID(Telemetry, "speak", "(Ljava/lang/String;)V"),
+                                env->GetMethodID(jclazz, "speak", "(Ljava/lang/String;)V"),
                                 jtext);
             env->DeleteLocalRef(jtext);
         }
@@ -114,7 +113,7 @@ namespace sdk {
         string get_caption() {
             attach_thread
             auto jstr = (jstring) (env->CallObjectMethod(telemetry,
-                                                         env->GetMethodID(Telemetry,
+                                                         env->GetMethodID(jclazz,
                                                                           "getCaption",
                                                                           "()Ljava/lang/String;")));
 
@@ -128,7 +127,7 @@ namespace sdk {
             attach_thread
             jstring jcaption = env->NewStringUTF(caption.c_str());
             env->DeleteLocalRef(env->CallObjectMethod(telemetry,
-                                                      env->GetMethodID(Telemetry, "setCaption",
+                                                      env->GetMethodID(jclazz, "setCaption",
                                                                        "(Ljava/lang/String;)Lorg/firstinspires/ftc/robotcore/external/Telemetry$Line;"),
                                                       jcaption));
             env->DeleteLocalRef(jcaption);
@@ -137,7 +136,7 @@ namespace sdk {
         void set_display_format(
                 display_format display_format) { //TODO: Test (HIGH RISK OF NOT FUNCTIONING) (This doesnt work (Florian))
             attach_thread
-            env->CallVoidMethod(telemetry, env->GetMethodID(Telemetry, "setDisplayFormat",
+            env->CallVoidMethod(telemetry, env->GetMethodID(jclazz, "setDisplayFormat",
                                                             "(Ljava/lang/String;)Lorg/firstinspires/ftc/robotcore/external/Telemetry$DisplayFormat;)V"),
                                 display_format);
         }
@@ -146,7 +145,7 @@ namespace sdk {
             attach_thread
             jboolean isCopy = JNI_FALSE;
             auto jstr = (jstring) (env->CallObjectMethod(telemetry,
-                                                         env->GetMethodID(Telemetry,
+                                                         env->GetMethodID(jclazz,
                                                                           "getItemSeparator",
                                                                           "()Ljava/lang/String;")));
             const char *utf_chars = env->GetStringUTFChars(jstr, &isCopy);
@@ -158,7 +157,7 @@ namespace sdk {
         void set_item_separator(const string &item_separator) {
             attach_thread
             jstring jitem_separator = env->NewStringUTF(item_separator.c_str());
-            env->DeleteLocalRef(env->CallObjectMethod(telemetry, env->GetMethodID(Telemetry,
+            env->DeleteLocalRef(env->CallObjectMethod(telemetry, env->GetMethodID(jclazz,
                                                                                   "setItemSeparator",
                                                                                   "(Ljava/lang/String;)V"),
                                                       jitem_separator));
@@ -169,7 +168,7 @@ namespace sdk {
             attach_thread
             jboolean isCopy = JNI_FALSE;
             auto jstr = (jstring) (env->CallObjectMethod(telemetry,
-                                                         env->GetMethodID(Telemetry,
+                                                         env->GetMethodID(jclazz,
                                                                           "getCaptionValueSeparator",
                                                                           "()Ljava/lang/String;")));
             const char *utf_chars = env->GetStringUTFChars(jstr, &isCopy);
@@ -181,7 +180,7 @@ namespace sdk {
         void set_caption_value_separator(const string &caption_value_separator) {
             attach_thread
             jstring jcaption_value_separator = env->NewStringUTF(caption_value_separator.c_str());
-            env->DeleteLocalRef(env->CallObjectMethod(telemetry, env->GetMethodID(Telemetry,
+            env->DeleteLocalRef(env->CallObjectMethod(telemetry, env->GetMethodID(jclazz,
                                                                                   "setCaptionValueSeparator",
                                                                                   "(Ljava/lang/String;)V"),
                                                       jcaption_value_separator));
@@ -191,20 +190,20 @@ namespace sdk {
         bool is_auto_clear() {
             attach_thread
             return env->CallBooleanMethod(telemetry,
-                                          env->GetMethodID(Telemetry, "isAutoClear", "()Z"));
+                                          env->GetMethodID(jclazz, "isAutoClear", "()Z"));
         }
 
         void set_ms_transmission_interval(int ms_transmission_interval) {
             attach_thread
             jint jms_transmission_interval = static_cast<jint>(ms_transmission_interval);
             env->CallVoidMethod(telemetry,
-                                env->GetMethodID(Telemetry, "setMsTransmissionInterval", "(I;)V"),
+                                env->GetMethodID(jclazz, "setMsTransmissionInterval", "(I;)V"),
                                 jms_transmission_interval);
         }
 
         int get_ms_transmission_interval() {
             attach_thread
-            return static_cast<int>(env->CallIntMethod(telemetry, env->GetMethodID(Telemetry,
+            return static_cast<int>(env->CallIntMethod(telemetry, env->GetMethodID(jclazz,
                                                                                    "getMsTransmissionInterval",
                                                                                    "()I")));
         }
@@ -212,14 +211,14 @@ namespace sdk {
         void set_retained(bool retained) {
             attach_thread
             env->DeleteLocalRef(env->CallObjectMethod(telemetry,
-                                                      env->GetMethodID(Telemetry, "setRetained",
+                                                      env->GetMethodID(jclazz, "setRetained",
                                                                        "(Z;)Lorg/firstinspires/ftc/robotcore/external/Telemetry$Item;"),
                                                       retained));
         }
 
         bool is_retained() {
             attach_thread
-            return static_cast<bool>(env->CallBooleanMethod(telemetry, env->GetMethodID(Telemetry,
+            return static_cast<bool>(env->CallBooleanMethod(telemetry, env->GetMethodID(jclazz,
                                                                                         "isRetained",
                                                                                         "()Z")));
         }

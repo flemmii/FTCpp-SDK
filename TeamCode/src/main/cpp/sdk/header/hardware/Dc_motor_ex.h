@@ -12,13 +12,13 @@
 #include "PIDF_coefficients.h"
 
 namespace sdk {
-    extern jclass DcMotorEx;
-    extern jclass DcMotor_RunMode;
-    extern jclass PIDFCoefficients;
-    extern jclass DcMotor_ZeroPowerBehavior;
-
     class Dc_motor_ex : public Dc_motor_simple {
     public:
+        static jclass jclazz;
+        static jclass jclazz_RunMode;
+        static jclass jclazz_ZeroPowerBehavior;
+        jobject dcMotorEx{};
+
         enum class Run_mode {
             RUN_WITHOUT_ENCODER,
             RUN_USING_ENCODER,
@@ -31,8 +31,6 @@ namespace sdk {
             BRAKE,
             FLOAT
         };
-
-        jobject dcMotorEx{};
 
         Dc_motor_ex() = default;
 

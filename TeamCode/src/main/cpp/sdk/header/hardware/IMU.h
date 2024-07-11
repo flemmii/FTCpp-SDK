@@ -10,12 +10,11 @@
 #include "navigation/Yaw_pitch_roll_angles.h"
 
 namespace sdk {
-    extern jclass IMU;
-
     // TODO: Finish this class
     /*
     class IMU {
     public:
+        static jclass jclazz;
         jobject imu{};
 
         static struct Parameters {

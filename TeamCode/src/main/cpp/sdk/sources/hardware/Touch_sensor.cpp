@@ -5,8 +5,6 @@
 #include "hardware/Touch_sensor.h"
 
 namespace sdk {
-    jclass TouchSensor;
-
     Touch_sensor::Touch_sensor(jobject touchSensor) : touchSensor(touchSensor) {}
 
     Touch_sensor::~Touch_sensor() {
@@ -30,13 +28,13 @@ namespace sdk {
     double Touch_sensor::get_value() const {
         attach_thread
         return static_cast<double>(env->CallDoubleMethod(touchSensor,
-                                                         env->GetMethodID(TouchSensor, "getValue",
+                                                         env->GetMethodID(jclazz, "getValue",
                                                                           "()D")));
     }
 
     bool Touch_sensor::is_pressed() const {
         attach_thread
         return env->CallBooleanMethod(touchSensor,
-                                      env->GetMethodID(TouchSensor, "isPressed", "()Z"));
+                                      env->GetMethodID(jclazz, "isPressed", "()Z"));
     }
 } // sdk

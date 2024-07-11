@@ -7,9 +7,6 @@
 using namespace std;
 
 namespace sdk {
-    jclass Servo;
-    jclass Servo_Direction;
-
     Servo::Servo(jobject servo) : servo(servo) {}
 
     Servo::~Servo() {
@@ -32,7 +29,7 @@ namespace sdk {
     Servo_controller Servo::get_controller() const {
         attach_thread
         jobject jcontroller = env->CallObjectMethod(servo,
-                                                    env->GetMethodID(sdk::Servo, "getController",
+                                                    env->GetMethodID(jclazz, "getController",
                                                                      "()Lcom/qualcomm/robotcore/hardware/ServoController;"));
 
         Servo_controller controller(env->NewGlobalRef(jcontroller));
@@ -43,18 +40,18 @@ namespace sdk {
     int Servo::get_port_number() const {
         attach_thread
         return static_cast<int>(env->CallIntMethod(servo,
-                                                   env->GetMethodID(sdk::Servo, "getPortNumber",
+                                                   env->GetMethodID(jclazz, "getPortNumber",
                                                                     "()I")));
     }
 
     void Servo::set_direction(Servo::Direction direction) {
         attach_thread
-        jobject jdirection = env->GetStaticObjectField(sdk::Servo_Direction,
-                                                       env->GetStaticFieldID(sdk::Servo_Direction,
+        jobject jdirection = env->GetStaticObjectField(jclazz_Direction,
+                                                       env->GetStaticFieldID(jclazz_Direction,
                                                                              direction_to_string(
                                                                                      direction),
                                                                              "Lcom/qualcomm/robotcore/hardware/Servo$Direction;"));
-        env->CallVoidMethod(servo, env->GetMethodID(sdk::Servo, "setDirection",
+        env->CallVoidMethod(servo, env->GetMethodID(jclazz, "setDirection",
                                                     "(Lcom/qualcomm/robotcore/hardware/Servo$Direction;)V"),
                             jdirection);
         env->DeleteLocalRef(jdirection);
@@ -63,13 +60,13 @@ namespace sdk {
     Servo::Direction Servo::get_direction() const {
         attach_thread
 
-        jobject direction = env->CallObjectMethod(servo, env->GetMethodID(sdk::Servo,
+        jobject direction = env->CallObjectMethod(servo, env->GetMethodID(jclazz,
                                                                           "getDirection",
                                                                           "()Lcom/qualcomm/robotcore/hardware/Servo$Direction;"));
 
 
         auto name = (jstring) env->CallObjectMethod(direction,
-                                                    env->GetMethodID(Servo_Direction,
+                                                    env->GetMethodID(jclazz_Direction,
                                                                      "name",
                                                                      "()Ljava/lang/String;"));
 
@@ -96,20 +93,20 @@ namespace sdk {
 
     void Servo::set_position(double position) const {
         attach_thread
-        env->CallVoidMethod(servo, env->GetMethodID(sdk::Servo, "setPosition", "(D)V"),
+        env->CallVoidMethod(servo, env->GetMethodID(jclazz, "setPosition", "(D)V"),
                             static_cast<jdouble> (position));
     }
 
     double Servo::get_position() const {
         attach_thread
         return static_cast<double>(env->CallDoubleMethod(servo,
-                                                         env->GetMethodID(sdk::Servo, "getPosition",
+                                                         env->GetMethodID(jclazz, "getPosition",
                                                                           "()D")));
     }
 
     void Servo::scale_range(double min, double max) {
         attach_thread
-        env->CallVoidMethod(servo, env->GetMethodID(sdk::Servo, "scaleRange", "(DD)V"),
+        env->CallVoidMethod(servo, env->GetMethodID(jclazz, "scaleRange", "(DD)V"),
                             static_cast<jdouble>(min), static_cast<jdouble>(max));
         MIN_POSITION = min;
         MAX_POSITION = max;
