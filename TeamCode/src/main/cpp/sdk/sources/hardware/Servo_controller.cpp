@@ -7,6 +7,9 @@
 using namespace std;
 
 namespace sdk {
+    jclass Servo_controller::jclazz;
+    jclass Servo_controller::jclazz_PwmStatus;
+    
     Servo_controller::Servo_controller(jobject servoController) : servoController(
             servoController) {}
 

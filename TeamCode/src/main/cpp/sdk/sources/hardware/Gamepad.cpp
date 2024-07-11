@@ -1,6 +1,8 @@
 #include "hardware/Gamepad.h"
 
 namespace sdk {
+    jclass Gamepad::jclazz;
+
     Gamepad::Gamepad(jobject gamepad) : gamepad(gamepad) {}
 
     Gamepad::~Gamepad() {

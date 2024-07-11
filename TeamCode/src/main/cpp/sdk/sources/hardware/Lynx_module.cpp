@@ -7,6 +7,8 @@
 using namespace std;
 
 namespace sdk {
+    jclass Lynx_module::jclazz;
+    jclass Lynx_module::jclazz_BulkCachingMode;
 
     Lynx_module::Lynx_module(jobject lynxModule) : lynxModule(lynxModule) {}
 

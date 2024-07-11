@@ -5,6 +5,8 @@
 #include "hardware/Gyro_sensor.h"
 
 namespace sdk {
+    jclass Gyro_sensor::jclazz;
+    
     Gyro_sensor::Gyro_sensor(jobject gyroSensor) : gyroSensor(gyroSensor) {}
 
     Gyro_sensor::~Gyro_sensor() {

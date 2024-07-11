@@ -10,6 +10,14 @@ using namespace sdk;
 namespace sdk {
     int Vision_portal::vision_portal_count = 0;
 
+    jclass Vision_portal::jclazz;
+    jclass Vision_portal::jclazz_StreamFormat;
+    jclass Vision_portal::jclazz_MultiPortalLayout;
+
+    jclass Vision_portal::Builder::jclazz;
+
+    int Vision_portal::DEFAULT_VIEW_CONTAINER_ID;
+
     const char *
     Vision_portal::multi_portal_layout_to_string(Vision_portal::Multi_portal_layout mpl) {
         switch (mpl) {

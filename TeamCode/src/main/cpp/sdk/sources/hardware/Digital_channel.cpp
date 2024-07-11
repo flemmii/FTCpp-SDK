@@ -5,6 +5,8 @@
 #include "hardware/Digital_channel.h"
 
 namespace sdk {
+    jclass Digital_channel::jclazz;
+    
     Digital_channel::Digital_channel(jobject digitalChannel) : digitalChannel(digitalChannel) {}
 
     Digital_channel::~Digital_channel() {

@@ -5,6 +5,8 @@
 #include "hardware/camera/Camera_name.h"
 
 namespace sdk {
+    jclass Camera_name::jclazz;
+
     Camera_name::Camera_name(jobject cameraName) : cameraName(cameraName) {}
 
     Camera_name::~Camera_name() {

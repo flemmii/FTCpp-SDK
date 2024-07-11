@@ -5,6 +5,8 @@
 #include "hardware/Touch_sensor.h"
 
 namespace sdk {
+    jclass Touch_sensor::jclazz;
+    
     Touch_sensor::Touch_sensor(jobject touchSensor) : touchSensor(touchSensor) {}
 
     Touch_sensor::~Touch_sensor() {

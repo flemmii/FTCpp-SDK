@@ -7,6 +7,11 @@
 using namespace std;
 
 namespace sdk {
+    jclass Dc_motor_ex::jclazz;
+    jclass Dc_motor_ex::jclazz_RunMode;
+    jclass Dc_motor_ex::jclazz_ZeroPowerBehavior;
+
+
     Dc_motor_ex::Dc_motor_ex(jobject dcMotorEx) : dcMotorEx(dcMotorEx),
                                                   Dc_motor_simple(dcMotorEx) {}
 

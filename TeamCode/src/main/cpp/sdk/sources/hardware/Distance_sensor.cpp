@@ -2,6 +2,9 @@
 
 using namespace std;
 namespace sdk {
+    jclass Distance_sensor::jclazz;
+    jclass Distance_sensor::DistanceUnit;
+
     Distance_sensor::Distance_sensor(jobject distanceSensor) : distanceSensor(distanceSensor) {}
 
     Distance_sensor::~Distance_sensor() {

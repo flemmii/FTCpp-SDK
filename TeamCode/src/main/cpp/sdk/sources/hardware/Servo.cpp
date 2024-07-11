@@ -7,6 +7,9 @@
 using namespace std;
 
 namespace sdk {
+    jclass Servo::jclazz;
+    jclass Servo::jclazz_Direction;
+
     Servo::Servo(jobject servo) : servo(servo) {}
 
     Servo::~Servo() {

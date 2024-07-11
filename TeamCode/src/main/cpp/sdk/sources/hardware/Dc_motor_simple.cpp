@@ -5,6 +5,9 @@
 #include "hardware/Dc_motor_simple.h"
 
 namespace sdk {
+    jclass Dc_motor_simple::jclazz;
+    jclass Dc_motor_simple::jclazz_Direction;
+
     Dc_motor_simple::Dc_motor_simple(jobject dcMotorSimple) : dcMotorSimple(dcMotorSimple) {}
 
     Dc_motor_simple::~Dc_motor_simple() {

@@ -5,6 +5,8 @@
 #include "hardware/Analog_input.h"
 
 namespace sdk {
+    jclass Analog_input::jclazz;
+
     Analog_input::Analog_input(jobject analogInput) : analogInput(analogInput) {}
 
     Analog_input::~Analog_input() {

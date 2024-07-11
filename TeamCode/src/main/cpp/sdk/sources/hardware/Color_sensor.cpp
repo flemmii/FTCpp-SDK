@@ -5,6 +5,8 @@
 #include "hardware/Color_sensor.h"
 
 namespace sdk {
+    jclass Color_sensor::jclazz;
+
     Color_sensor::Color_sensor(jobject colorSensor) : colorSensor(colorSensor) {}
 
     Color_sensor::~Color_sensor() {

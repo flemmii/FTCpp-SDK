@@ -7,6 +7,8 @@
 using namespace std;
 
 namespace sdk {
+    jclass Webcam_name::jclazz;
+
     Webcam_name::Webcam_name(jobject webcamName) : webcamName(webcamName),
                                                    Camera_name(webcamName) {}
 

@@ -7,6 +7,12 @@
 using namespace std;
 
 namespace sdk {
+    jclass BNO055IMU::jclazz;
+    jclass BNO055IMU::jclazz_AngleUnit;
+    jclass BNO055IMU::jclazz_AccelUnit;
+
+    jclass BNO055IMU::Parameters::jclazz;
+    
     BNO055IMU::BNO055IMU(jobject bno055imu) : bno055imu(bno055imu) {}
 
     BNO055IMU::~BNO055IMU() {

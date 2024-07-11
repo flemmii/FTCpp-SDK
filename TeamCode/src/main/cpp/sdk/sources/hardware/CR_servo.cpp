@@ -5,6 +5,8 @@
 #include "hardware/CR_servo.h"
 
 namespace sdk {
+    jclass CR_servo::jclazz;
+
     CR_servo::CR_servo(jobject crServo) : crServo(crServo), Dc_motor_simple(crServo) {}
 
     CR_servo::~CR_servo() {
