@@ -5,32 +5,15 @@
 #ifndef FTCROBOTCONTROLLER_DC_MOTOR_EX_H
 #define FTCROBOTCONTROLLER_DC_MOTOR_EX_H
 
-#include <map>
-
 #include "utils.h"
-#include "Dc_motor_simple.h"
+#include "Dc_motor.h"
 #include "PIDF_coefficients.h"
 
 namespace sdk {
-    class Dc_motor_ex : public Dc_motor_simple {
+    class Dc_motor_ex : public Dc_motor {
     public:
         static jclass jclazz;
-        static jclass jclazz_RunMode;
-        static jclass jclazz_ZeroPowerBehavior;
         jobject dcMotorEx{};
-
-        enum class Run_mode {
-            RUN_WITHOUT_ENCODER,
-            RUN_USING_ENCODER,
-            RUN_TO_POSITION,
-            STOP_AND_RESET_ENCODER
-        };
-
-        enum class Zero_power_behavior {
-            UNKNOWN,
-            BRAKE,
-            FLOAT
-        };
 
         Dc_motor_ex() = default;
 
@@ -38,7 +21,7 @@ namespace sdk {
 
         ~Dc_motor_ex();
 
-        Dc_motor_ex &operator=(jobject dcMotorEx);
+        Dc_motor_ex &operator=(jobject dcMotorEx) override;
 
         // DcMotorEx
 
@@ -62,29 +45,6 @@ namespace sdk {
         [[nodiscard]] int get_target_position_tolerance() const;
 
         [[nodiscard]] bool is_over_current() const;
-
-        // DcMotor
-        [[nodiscard]] int get_port_number() const;
-
-        void set_mode(Run_mode mode) const;
-
-        [[nodiscard]] Run_mode get_mode() const;
-
-        static const char *run_mode_to_string(Run_mode mode);
-
-        void set_zero_power_behavior(Zero_power_behavior zero_power_behavior) const;
-
-        [[nodiscard]] Zero_power_behavior get_zero_power_behavior() const;
-
-        static const char *zero_power_behavior_to_string(Zero_power_behavior zero_power_behavior);
-
-        void set_target_position(int position) const;
-
-        [[nodiscard]] int get_target_position() const;
-
-        [[nodiscard]] bool is_busy() const;
-
-        [[nodiscard]] int get_current_position() const;
     };
 
 } // SDK
