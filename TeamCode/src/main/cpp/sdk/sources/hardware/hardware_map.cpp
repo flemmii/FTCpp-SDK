@@ -10,12 +10,10 @@ using namespace std;
 namespace sdk::hardware_map {
     jobject hardwareMap;
 
-    template<class T>
-    jobject get(const string &device_name) {
+    jobject get(jclass jclazz, const string &device_name) {
         attach_thread
         jclass HardwareMap = env->GetObjectClass(hardwareMap);
         jstring jstr = env->NewStringUTF(device_name.c_str());
-        jclass jclazz = T::jclazz;
 
         jobject device =
                 env->CallObjectMethod(hardwareMap,
