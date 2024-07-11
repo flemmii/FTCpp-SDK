@@ -105,9 +105,10 @@ namespace sdk {
         private:
             std::vector<std::pair<sdk::Vision_processor *, bool>> processors;
 
-            jobject builder;
         public:
             static jclass jclazz;
+
+            jobject builder;
 
             Builder();
 
