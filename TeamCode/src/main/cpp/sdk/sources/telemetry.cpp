@@ -40,6 +40,8 @@ namespace sdk {
 
         template void add_data<char>(const string &, char);
 
+        template void add_data<char *>(const string &, char *);
+
         template void add_data<string>(const string &, string);
 
         template void add_data<unsigned short>(const string &, unsigned short);
