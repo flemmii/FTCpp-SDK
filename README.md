@@ -10,6 +10,7 @@ Java Native Interface (JNI).
 - Compiler statements
 - Access to OpenCV as a native library
 - Access to other C++ libraries
+- You can still use java and use this just as an extension
 
 ## Disadvantages
 - Not every feature from the SDK is included yet
