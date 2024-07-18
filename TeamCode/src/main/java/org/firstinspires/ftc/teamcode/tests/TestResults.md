@@ -15,60 +15,60 @@ The robot was not moved or was influenced from outside in the entire test (excep
 
 ### TrackPosition
 #### <span style="color:DodgerBlue"> C++ </span>
-Overall loops: 4919 loops
-Avarage loop time: 12.1981 ms
-Loops per second: 81.9800 loops/s
-Max loop time: 24.625 ms
-Min loop time: 8.766 ms
+Overall loops: 4919 loops  
+Avarage loop time: 12.1981 ms  
+Loops per second: 81.9800 loops/s  
+Max loop time: 24.625 ms  
+Min loop time: 8.766 ms  
 
 #### <span style="color:Orange"> Java </span>
-Overall loops: 4834 loops
-Avarage loop time: 12.4047 ms
-Loops per second: 80.6146 loops/s
-Max loop time: 28.681 ms
-Min loop time: 8.579 ms
+Overall loops: 4834 loops  
+Avarage loop time: 12.4047 ms  
+Loops per second: 80.6146 loops/s  
+Max loop time: 28.681 ms  
+Min loop time: 8.579 ms  
 
 ### TeamPropDetection
 #### <span style="color:DodgerBlue"> C++ </span>
-Overall loops: 883 loops
-Avarage loop time: 67.8918 ms
-Loops per second: 14.7293 loops/s
-Max loop time: 1138.217 ms (This may be the time it took to create the vision portal)
-Min loop time: 49.037 ms
+Overall loops: 883 loops  
+Avarage loop time: 67.8918 ms  
+Loops per second: 14.7293 loops/s  
+Max loop time: 1138.217 ms (This may be the time it took to create the vision portal)  
+Min loop time: 49.037 ms  
 
 #### <span style="color:Orange"> Java </span>
-Overall loops: 883 loops
-Avarage loop time: 67.9092 ms
-Loops per second: 14.7076 loops/s
-Max loop time: 1162.971 ms (This may be the time it took to create the vision portal)
-Min loop time: 36.211 ms
+Overall loops: 883 loops  
+Avarage loop time: 67.9092 ms  
+Loops per second: 14.7076 loops/s  
+Max loop time: 1162.971 ms (This may be the time it took to create the vision portal)  
+Min loop time: 36.211 ms  
 
 ### Driving (No movement)
 #### <span style="color:DodgerBlue"> C++ </span>
-Overall loops: 31559 loops
-Avarage loop time: 1.8993 ms
-Loops per second: 526.5100 loops/s
-Max loop time: 34.700 ms
-Min loop time: 0.597 ms
+Overall loops: 31559 loops  
+Avarage loop time: 1.8993 ms  
+Loops per second: 526.5100 loops/s  
+Max loop time: 34.700 ms  
+Min loop time: 0.597 ms  
 
 #### <span style="color:Orange"> Java </span>
-Overall loops: 22333 loops
-Avarage loop time: 2.6848 ms
-Loops per second: 372.4672 loops/s
-Max loop time: 21.677 ms
-Min loop time: 0.235 ms
+Overall loops: 22333 loops  
+Avarage loop time: 2.6848 ms  
+Loops per second: 372.4672 loops/s  
+Max loop time: 21.677 ms  
+Min loop time: 0.235 ms  
 
 ### Driving (Driving around the field)
 #### <span style="color:DodgerBlue"> C++ </span>
-Overall loops: 30561 loops
-Avarage loop time: 1.9613 ms
-Loops per second: 509.8659 loops/s
-Max loop time: 20.929 ms
-Min loop time: 0.593 ms
+Overall loops: 30561 loops  
+Avarage loop time: 1.9613 ms  
+Loops per second: 509.8659 loops/s  
+Max loop time: 20.929 ms  
+Min loop time: 0.593 ms  
 
 #### <span style="color:Orange"> Java </span>
-Overall loops: 22004 loops
-Avarage loop time: 2.7254 ms
-Loops per second: 366.9186 loops/s
-Max loop time: 17.143 ms
-Min loop time: 0.145 ms
+Overall loops: 22004 loops  
+Avarage loop time: 2.7254 ms  
+Loops per second: 366.9186 loops/s  
+Max loop time: 17.143 ms  
+Min loop time: 0.145 ms  
