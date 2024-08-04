@@ -244,15 +244,16 @@ namespace sdk {
 
     Vision_portal::Builder::Builder() {
         attach_thread
-        jobject localBuilder = env->NewObject(jclazz,
-                                              env->GetMethodID(jclazz, "<init>",
+        jobject localBuilder = env->NewObject(Vision_portal::jclazz,
+                                              env->GetMethodID(Vision_portal::jclazz, "<init>",
                                                                "()V"));
         builder = env->NewGlobalRef(localBuilder);
 
-        DEFAULT_VIEW_CONTAINER_ID = env->GetStaticIntField(jclazz,
-                                                           env->GetStaticFieldID(jclazz,
-                                                                                 "DEFAULT_VIEW_CONTAINER_ID",
-                                                                                 "I"));
+        DEFAULT_VIEW_CONTAINER_ID = env->GetStaticIntField(Vision_portal::jclazz,
+                                                           env->GetStaticFieldID(
+                                                                   Vision_portal::jclazz,
+                                                                   "DEFAULT_VIEW_CONTAINER_ID",
+                                                                   "I"));
         env->DeleteLocalRef(localBuilder);
     }
 
