@@ -244,9 +244,7 @@ namespace sdk {
 
     Vision_portal::Builder::Builder() {
         attach_thread
-        jobject localBuilder = env->NewObject(Vision_portal::jclazz,
-                                              env->GetMethodID(Vision_portal::jclazz, "<init>",
-                                                               "()V"));
+        jobject localBuilder = env->NewObject(jclazz, env->GetMethodID(jclazz, "<init>", "()V"));
         builder = env->NewGlobalRef(localBuilder);
 
         DEFAULT_VIEW_CONTAINER_ID = env->GetStaticIntField(Vision_portal::jclazz,
