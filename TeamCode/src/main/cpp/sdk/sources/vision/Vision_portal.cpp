@@ -436,7 +436,7 @@ namespace sdk {
         jobject jvisionPortal = env->CallObjectMethod(builder,
                                                       env->GetMethodID(jclazz,
                                                                        "build",
-                                                                       "()Lorg/firstinspires/ftc/vision/jclazz;"));
+                                                                       "()Lorg/firstinspires/ftc/vision/VisionPortal;"));
         Vision_portal vision_portal(env->NewGlobalRef(jvisionPortal));
         vision_portal.processors = processors;
         env->DeleteLocalRef(jvisionPortal);
