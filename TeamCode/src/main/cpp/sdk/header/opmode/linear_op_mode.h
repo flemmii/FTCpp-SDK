@@ -38,6 +38,9 @@ namespace sdk::linear_op_mode {
     void loop();
 
     void stop();
+
+    // OpMode Internal
+    void request_op_mode_stop();
 }
 
 

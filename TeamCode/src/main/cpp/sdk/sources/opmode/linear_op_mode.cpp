@@ -75,5 +75,10 @@ namespace sdk {
             attach_thread
             env->CallVoidMethod(thiz, env->GetMethodID(jclazz, "stop", "()V"));
         }
+
+        void request_op_mode_stop() {
+            attach_thread
+            env->CallVoidMethod(thiz, env->GetMethodID(jclazz, "requestOpModeStop", "()V"));
+        }
     }
 }
