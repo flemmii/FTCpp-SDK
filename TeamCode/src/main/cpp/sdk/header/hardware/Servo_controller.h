@@ -8,11 +8,10 @@
 #include "utils.h"
 
 namespace sdk {
-    extern jclass ServoController;
-    extern jclass ServoController_PwmStatus;
-
     class Servo_controller {
     public:
+        static jclass jclazz;
+        static jclass jclazz_PwmStatus;
         jobject servoController{};
 
         Servo_controller() = default;

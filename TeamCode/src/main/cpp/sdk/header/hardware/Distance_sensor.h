@@ -4,13 +4,13 @@
 #include "utils.h"
 
 namespace sdk {
-    extern jclass DistanceSensor;
-    extern jclass DistanceUnit;
 
     class Distance_sensor {
-    private:
-        jobject distanceSensor{};
     public:
+        static jclass jclazz;
+        static jclass DistanceUnit;
+        jobject distanceSensor{};
+
         Distance_sensor() = default;
 
         Distance_sensor(jobject distanceSensor);

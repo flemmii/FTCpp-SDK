@@ -10,10 +10,9 @@
 #include "utils.h"
 
 namespace sdk {
-    extern jclass DigitalChannel;
-
     class Digital_channel {
     public:
+        static jclass jclazz;
         jobject digitalChannel;
 
         enum class Mode {

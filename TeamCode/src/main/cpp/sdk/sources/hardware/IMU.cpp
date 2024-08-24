@@ -5,8 +5,6 @@
 #include "hardware/IMU.h"
 
 namespace sdk {
-    jclass IMU;
-
     /*
     bool IMU::initialize(Parameters parameters) {
 
@@ -14,12 +12,12 @@ namespace sdk {
 
     void IMU::reset_yaw() {
         attach_thread
-        env->CallVoidMethod(imu, env->GetMethodID(sdk::IMU, "resetYaw", "()V"));
+        env->CallVoidMethod(imu, env->GetMethodID(jclazz, "resetYaw", "()V"));
     }
 
     Yaw_pitch_roll_angles IMU::get_robot_yaw_pitch_roll_angles() {
         attach_thread
-        jobject yawPitchRollAngles = env->CallObjectMethod(imu, env->GetMethodID(sdk::IMU,
+        jobject yawPitchRollAngles = env->CallObjectMethod(imu, env->GetMethodID(jclazz,
                                                                                  "getRobotYawPitchRollAngles",
                                                                                  "()Lorg/firstinspires/ftc/robotcore/external/navigation/YawPitchRoll;"));
         jclass YawPitchRollAngles = env->GetObjectClass(yawPitchRollAngles);

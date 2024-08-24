@@ -10,36 +10,44 @@
 #include "hardware/Gamepad.h"
 #include "../telemetry.h"
 
-namespace sdk {
-    extern jobject currentOpMode;
-    extern jclass CurrentOpMode;
 
-    namespace linear_op_mode {
-        // LinearOpMode
-        void wait_for_start();
+namespace sdk::linear_op_mode {
+    extern jclass jclazz;
+    extern jobject thiz;
 
-        void idle();
+    void wait_for_start();
 
-        void sleep(int milliseconds);
+    void idle();
 
-        bool op_mode_is_active();
+    void sleep(int milliseconds);
 
-        bool op_mode_in_init();
+    bool op_mode_is_active();
 
-        bool is_started();
+    bool op_mode_in_init();
 
-        bool is_stop_requested();
+    bool is_started();
 
-        void init();
+    bool is_stop_requested();
 
-        void init_loop();
+    void init();
 
-        void start();
+    void init_loop();
 
-        void loop();
+    void start();
 
-        void stop();
-    }
+    void loop();
+
+    void stop();
+
+    // OpMode
+    void terminate_op_mode_now();
+
+    double get_runtime();
+
+    void reset_runtime();
+
+    // OpMode Internal
+    void request_op_mode_stop();
 }
 
 

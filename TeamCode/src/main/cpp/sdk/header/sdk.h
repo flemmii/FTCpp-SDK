@@ -14,6 +14,7 @@
 #include "hardware/BNO055IMU.h"
 #include "hardware/Color_sensor.h"
 #include "hardware/CR_servo.h"
+#include "hardware/Dc_motor.h"
 #include "hardware/Dc_motor_ex.h"
 #include "hardware/Dc_motor_simple.h"
 #include "hardware/Digital_channel.h"

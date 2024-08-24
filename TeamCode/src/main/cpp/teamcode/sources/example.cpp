@@ -16,10 +16,10 @@ Java_org_firstinspires_ftc_teamcode_opmodes_teleop_Example_opMode(JNIEnv *env,
     init_sdk
 
     // This gets all the drive motors from the hardware map
-    Dc_motor_ex front_right = hardware_map::get(DcMotorEx, "front_right");
-    Dc_motor_ex front_left = hardware_map::get(DcMotorEx, "front_left");
-    Dc_motor_ex rear_right = hardware_map::get(DcMotorEx, "rear_right");
-    Dc_motor_ex rear_left = hardware_map::get(DcMotorEx, "rear_left");
+    Dc_motor_ex front_right = hardware_map::get<Dc_motor_ex>("front_right");
+    Dc_motor_ex front_left = hardware_map::get<Dc_motor_ex>("front_left");
+    Dc_motor_ex rear_right = hardware_map::get<Dc_motor_ex>("rear_right");
+    Dc_motor_ex rear_left = hardware_map::get<Dc_motor_ex>("rear_left");
 
     // Reverses two motors, so forward is all motors to positive power
     // You may need to adjust this to meet your robots configuration

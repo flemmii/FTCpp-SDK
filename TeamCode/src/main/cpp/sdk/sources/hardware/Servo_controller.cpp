@@ -7,9 +7,9 @@
 using namespace std;
 
 namespace sdk {
-    jclass ServoController;
-    jclass ServoController_PwmStatus;
-
+    jclass Servo_controller::jclazz;
+    jclass Servo_controller::jclazz_PwmStatus;
+    
     Servo_controller::Servo_controller(jobject servoController) : servoController(
             servoController) {}
 
@@ -33,19 +33,19 @@ namespace sdk {
 
     void Servo_controller::pwm_enable() const {
         attach_thread
-        env->CallVoidMethod(servoController, env->GetMethodID(ServoController, "pwmEnable", "()V"));
+        env->CallVoidMethod(servoController, env->GetMethodID(jclazz, "pwmEnable", "()V"));
     }
 
     void Servo_controller::pwm_disable() const {
         attach_thread
         env->CallVoidMethod(servoController,
-                            env->GetMethodID(ServoController, "pwmDisable", "()V"));
+                            env->GetMethodID(jclazz, "pwmDisable", "()V"));
     }
 
     Servo_controller::Pwm_status Servo_controller::get_pwm_status() const {
         attach_thread
         jobject pwmStatus = env->CallObjectMethod(servoController,
-                                                  env->GetMethodID(ServoController,
+                                                  env->GetMethodID(jclazz,
                                                                    "getPwmStatus",
                                                                    "()Lcom/qualcomm/robotcore/hardware/ServoController$PwmStatus;"));
 
@@ -74,14 +74,14 @@ namespace sdk {
     void Servo_controller::set_servo_position(int servo, double position) const {
         attach_thread
         env->CallVoidMethod(servoController,
-                            env->GetMethodID(ServoController, "setServoPosition", "(ID)V"),
+                            env->GetMethodID(jclazz, "setServoPosition", "(ID)V"),
                             static_cast<jint>(servo), static_cast<jdouble>(position));
     }
 
     double Servo_controller::get_servo_position(int servo) const {
         attach_thread
         return static_cast<jdouble> (env->CallDoubleMethod(servoController,
-                                                           env->GetMethodID(ServoController,
+                                                           env->GetMethodID(jclazz,
                                                                             "getServoPosition",
                                                                             "(I)D"),
                                                            static_cast<jint>(servo)));

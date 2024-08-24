@@ -5,7 +5,7 @@
 #include "hardware/Analog_input.h"
 
 namespace sdk {
-    jclass AnalogInput;
+    jclass Analog_input::jclazz;
 
     Analog_input::Analog_input(jobject analogInput) : analogInput(analogInput) {}
 
@@ -29,21 +29,21 @@ namespace sdk {
     int Analog_input::get_voltage() const {
         attach_thread
         return static_cast<int>(env->CallIntMethod(analogInput,
-                                                   env->GetMethodID(AnalogInput, "getVoltage",
+                                                   env->GetMethodID(jclazz, "getVoltage",
                                                                     "()I")));
     }
 
     int Analog_input::get_max_voltage() const {
         attach_thread
         return static_cast<int>(env->CallIntMethod(analogInput,
-                                                   env->GetMethodID(AnalogInput, "getMaxVoltage",
+                                                   env->GetMethodID(jclazz, "getMaxVoltage",
                                                                     "()I")));
     }
 
     std::string Analog_input::get_device_name() const {
         attach_thread
         auto jStr = (jstring) (env->CallObjectMethod(analogInput,
-                                                     env->GetMethodID(AnalogInput,
+                                                     env->GetMethodID(jclazz,
                                                                       "getDeviceName",
                                                                       "()Ljava/lang/String;")));
 
@@ -57,7 +57,7 @@ namespace sdk {
     std::string Analog_input::get_connection_info() const {
         attach_thread
         auto jStr = (jstring) (env->CallObjectMethod(analogInput,
-                                                     env->GetMethodID(AnalogInput,
+                                                     env->GetMethodID(jclazz,
                                                                       "getConnectionInfo",
                                                                       "()Ljava/lang/String;")));
 
@@ -71,19 +71,19 @@ namespace sdk {
     int Analog_input::get_version() const {
         attach_thread
         return static_cast<int>(env->CallIntMethod(analogInput,
-                                                   env->GetMethodID(AnalogInput, "getVersion",
+                                                   env->GetMethodID(jclazz, "getVersion",
                                                                     "()I")));
     }
 
     void Analog_input::reset_device_configuration_for_op_mode() const {
         attach_thread
         env->CallVoidMethod(analogInput,
-                            env->GetMethodID(AnalogInput, "resetDeviceConfigurationForOpMode",
+                            env->GetMethodID(jclazz, "resetDeviceConfigurationForOpMode",
                                              "()V"));
     }
 
     void Analog_input::close() const {
         attach_thread
-        env->CallVoidMethod(analogInput, env->GetMethodID(AnalogInput, "close", "()V"));
+        env->CallVoidMethod(analogInput, env->GetMethodID(jclazz, "close", "()V"));
     }
 } // sdk

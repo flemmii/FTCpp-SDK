@@ -1,3 +1,27 @@
+# What is this?
+
+This is a project that makes it possible to program in C++ in FTC. This is also 100%
+competition legal cause it still uses the SDK, it just accesses it from C++ via the
+Java Native Interface (JNI).
+
+## Advantages
+- Faster execution (Exact data from the [Test Results](https://github.com/flemmii/FTCpp-SDK/blob/Tests/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/tests/TestResults.md))
+- No forced object orientation
+- Compiler statements
+- Access to OpenCV as a native library
+- Access to other C++ libraries
+- You can still use Java and use this project just as an extension
+
+## Disadvantages
+- Not every feature from the SDK is included yet
+- More difficult debugging
+- No access to Java libraries such as Roadrunner
+
+## Who should use this?
+As you see above as a rookie team I wouldn't suggest you to use this. It is rather designed for
+more experienced teams who want to try something new and who want to push their software to the
+limit to get the best loop times possible.
+
 # Downloading this project
 
 To download this repository, simply run the following command in your terminal:
@@ -26,6 +50,8 @@ git update-index --assume-unchanged TeamCode/src/main/cpp/teamcode/sources/examp
 ```
 
 # The different folders
+
+You can find these folders in TeamCode/src/main/cpp
 
 ## createOpModeJava
 
@@ -139,6 +165,51 @@ You get normal error messages in the terminal, so you can see what went wrong.
 You can only see the errors in logcat, so nothing will be shown on the Driver Hub.
 If you want to log anything additional to logcat simply include the sdk/extras/utils.h file
 and use the log function.
+
+<details close>
+  <summary> How a log looks like </summary>
+  <span style="color:Red">
+  JNI DETECTED ERROR IN APPLICATION: JNI NewGlobalRef called with pending exception java.lang.IllegalArgumentException: Unable to find a hardware device with name "test" and type DcMotorEx  
+  at java.lang.Object com.qualcomm.robotcore.hardware.HardwareMap.get(java.lang.Class, java.lang.String) (HardwareMap.java:213)
+  at void org.firstinspires.ftc.teamcode.opmodes.autonomous.AutoTest.opMode() (AutoTest.java:-2)
+  at void org.firstinspires.ftc.teamcode.opmodes.autonomous.AutoTest.runOpMode() (AutoTest.java:15)
+  at void com.qualcomm.robotcore.eventloop.opmode.LinearOpMode.internalRunOpMode() (LinearOpMode.java:199)
+  at void com.qualcomm.robotcore.eventloop.opmode.OpModeInternal.lambda$internalInit$1$com-qualcomm-robotcore-eventloop-opmode-OpModeInternal() (OpModeInternal.java:181)
+  at void com.qualcomm.robotcore.eventloop.opmode.OpModeInternal$$ExternalSyntheticLambda1.run() (D8$$SyntheticClass:-1)
+  at void com.qualcomm.robotcore.util.ThreadPool.logThreadLifeCycle(java.lang.String, java.lang.Runnable) (ThreadPool.java:737)
+  at void com.qualcomm.robotcore.eventloop.opmode.OpModeInternal.lambda$internalInit$2$com-qualcomm-robotcore-eventloop-opmode-OpModeInternal() (OpModeInternal.java:179)
+  at void com.qualcomm.robotcore.eventloop.opmode.OpModeInternal$$ExternalSyntheticLambda2.run() (D8$$SyntheticClass:-1)
+  at void java.util.concurrent.ThreadPoolExecutor.runWorker(java.util.concurrent.ThreadPoolExecutor$Worker) (ThreadPoolExecutor.java:1133)
+  at void java.util.concurrent.ThreadPoolExecutor$Worker.run() (ThreadPoolExecutor.java:607)
+  at void com.qualcomm.robotcore.util.ThreadPool$ThreadFactoryImpl$1.run() (ThreadPool.java:793)
+  at void java.lang.Thread.run() (Thread.java:761)
+  in call to NewGlobalRef
+  from void org.firstinspires.ftc.teamcode.opmodes.autonomous.AutoTest.opMode()
+  "OpModeThread" prio=5 tid=58 Runnable
+  | group="main" sCount=0 dsCount=0 obj=0x137fc280 self=0x782599e200
+  | sysTid=3589 nice=0 cgrp=default sched=0/0 handle=0x781fdf0450
+  | state=R schedstat=( 0 0 0 ) utm=106 stm=2 core=2 HZ=100
+  | stack=0x781fcee000-0x781fcf0000 stackSize=1037KB
+  | held mutexes= "mutator lock"(shared held)
+  native: #00 pc 000000000047ef3c  /system/lib64/libart.so (_ZN3art15DumpNativeStackERNSt3__113basic_ostreamIcNS0_11char_traitsIcEEEEiP12BacktraceMapPKcPNS_9ArtMethodEPv+220)
+  native: #01 pc 000000000047ef38  /system/lib64/libart.so (_ZN3art15DumpNativeStackERNSt3__113basic_ostreamIcNS0_11char_traitsIcEEEEiP12BacktraceMapPKcPNS_9ArtMethodEPv+216)
+  native: #02 pc 0000000000452fc4  /system/lib64/libart.so (_ZNK3art6Thread9DumpStackERNSt3__113basic_ostreamIcNS1_11char_traitsIcEEEEbP12BacktraceMap+480)
+  native: #03 pc 00000000002f04a4  /system/lib64/libart.so (_ZN3art9JavaVMExt8JniAbortEPKcS2_+1136)
+  native: #04 pc 00000000002f0bb4  /system/lib64/libart.so (_ZN3art9JavaVMExt9JniAbortVEPKcS2_St9__va_list+124)
+  native: #05 pc 0000000000102798  /system/lib64/libart.so (_ZN3art11ScopedCheck6AbortFEPKcz+156)
+  native: #06 pc 00000000001021a8  /system/lib64/libart.so (_ZN3art11ScopedCheck11CheckThreadEP7_JNIEnv+536)
+  native: #07 pc 00000000000ffce8  /system/lib64/libart.so (_ZN3art11ScopedCheck5CheckERNS_18ScopedObjectAccessEbPKcPNS_12JniValueTypeE+1124)
+  native: #08 pc 0000000000103a7c  /system/lib64/libart.so (_ZN3art8CheckJNI6NewRefEPKcP7_JNIEnvP8_jobjectNS_15IndirectRefKindE+624)
+  native: #09 pc 0000000000014648  /data/app/com.qualcomm.ftcrobotcontroller-1/lib/arm64/libsdk.so (_ZN7_JNIEnv12NewGlobalRefEP8_jobject+40)
+  native: #10 pc 000000000001c7f0  /data/app/com.qualcomm.ftcrobotcontroller-1/lib/arm64/libsdk.so (_ZN3sdk12hardware_map3getEP7_jclassRKNSt6__ndk112basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEE+236)
+  native: #11 pc 0000000000070f04  /data/app/com.qualcomm.ftcrobotcontroller-1/lib/arm64/libteamcode.so (Java_org_firstinspires_ftc_teamcode_opmodes_autonomous_AutoTest_opMode+3036)
+  native: #12 pc 000000000011e230  /data/app/com.qualcomm.ftcrobotcontroller-1/oat/arm64/base.odex (Java_org_firstinspires_ftc_teamcode_opmodes_autonomous_AutoTest_opMode__+124)
+  </span>
+</details>
+&nbsp;
+
+This looks like a lot but if you look at specific lines you can find out where the issue is.
+The last line (this is just the last line in this excerpt it will be in somewhere hidden in the error normally) shows this: Java_org_firstinspires_ftc_teamcode_opmodes_autonomous_AutoTest_opMode__+124 and by that you can see that the error is in the AutoTest_opMode. The type of error and error description is at the top of the error.
 
 If it says anything with JNI and you have done nothing with JNI, its probably an error in the sdk.
 If that happens please open an issue on GitHub or write me on Discord (flemmii).

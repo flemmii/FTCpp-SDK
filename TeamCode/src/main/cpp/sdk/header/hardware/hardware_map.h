@@ -15,6 +15,11 @@ namespace sdk::hardware_map {
     extern jobject hardwareMap;
 
     jobject get(jclass jclazz, const std::string &device_name);
+
+    template<class T>
+    jobject get(const std::string &device_name) {
+        return get(T::jclazz, device_name);
+    }
 }
 // SDK
 

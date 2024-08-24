@@ -7,11 +7,12 @@
 using namespace std;
 
 namespace sdk {
-    jclass BNO055IMU;
-    jclass BNO055IMU_Parameters;
-    jclass BNO055IMU_AngleUnit;
-    jclass BNO055IMU_AccelUnit;
+    jclass BNO055IMU::jclazz;
+    jclass BNO055IMU::jclazz_AngleUnit;
+    jclass BNO055IMU::jclazz_AccelUnit;
 
+    jclass BNO055IMU::Parameters::jclazz;
+    
     BNO055IMU::BNO055IMU(jobject bno055imu) : bno055imu(bno055imu) {}
 
     BNO055IMU::~BNO055IMU() {
@@ -22,7 +23,7 @@ namespace sdk {
         }
     }
 
-    class BNO055IMU &BNO055IMU::operator=(jobject bno055imu) {
+    BNO055IMU &BNO055IMU::operator=(jobject bno055imu) {
         if (this->bno055imu) {
             attach_thread
             env->DeleteGlobalRef(this->bno055imu);
@@ -53,32 +54,32 @@ namespace sdk {
         }
     }
 
-    bool BNO055IMU::initialize(sdk::BNO055IMU::Parameters parameters) {
+    bool BNO055IMU::initialize(BNO055IMU::Parameters parameters) {
         attach_thread
-        jobject parametersJava = env->NewObject(sdk::BNO055IMU_Parameters,
-                                                env->GetMethodID(sdk::BNO055IMU_Parameters,
+        jobject parametersJava = env->NewObject(Parameters::jclazz,
+                                                env->GetMethodID(Parameters::jclazz,
                                                                  "<init>", "()V"));
-        jobject angleUnit = env->GetStaticObjectField(sdk::BNO055IMU_AngleUnit,
+        jobject angleUnit = env->GetStaticObjectField(jclazz_AngleUnit,
                                                       env->GetStaticFieldID(
-                                                              sdk::BNO055IMU_AngleUnit,
+                                                              jclazz_AngleUnit,
                                                               angle_unit_to_string(
                                                                       parameters.angle_unit),
                                                               "Lcom/qualcomm/hardware/bosch/BNO055IMU$AngleUnit;"));
-        jobject accelUnit = env->GetStaticObjectField(sdk::BNO055IMU_AccelUnit,
+        jobject accelUnit = env->GetStaticObjectField(jclazz_AccelUnit,
                                                       env->GetStaticFieldID(
-                                                              sdk::BNO055IMU_AccelUnit,
+                                                              jclazz_AccelUnit,
                                                               accel_unit_to_string(
                                                                       parameters.accel_unit),
                                                               "Lcom/qualcomm/hardware/bosch/BNO055IMU$AccelUnit;"));
-        env->SetObjectField(parametersJava, env->GetFieldID(sdk::BNO055IMU_Parameters, "angleUnit",
+        env->SetObjectField(parametersJava, env->GetFieldID(Parameters::jclazz, "angleUnit",
                                                             "Lcom/qualcomm/hardware/bosch/BNO055IMU$AngleUnit;"),
                             angleUnit);
-        env->SetObjectField(parametersJava, env->GetFieldID(sdk::BNO055IMU_Parameters, "accelUnit",
+        env->SetObjectField(parametersJava, env->GetFieldID(Parameters::jclazz, "accelUnit",
                                                             "Lcom/qualcomm/hardware/bosch/BNO055IMU$AccelUnit;"),
                             accelUnit);
 
         bool result = env->CallBooleanMethod(bno055imu,
-                                             env->GetMethodID(sdk::BNO055IMU, "initialize",
+                                             env->GetMethodID(jclazz, "initialize",
                                                               "(Lcom/qualcomm/hardware/bosch/BNO055IMU$Parameters;)Z"),
                                              parametersJava);
         env->DeleteLocalRef(parametersJava);
@@ -91,14 +92,14 @@ namespace sdk {
     void BNO055IMU::start_acceleration_integration(int ms_poll_interval) {
         attach_thread
         env->CallVoidMethod(bno055imu,
-                            env->GetMethodID(sdk::BNO055IMU, "startAccelerationIntegration",
+                            env->GetMethodID(jclazz, "startAccelerationIntegration",
                                              "(Lorg/firstinspires/ftc/robotcore/external/navigation/Position;Lorg/firstinspires/ftc/robotcore/external/navigation/Velocity;I)V"),
                             NULL, NULL, static_cast<jint>(ms_poll_interval));
     }
 
     Orientation BNO055IMU::get_angular_orientation() {
         attach_thread
-        jobject orientation = env->CallObjectMethod(bno055imu, env->GetMethodID(sdk::BNO055IMU,
+        jobject orientation = env->CallObjectMethod(bno055imu, env->GetMethodID(jclazz,
                                                                                 "getAngularOrientation",
                                                                                 "()Lorg/firstinspires/ftc/robotcore/external/navigation/Orientation;"));
         jclass Orientation = env->GetObjectClass(orientation);
@@ -119,7 +120,7 @@ namespace sdk {
 
     Acceleration BNO055IMU::get_acceleration() {
         attach_thread
-        jobject acceleration = env->CallObjectMethod(bno055imu, env->GetMethodID(sdk::BNO055IMU,
+        jobject acceleration = env->CallObjectMethod(bno055imu, env->GetMethodID(jclazz,
                                                                                  "getAcceleration",
                                                                                  "()Lorg/firstinspires/ftc/robotcore/external/navigation/Acceleration;"));
         jclass Acceleration = env->GetObjectClass(acceleration);
@@ -140,7 +141,7 @@ namespace sdk {
 
     Angular_velocity BNO055IMU::get_angular_velocity() {
         attach_thread
-        jobject angularVelocity = env->CallObjectMethod(bno055imu, env->GetMethodID(sdk::BNO055IMU,
+        jobject angularVelocity = env->CallObjectMethod(bno055imu, env->GetMethodID(jclazz,
                                                                                     "getAngularVelocity",
                                                                                     "()Lorg/firstinspires/ftc/robotcore/external/navigation/AngularVelocity;"));
         jclass AngularVelocity = env->GetObjectClass(angularVelocity);

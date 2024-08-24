@@ -13,18 +13,18 @@
 #include "../hardware/camera/Webcam_name.h"
 
 namespace sdk {
-    extern jclass VisionPortal;
-    extern jclass VisionPortal_StreamFormat;
-    extern jclass VisionPortal_MultiPortalLayout;
-    extern jclass VisionPortal_Builder;
 
     class Vision_portal {
     private:
         static int vision_portal_count;
     public:
-        std::vector<std::pair<sdk::Vision_processor *, bool>> processors;
+        static jclass jclazz;
+        static jclass jclazz_StreamFormat;
+        static jclass jclazz_MultiPortalLayout;
 
         jobject visionPortal;
+
+        std::vector<std::pair<sdk::Vision_processor *, bool>> processors;
 
         static int DEFAULT_VIEW_CONTAINER_ID;
         enum class Stream_format {
@@ -105,8 +105,10 @@ namespace sdk {
         private:
             std::vector<std::pair<sdk::Vision_processor *, bool>> processors;
 
-            jobject builder;
         public:
+            static jclass jclazz;
+
+            jobject builder;
 
             Builder();
 

@@ -10,11 +10,11 @@
 #include "utils.h"
 
 namespace sdk {
-    extern jclass DcMotorSimple;
-    extern jclass DcMotorSimple_Direction;
-
     class Dc_motor_simple {
     public:
+        static jclass jclazz;
+        static jclass jclazz_Direction;
+
         jobject dcMotorSimple{};
 
         enum class Direction {

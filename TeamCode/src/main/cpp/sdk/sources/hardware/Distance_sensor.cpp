@@ -2,8 +2,8 @@
 
 using namespace std;
 namespace sdk {
-    jclass DistanceSensor;
-    jclass DistanceUnit;
+    jclass Distance_sensor::jclazz;
+    jclass Distance_sensor::DistanceUnit;
 
     Distance_sensor::Distance_sensor(jobject distanceSensor) : distanceSensor(distanceSensor) {}
 
@@ -32,7 +32,7 @@ namespace sdk {
                                                                            "Lorg/firstinspires/ftc/robotcore/external/navigation/DistanceUnit;"));
 
         auto result = static_cast<double>(env->CallDoubleMethod(distanceSensor,
-                                                                env->GetMethodID(DistanceSensor,
+                                                                env->GetMethodID(jclazz,
                                                                                  "getDistance",
                                                                                  "(Lorg/firstinspires/ftc/robotcore/external/navigation/DistanceUnit;)D"),
                                                                 mmObject));

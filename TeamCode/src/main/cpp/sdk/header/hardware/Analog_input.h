@@ -10,10 +10,9 @@
 #include "utils.h"
 
 namespace sdk {
-    extern jclass AnalogInput;
-
     class Analog_input {
     public:
+        static jclass jclazz;
         jobject analogInput{};
 
         Analog_input() = default;

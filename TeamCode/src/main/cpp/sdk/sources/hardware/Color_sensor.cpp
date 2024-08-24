@@ -5,7 +5,7 @@
 #include "hardware/Color_sensor.h"
 
 namespace sdk {
-    jclass ColorSensor;
+    jclass Color_sensor::jclazz;
 
     Color_sensor::Color_sensor(jobject colorSensor) : colorSensor(colorSensor) {}
 
@@ -29,36 +29,36 @@ namespace sdk {
     int Color_sensor::red() const {
         attach_thread
         return static_cast<int>(env->CallIntMethod(colorSensor,
-                                                   env->GetMethodID(ColorSensor, "red", "()I")));
+                                                   env->GetMethodID(jclazz, "red", "()I")));
     }
 
     int Color_sensor::green() const {
         attach_thread
         return static_cast<int>(env->CallIntMethod(colorSensor,
-                                                   env->GetMethodID(ColorSensor, "green", "()I")));
+                                                   env->GetMethodID(jclazz, "green", "()I")));
     }
 
     int Color_sensor::blue() const {
         attach_thread
         return static_cast<int>(env->CallIntMethod(colorSensor,
-                                                   env->GetMethodID(ColorSensor, "blue", "()I")));
+                                                   env->GetMethodID(jclazz, "blue", "()I")));
     }
 
     int Color_sensor::alpha() const {
         attach_thread
         return static_cast<int>(env->CallIntMethod(colorSensor,
-                                                   env->GetMethodID(ColorSensor, "alpha", "()I")));
+                                                   env->GetMethodID(jclazz, "alpha", "()I")));
     }
 
     int Color_sensor::argb() const {
         attach_thread
         return static_cast<int>(env->CallIntMethod(colorSensor,
-                                                   env->GetMethodID(ColorSensor, "argb", "()I")));
+                                                   env->GetMethodID(jclazz, "argb", "()I")));
     }
 
     void Color_sensor::enable_led(bool enable) const {
         attach_thread
-        env->CallVoidMethod(colorSensor, env->GetMethodID(ColorSensor, "enableLed", "(Z)V"),
+        env->CallVoidMethod(colorSensor, env->GetMethodID(jclazz, "enableLed", "(Z)V"),
                             enable);
     }
 } // sdk

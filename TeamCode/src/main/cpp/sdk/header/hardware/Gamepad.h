@@ -8,11 +8,9 @@
 #include "utils.h"
 
 namespace sdk {
-
-    extern jclass Gamepad;
-
     class Gamepad {
     public:
+        static jclass jclazz;
         jobject gamepad{};
 
         float left_stick_x = 0;

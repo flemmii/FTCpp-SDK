@@ -8,10 +8,9 @@
 #include "utils.h"
 
 namespace sdk {
-    extern jclass CameraName;
-
     class Camera_name {
     public:
+        static jclass jclazz;
         jobject cameraName{};
 
         Camera_name() = default;

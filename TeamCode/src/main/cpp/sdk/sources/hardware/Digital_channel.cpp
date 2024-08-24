@@ -5,8 +5,8 @@
 #include "hardware/Digital_channel.h"
 
 namespace sdk {
-    jclass DigitalChannel;
-
+    jclass Digital_channel::jclazz;
+    
     Digital_channel::Digital_channel(jobject digitalChannel) : digitalChannel(digitalChannel) {}
 
     Digital_channel::~Digital_channel() {
@@ -29,7 +29,7 @@ namespace sdk {
     Digital_channel::Mode Digital_channel::get_mode() const {
         attach_thread
         jobject mode = env->CallObjectMethod(digitalChannel,
-                                             env->GetMethodID(DigitalChannel, "getMode",
+                                             env->GetMethodID(jclazz, "getMode",
                                                               "()Lcom/qualcomm/robotcore/hardware/DigitalChannel$Mode;"));
 
         auto name = (jstring) env->CallObjectMethod(mode,
@@ -54,16 +54,16 @@ namespace sdk {
         attach_thread
         jobject modeObj;
         if (mode == Mode::INPUT) {
-            modeObj = env->GetStaticObjectField(DigitalChannel,
-                                                env->GetStaticFieldID(DigitalChannel, "Mode.INPUT",
+            modeObj = env->GetStaticObjectField(jclazz,
+                                                env->GetStaticFieldID(jclazz, "Mode.INPUT",
                                                                       "Lcom/qualcomm/robotcore/hardware/DigitalChannel$Mode;"));
         } else {
-            modeObj = env->GetStaticObjectField(DigitalChannel,
-                                                env->GetStaticFieldID(DigitalChannel, "Mode.OUTPUT",
+            modeObj = env->GetStaticObjectField(jclazz,
+                                                env->GetStaticFieldID(jclazz, "Mode.OUTPUT",
                                                                       "Lcom/qualcomm/robotcore/hardware/DigitalChannel$Mode;"));
         }
         env->CallVoidMethod(digitalChannel,
-                            env->GetMethodID(DigitalChannel, "setMode",
+                            env->GetMethodID(jclazz, "setMode",
                                              "(Lcom/qualcomm/robotcore/hardware/DigitalChannel$Mode;)V"),
                             modeObj);
         env->DeleteLocalRef(modeObj);
@@ -72,13 +72,13 @@ namespace sdk {
     bool Digital_channel::get_state() const {
         attach_thread
         return env->CallBooleanMethod(digitalChannel,
-                                      env->GetMethodID(DigitalChannel, "getState", "()Z"));
+                                      env->GetMethodID(jclazz, "getState", "()Z"));
     }
 
     void Digital_channel::set_state(bool state) const {
         attach_thread
         env->CallVoidMethod(digitalChannel,
-                            env->GetMethodID(DigitalChannel, "setState", "(Z)V"),
+                            env->GetMethodID(jclazz, "setState", "(Z)V"),
                             state);
     }
 } // sdk
