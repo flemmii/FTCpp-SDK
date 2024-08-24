@@ -39,6 +39,13 @@ namespace sdk::linear_op_mode {
 
     void stop();
 
+    // OpMode
+    void terminate_op_mode_now();
+
+    double get_runtime();
+
+    void reset_runtime();
+
     // OpMode Internal
     void request_op_mode_stop();
 }

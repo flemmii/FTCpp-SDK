@@ -80,5 +80,22 @@ namespace sdk {
             attach_thread
             env->CallVoidMethod(thiz, env->GetMethodID(jclazz, "requestOpModeStop", "()V"));
         }
+
+        double get_runtime() {
+            attach_thread
+            return static_cast<double>(env->CallDoubleMethod(thiz,
+                                                             env->GetMethodID(jclazz, "getRuntime",
+                                                                              "()D")));
+        }
+
+        void reset_runtime() {
+            attach_thread
+            env->CallVoidMethod(thiz, env->GetMethodID(jclazz, "resetRuntime", "()V"));
+        }
+
+        void terminate_op_mode_now() {
+            attach_thread
+            env->CallVoidMethod(thiz, env->GetMethodID(jclazz, "terminateOpModeNow", "()V"));
+        }
     }
 }
