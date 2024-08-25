@@ -10,9 +10,10 @@
 
 namespace sdk::telemetry {
     extern jclass jclazz;
+    extern jclass jclazz_DisplayFormat;
     extern jobject telemetry;
 
-    enum class display_format {
+    enum class Display_format {
         CLASSIC,
         MONOSPACE,
         HTML
@@ -49,7 +50,7 @@ namespace sdk::telemetry {
 
     void set_caption(const std::string &caption);
 
-    void set_display_format(display_format display_format);
+    void set_display_format(Display_format display_format);
 
     //TODO: FInd a way to implement setValue (because of args)
 

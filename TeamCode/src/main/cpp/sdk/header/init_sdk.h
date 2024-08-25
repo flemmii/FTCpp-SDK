@@ -24,6 +24,7 @@
     jobject localTelemetryObject = env->GetObjectField(sdk::linear_op_mode::thiz, env->GetFieldID(sdk::linear_op_mode::jclazz, "telemetry", "Lorg/firstinspires/ftc/robotcore/external/Telemetry;")); \
     sdk::telemetry::telemetry = env->NewGlobalRef(localTelemetryObject); \
     env->DeleteLocalRef(localTelemetryObject);                                                                               \
+    find_class_and_create_global_ref("org/firstinspires/ftc/robotcore/external/Telemetry$DisplayFormat", telemetry::jclazz_DisplayFormat)      \
     find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/AnalogInput", Analog_input::jclazz)                     \
     find_class_and_create_global_ref("com/qualcomm/hardware/bosch/BNO055IMU", BNO055IMU::jclazz)                             \
     find_class_and_create_global_ref("com/qualcomm/hardware/bosch/BNO055IMU$AngleUnit", BNO055IMU::jclazz_AngleUnit)         \

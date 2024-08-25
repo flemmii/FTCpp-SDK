@@ -5,6 +5,7 @@ using namespace std;
 
 namespace sdk::telemetry {
     jclass jclazz;
+    jclass jclazz_DisplayFormat;
     jobject telemetry;
 
     // TODO: Try to get this to work with objects as well
@@ -150,12 +151,32 @@ namespace sdk::telemetry {
         env->DeleteLocalRef(jcaption);
     }
 
+    const char *display_format_to_string(Display_format display_format) {
+        switch (display_format) {
+            case Display_format::CLASSIC:
+                return "CLASSIC";
+            case Display_format::HTML:
+                return "HTML";
+            case Display_format::MONOSPACE:
+                return "MONOSPACE";
+            default:
+                throw invalid_argument("Unimplemented item");
+        }
+    }
+
     void set_display_format(
-            display_format display_format) { //TODO: Test (HIGH RISK OF NOT FUNCTIONING) (This doesnt work (Florian))
+            Display_format display_format) {
         attach_thread
+        jobject displayFormat = env->GetStaticObjectField(jclazz_DisplayFormat,
+                                                          env->GetStaticFieldID(
+                                                                  jclazz_DisplayFormat,
+                                                                  display_format_to_string(
+                                                                          display_format),
+                                                                  "Lorg/firstinspires/ftc/robotcore/external/Telemetry$DisplayFormat;"));
         env->CallVoidMethod(telemetry, env->GetMethodID(jclazz, "setDisplayFormat",
-                                                        "(Ljava/lang/String;)Lorg/firstinspires/ftc/robotcore/external/Telemetry$DisplayFormat;)V"),
-                            display_format);
+                                                        "(Lorg/firstinspires/ftc/robotcore/external/Telemetry$DisplayFormat;)V"),
+                            displayFormat);
+        env->DeleteLocalRef(displayFormat);
     }
 
     string get_item_separator() {
