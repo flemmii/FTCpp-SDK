@@ -59,6 +59,8 @@ namespace sdk {
 
         static const char *stream_format_to_string(Vision_portal::Stream_format sf);
 
+        Vision_portal() = default;
+
         Vision_portal(jobject visionPortal);
 
         ~Vision_portal();
