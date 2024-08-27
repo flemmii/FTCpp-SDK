@@ -402,27 +402,6 @@ namespace sdk {
             throw invalid_argument("Processor cannot be null");
 
         this->processors.emplace_back(processor, true);
-
-        jobject jprocessor;
-        attach_thread
-
-        if (Vision_portal::vision_portal_count == 0)
-            jprocessor = env->NewObject(vision_processor::first_vision_processor::jclazz,
-                                        env->GetMethodID(
-                                                vision_processor::first_vision_processor::jclazz,
-                                                "<init>", "()V"));
-        else
-            jprocessor = env->NewObject(vision_processor::second_vision_processor::jclazz,
-                                        env->GetMethodID(
-                                                vision_processor::second_vision_processor::jclazz,
-                                                "<init>", "()V"));
-
-        env->DeleteLocalRef(env->CallObjectMethod(builder, env->GetMethodID(jclazz,
-                                                                            "addProcessor",
-                                                                            "(Lorg/firstinspires/ftc/vision/VisionProcessor;)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"),
-                                                  jprocessor));
-        env->DeleteLocalRef(jprocessor);
-
         return *this;
     }
 
@@ -434,27 +413,6 @@ namespace sdk {
 
             this->processors.emplace_back(processor, true);
         }
-
-        jobject jprocessor;
-        attach_thread
-
-        if (Vision_portal::vision_portal_count == 0)
-            jprocessor = env->NewObject(vision_processor::first_vision_processor::jclazz,
-                                        env->GetMethodID(
-                                                vision_processor::first_vision_processor::jclazz,
-                                                "<init>", "()V"));
-        else
-            jprocessor = env->NewObject(vision_processor::second_vision_processor::jclazz,
-                                        env->GetMethodID(
-                                                vision_processor::second_vision_processor::jclazz,
-                                                "<init>", "()V"));
-
-        env->DeleteLocalRef(env->CallObjectMethod(builder, env->GetMethodID(jclazz,
-                                                                            "addProcessor",
-                                                                            "(Lorg/firstinspires/ftc/vision/VisionProcessor;)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"),
-                                                  jprocessor));
-        env->DeleteLocalRef(jprocessor);
-
         return *this;
     }
 
@@ -481,8 +439,27 @@ namespace sdk {
     }
 
     Vision_portal Vision_portal::Builder::build() {
-
         attach_thread
+
+        jobject jprocessor;
+
+        if (Vision_portal::vision_portal_count == 0)
+            jprocessor = env->NewObject(vision_processor::first_vision_processor::jclazz,
+                                        env->GetMethodID(
+                                                vision_processor::first_vision_processor::jclazz,
+                                                "<init>", "()V"));
+        else
+            jprocessor = env->NewObject(vision_processor::second_vision_processor::jclazz,
+                                        env->GetMethodID(
+                                                vision_processor::second_vision_processor::jclazz,
+                                                "<init>", "()V"));
+
+        env->DeleteLocalRef(env->CallObjectMethod(builder, env->GetMethodID(jclazz,
+                                                                            "addProcessor",
+                                                                            "(Lorg/firstinspires/ftc/vision/VisionProcessor;)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"),
+                                                  jprocessor));
+        env->DeleteLocalRef(jprocessor);
+
         jobject jvisionPortal = env->CallObjectMethod(builder,
                                                       env->GetMethodID(jclazz,
                                                                        "build",
