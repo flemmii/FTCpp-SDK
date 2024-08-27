@@ -69,6 +69,7 @@ namespace sdk {
             env->DeleteGlobalRef(this->visionPortal);
         }
         this->visionPortal = vision_portal.visionPortal;
+        this->processors = vision_portal.processors;
         return *this;
     }
 
