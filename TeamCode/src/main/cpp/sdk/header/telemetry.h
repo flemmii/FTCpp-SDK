@@ -31,6 +31,8 @@ namespace sdk::telemetry {
     template<typename T>
     void add_data(const std::string &caption, const T &value);
 
+    void add_data(const std::string &caption, const char *value);
+
     void add_line(const std::string &line_caption);
 
     void set_auto_clear(const bool &auto_clear);

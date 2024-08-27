@@ -31,7 +31,7 @@ namespace sdk::telemetry {
         jstring jcaption = env->NewStringUTF(caption.c_str());
         jclass Boolean = env->FindClass("java/lang/Boolean");
         jobject jvalue = env->NewObject(Boolean, env->GetMethodID(Boolean, "<init>", "(Z)V"),
-                                        value);
+                                        static_cast<jboolean>(value));
         env->DeleteLocalRef(env->CallObjectMethod(telemetry,
                                                   env->GetMethodID(jclazz, "addData",
                                                                    "(Ljava/lang/String;Ljava/lang/Object;)Lorg/firstinspires/ftc/robotcore/external/Telemetry$Item;"),
@@ -56,7 +56,9 @@ namespace sdk::telemetry {
 
     template void add_data<char>(const string &, const char &);
 
-    template void add_data<const char &>(const string &, const char &);
+    void add_data(const string &caption, const char *value) {
+        add_data(caption, string(value));
+    }
 
     template void add_data<string>(const string &, const string &);
 
