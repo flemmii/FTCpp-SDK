@@ -13,15 +13,15 @@ namespace sdk {
 
         Distance_sensor() = default;
 
-        Distance_sensor(jobject distanceSensor);
+        Distance_sensor(const jobject &distanceSensor);
 
         ~Distance_sensor();
 
-        Distance_sensor &operator=(jobject distanceSensor);
+        Distance_sensor &operator=(const jobject &distanceSensor);
 
         // TODO: Add Distance_unit
         // Returns the distance in mm
-        double get_distance();
+        [[nodiscard]] double get_distance() const;
     };
 }
 

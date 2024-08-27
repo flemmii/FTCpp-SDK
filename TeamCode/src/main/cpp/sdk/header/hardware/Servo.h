@@ -26,27 +26,27 @@ namespace sdk {
 
         Servo() = default;
 
-        Servo(jobject servo);
+        Servo(const jobject &servo);
 
         ~Servo();
 
-        Servo &operator=(jobject servo);
+        Servo &operator=(const jobject &servo);
 
         [[nodiscard]] Servo_controller get_controller() const;
 
         [[nodiscard]] int get_port_number() const;
 
-        void set_direction(Servo::Direction direction);
+        void set_direction(const Direction &direction) const;
 
         [[nodiscard]] Direction get_direction() const;
 
-        static const char *direction_to_string(Servo::Direction direction);
+        static const char *direction_to_string(const Direction &direction);
 
-        void set_position(double position) const;
+        void set_position(const double &position) const;
 
         [[nodiscard]] double get_position() const;
 
-        void scale_range(double min, double max);
+        void scale_range(const double &min, const double &max);
     };
 
 } // sdk

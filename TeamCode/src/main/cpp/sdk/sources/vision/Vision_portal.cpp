@@ -19,7 +19,7 @@ namespace sdk {
     int Vision_portal::DEFAULT_VIEW_CONTAINER_ID;
 
     const char *
-    Vision_portal::multi_portal_layout_to_string(Vision_portal::Multi_portal_layout mpl) {
+    Vision_portal::multi_portal_layout_to_string(const Vision_portal::Multi_portal_layout &mpl) {
         switch (mpl) {
             case Multi_portal_layout::HORIZONTAL:
                 return "HORIZONTAL";
@@ -30,7 +30,7 @@ namespace sdk {
         }
     }
 
-    const char *Vision_portal::stream_format_to_string(Vision_portal::Stream_format sf) {
+    const char *Vision_portal::stream_format_to_string(const Vision_portal::Stream_format &sf) {
         switch (sf) {
             case Stream_format::YUY2:
                 return "YUY2";
@@ -41,7 +41,7 @@ namespace sdk {
         }
     }
 
-    Vision_portal::Vision_portal(jobject visionPortal) : visionPortal(visionPortal) {
+    Vision_portal::Vision_portal(const jobject &visionPortal) : visionPortal(visionPortal) {
         // Normally you just need 2 Vision_portals and more than 2 Vision_portals have also a high risk to crash the control hub
         if (vision_portal_count > 2)
             throw runtime_error("Only 2 Vision_portals are allowed to exist at a time");
@@ -63,7 +63,7 @@ namespace sdk {
         }
     }
 
-    Vision_portal &Vision_portal::operator=(jobject visionPortal) {
+    Vision_portal &Vision_portal::operator=(const jobject &visionPortal) {
         if (this->visionPortal) {
             attach_thread
             env->DeleteGlobalRef(this->visionPortal);
@@ -73,7 +73,8 @@ namespace sdk {
     }
 
     vector<int>
-    Vision_portal::makeMultiPortalView(int numPortals, Vision_portal::Multi_portal_layout mpl) {
+    Vision_portal::makeMultiPortalView(const int &numPortals,
+                                       const Vision_portal::Multi_portal_layout &mpl) {
         attach_thread
         jobject jmpl = env->GetStaticObjectField(jclazz_MultiPortalLayout,
                                                  env->GetStaticFieldID(
@@ -156,7 +157,7 @@ namespace sdk {
 
     void
     Vision_portal::set_processor_enabled(const Vision_processor *processor,
-                                         bool enabled) {
+                                         const bool &enabled) {
         if (processor == nullptr)
             throw invalid_argument("Processor cannot be null");
 
@@ -308,7 +309,7 @@ namespace sdk {
         }
     }
 
-    Vision_portal::Builder &Vision_portal::Builder::operator=(jobject builder) {
+    Vision_portal::Builder &Vision_portal::Builder::operator=(const jobject &builder) {
         if (this->builder) {
             attach_thread
             env->DeleteGlobalRef(this->builder);
@@ -328,7 +329,8 @@ namespace sdk {
         return *this;
     }
 
-    Vision_portal::Builder &Vision_portal::Builder::set_stream_format(Stream_format streamFormat) {
+    Vision_portal::Builder &
+    Vision_portal::Builder::set_stream_format(const Stream_format &streamFormat) {
         attach_thread
         jobject jstreamFormat = env->GetStaticObjectField(jclazz_StreamFormat,
                                                           env->GetStaticFieldID(
@@ -346,7 +348,7 @@ namespace sdk {
         return *this;
     }
 
-    Vision_portal::Builder &Vision_portal::Builder::enable_live_view(bool enable_live_view) {
+    Vision_portal::Builder &Vision_portal::Builder::enable_live_view(const bool &enable_live_view) {
         attach_thread
         env->DeleteLocalRef(env->CallObjectMethod(builder,
                                                   env->GetMethodID(jclazz,
@@ -356,7 +358,8 @@ namespace sdk {
         return *this;
     }
 
-    Vision_portal::Builder &Vision_portal::Builder::set_auto_stop_live_view(bool auto_pause) {
+    Vision_portal::Builder &
+    Vision_portal::Builder::set_auto_stop_live_view(const bool &auto_pause) {
         attach_thread
         env->DeleteLocalRef(env->CallObjectMethod(builder,
                                                   env->GetMethodID(jclazz,
@@ -367,7 +370,7 @@ namespace sdk {
     }
 
     Vision_portal::Builder &
-    Vision_portal::Builder::set_live_view_container_id(int live_view_container_id) {
+    Vision_portal::Builder::set_live_view_container_id(const int &live_view_container_id) {
         attach_thread
         env->DeleteLocalRef(env->CallObjectMethod(builder,
                                                   env->GetMethodID(jclazz,
@@ -377,7 +380,8 @@ namespace sdk {
         return *this;
     }
 
-    Vision_portal::Builder &Vision_portal::Builder::set_camera_resolution(Size camera_resolution) {
+    Vision_portal::Builder &
+    Vision_portal::Builder::set_camera_resolution(const Size &camera_resolution) {
         attach_thread
         jclass Size = env->FindClass("android/util/Size");
         jobject jcameraResolution = env->NewObject(Size,
@@ -417,7 +421,7 @@ namespace sdk {
     }
 
     Vision_portal::Builder &
-    Vision_portal::Builder::set_auto_start_stream_on_build(bool auto_start_stream_on_build) {
+    Vision_portal::Builder::set_auto_start_stream_on_build(const bool &auto_start_stream_on_build) {
         attach_thread
         env->DeleteLocalRef(env->CallObjectMethod(builder,
                                                   env->GetMethodID(jclazz,
@@ -428,7 +432,7 @@ namespace sdk {
     }
 
     Vision_portal::Builder &
-    Vision_portal::Builder::set_show_stats_overlay(bool show_stats_overlay) {
+    Vision_portal::Builder::set_show_stats_overlay(const bool &show_stats_overlay) {
         attach_thread
         env->DeleteLocalRef(env->CallObjectMethod(builder,
                                                   env->GetMethodID(jclazz,

@@ -61,17 +61,17 @@ namespace sdk {
 
         Gamepad() = default;
 
-        Gamepad(jobject gamepad);
+        Gamepad(const jobject &gamepad);
 
         ~Gamepad();
 
-        Gamepad &operator=(jobject gamepad);
+        Gamepad &operator=(const jobject &gamepad);
 
         void update();
 
-        void rumble(int duration_ms) const;
+        void rumble(const int &duration_ms) const;
 
-        void rumble(double rumble1, double rumble2, int duration_ms) const;
+        void rumble(const double &rumble1, const double &rumble2, const int &duration_ms) const;
 
         void stop_rumble() const;
 

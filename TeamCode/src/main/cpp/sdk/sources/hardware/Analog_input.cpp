@@ -7,7 +7,7 @@
 namespace sdk {
     jclass Analog_input::jclazz;
 
-    Analog_input::Analog_input(jobject analogInput) : analogInput(analogInput) {}
+    Analog_input::Analog_input(const jobject &analogInput) : analogInput(analogInput) {}
 
     Analog_input::~Analog_input() {
         if (analogInput) {
@@ -17,7 +17,7 @@ namespace sdk {
         }
     }
 
-    Analog_input &Analog_input::operator=(jobject analogInput) {
+    Analog_input &Analog_input::operator=(const jobject &analogInput) {
         if (this->analogInput) {
             attach_thread
             env->DeleteGlobalRef(this->analogInput);

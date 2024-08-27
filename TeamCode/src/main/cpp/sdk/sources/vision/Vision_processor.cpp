@@ -15,11 +15,11 @@ namespace sdk {
         id = last_id++;
     }
 
-    void Vision_processor::init(int width, int height) const {}
+    void Vision_processor::init(const int &width, const int &height) const {}
 
-    void Vision_processor::process_frame(const Mat &input, long capture_time_nanos) const {}
+    void Vision_processor::process_frame(const Mat &input, const long &capture_time_nanos) const {}
 
-    void Vision_processor::on_draw_frame(int onscreen_width, int onscreen_height,
+    void Vision_processor::on_draw_frame(const int &onscreen_width, const int &onscreen_height,
                                          Mat &frame_to_draw_on) const {}
 
     bool operator==(const Vision_processor &lhs, const Vision_processor &rhs) {
@@ -33,7 +33,7 @@ namespace sdk {
         Mat second_processor_frame;
 
         void
-        native_init(int width, int height,
+        native_init(const int &width, const int &height,
                     const vector <pair<Vision_processor *, bool>> *processors) {
             for_each(processors->begin(), processors->end(),
                      [&](const auto &processor) {
@@ -42,7 +42,7 @@ namespace sdk {
                      });
         }
 
-        void native_process_frame(const Mat &input, long capture_time_nanos,
+        void native_process_frame(const Mat &input, const long &capture_time_nanos,
                                   const vector <pair<Vision_processor *, bool>> *processors) {
             Mat output = input.clone();
             for_each(processors->begin(), processors->end(),
@@ -52,8 +52,10 @@ namespace sdk {
                      });
         }
 
-        void native_on_draw_frame(jobject canvas, int onscreen_width, int onscreen_height,
-                                  float scale_bmp_px_to_canvas_px, float scale_canvas_density,
+        void native_on_draw_frame(const jobject &canvas, const int &onscreen_width,
+                                  const int &onscreen_height,
+                                  const float &scale_bmp_px_to_canvas_px,
+                                  const float &scale_canvas_density,
                                   const Mat &frame_to_draw_on,
                                   const vector <pair<Vision_processor *, bool>> *processors) {
             Mat output;

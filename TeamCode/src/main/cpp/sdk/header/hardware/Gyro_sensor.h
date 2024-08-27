@@ -17,11 +17,11 @@ namespace sdk {
 
         Gyro_sensor() = default;
 
-        Gyro_sensor(jobject gyroSensor);
+        Gyro_sensor(const jobject &gyroSensor);
 
         ~Gyro_sensor();
 
-        Gyro_sensor &operator=(jobject gyroSensor);
+        Gyro_sensor &operator=(const jobject &gyroSensor);
 
         void calibrate() const;
 

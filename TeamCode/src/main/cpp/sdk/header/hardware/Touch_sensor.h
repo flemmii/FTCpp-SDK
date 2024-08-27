@@ -15,11 +15,11 @@ namespace sdk {
 
         Touch_sensor() = default;
 
-        Touch_sensor(jobject touchSensor);
+        Touch_sensor(const jobject &touchSensor);
 
         ~Touch_sensor();
 
-        Touch_sensor &operator=(jobject touchSensor);
+        Touch_sensor &operator=(const jobject &touchSensor);
 
         [[nodiscard]] double get_value() const;
 

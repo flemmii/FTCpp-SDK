@@ -9,8 +9,8 @@ using namespace std;
 namespace sdk {
     jclass Servo_controller::jclazz;
     jclass Servo_controller::jclazz_PwmStatus;
-    
-    Servo_controller::Servo_controller(jobject servoController) : servoController(
+
+    Servo_controller::Servo_controller(const jobject &servoController) : servoController(
             servoController) {}
 
     Servo_controller::~Servo_controller() {
@@ -21,7 +21,7 @@ namespace sdk {
         }
     }
 
-    Servo_controller &Servo_controller::operator=(jobject servoController) {
+    Servo_controller &Servo_controller::operator=(const jobject &servoController) {
         if (this->servoController) {
             attach_thread
             env->DeleteGlobalRef(this->servoController);
@@ -71,14 +71,14 @@ namespace sdk {
         return Pwm_status::ENABLED;
     }
 
-    void Servo_controller::set_servo_position(int servo, double position) const {
+    void Servo_controller::set_servo_position(const int &servo, const double &position) const {
         attach_thread
         env->CallVoidMethod(servoController,
                             env->GetMethodID(jclazz, "setServoPosition", "(ID)V"),
                             static_cast<jint>(servo), static_cast<jdouble>(position));
     }
 
-    double Servo_controller::get_servo_position(int servo) const {
+    double Servo_controller::get_servo_position(const int &servo) const {
         attach_thread
         return static_cast<jdouble> (env->CallDoubleMethod(servoController,
                                                            env->GetMethodID(jclazz,

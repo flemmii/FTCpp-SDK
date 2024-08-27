@@ -13,7 +13,8 @@ namespace sdk {
         float second_angle;
         float third_angle;
 
-        Orientation(float first_angle, float second_angle, float third_angle);
+        Orientation(const float &first_angle, const float &second_angle, const float &third_angle)
+                : first_angle(first_angle), second_angle(second_angle), third_angle(third_angle) {}
     };
 
 } // sdk

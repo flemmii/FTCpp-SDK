@@ -11,7 +11,7 @@ namespace sdk::telemetry {
     // TODO: Try to get this to work with objects as well
 
     template<typename T>
-    void add_data(const string &caption, T value) {
+    void add_data(const string &caption, const T &value) {
         attach_thread
         ostringstream os;
         os << value;
@@ -26,7 +26,7 @@ namespace sdk::telemetry {
     }
 
     template<>
-    void add_data<bool>(const string &caption, bool value) {
+    void add_data<bool>(const string &caption, const bool &value) {
         attach_thread
         jstring jcaption = env->NewStringUTF(caption.c_str());
         jclass Boolean = env->FindClass("java/lang/Boolean");
@@ -42,35 +42,35 @@ namespace sdk::telemetry {
         env->DeleteLocalRef(jvalue);
     }
 
-    template void add_data<short>(const string &, short);
+    template void add_data<short>(const string &, const short &);
 
-    template void add_data<int>(const string &, int);
+    template void add_data<int>(const string &, const int &);
 
-    template void add_data<long>(const string &, long);
+    template void add_data<long>(const string &, const long &);
 
-    template void add_data<long long>(const string &, long long);
+    template void add_data<long long>(const string &, const long long &);
 
-    template void add_data<float>(const string &, float);
+    template void add_data<float>(const string &, const float &);
 
-    template void add_data<double>(const string &, double);
+    template void add_data<double>(const string &, const double &);
 
-    template void add_data<char>(const string &, char);
+    template void add_data<char>(const string &, const char &);
 
-    template void add_data<const char *>(const string &, const char *);
+    template void add_data<const char &>(const string &, const char &);
 
-    template void add_data<string>(const string &, string);
+    template void add_data<string>(const string &, const string &);
 
-    template void add_data<unsigned short>(const string &, unsigned short);
+    template void add_data<unsigned short>(const string &, const unsigned short &);
 
-    template void add_data<unsigned int>(const string &, unsigned int);
+    template void add_data<unsigned int>(const string &, const unsigned int &);
 
-    template void add_data<unsigned long>(const string &, unsigned long);
-
-    template void
-    add_data<unsigned long long>(const string &, unsigned long long);
+    template void add_data<unsigned long>(const string &, const unsigned long &);
 
     template void
-    add_data<unsigned char>(const string &, unsigned char);
+    add_data<unsigned long long>(const string &, const unsigned long long &);
+
+    template void
+    add_data<unsigned char>(const string &, const unsigned char &);
 
 
     void add_line(const string &line_caption) {
@@ -151,7 +151,7 @@ namespace sdk::telemetry {
         env->DeleteLocalRef(jcaption);
     }
 
-    const char *display_format_to_string(Display_format display_format) {
+    const char *display_format_to_string(const Display_format &display_format) {
         switch (display_format) {
             case Display_format::CLASSIC:
                 return "CLASSIC";
@@ -164,8 +164,7 @@ namespace sdk::telemetry {
         }
     }
 
-    void set_display_format(
-            Display_format display_format) {
+    void set_display_format(const Display_format &display_format) {
         attach_thread
         jobject displayFormat = env->GetStaticObjectField(jclazz_DisplayFormat,
                                                           env->GetStaticFieldID(
@@ -231,7 +230,7 @@ namespace sdk::telemetry {
                                       env->GetMethodID(jclazz, "isAutoClear", "()Z"));
     }
 
-    void set_ms_transmission_interval(int ms_transmission_interval) {
+    void set_ms_transmission_interval(const int &ms_transmission_interval) {
         attach_thread
         jint jms_transmission_interval = static_cast<jint>(ms_transmission_interval);
         env->CallVoidMethod(telemetry,
@@ -246,7 +245,7 @@ namespace sdk::telemetry {
                                                                                "()I")));
     }
 
-    void set_retained(bool retained) {
+    void set_retained(const bool &retained) {
         attach_thread
         env->DeleteLocalRef(env->CallObjectMethod(telemetry,
                                                   env->GetMethodID(jclazz, "setRetained",

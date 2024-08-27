@@ -29,7 +29,7 @@ namespace sdk::telemetry {
     };
 
     template<typename T>
-    void add_data(const std::string &caption, T value);
+    void add_data(const std::string &caption, const T &value);
 
     void add_line(const std::string &line_caption);
 
@@ -50,7 +50,7 @@ namespace sdk::telemetry {
 
     void set_caption(const std::string &caption);
 
-    void set_display_format(Display_format display_format);
+    void set_display_format(const Display_format &display_format);
 
     //TODO: FInd a way to implement setValue (because of args)
 
@@ -66,9 +66,9 @@ namespace sdk::telemetry {
 
     int get_ms_transmission_interval();
 
-    void set_ms_transmission_interval(int ms_transmission_interval);
+    void set_ms_transmission_interval(const int &ms_transmission_interval);
 
-    void set_retained(bool retained);
+    void set_retained(const bool &retained);
 
     bool is_retained();
 

@@ -9,14 +9,14 @@ using namespace std;
 namespace sdk {
     jclass Webcam_name::jclazz;
 
-    Webcam_name::Webcam_name(jobject webcamName) : webcamName(webcamName),
-                                                   Camera_name(webcamName) {}
+    Webcam_name::Webcam_name(const jobject &webcamName) : webcamName(webcamName),
+                                                          Camera_name(webcamName) {}
 
     Webcam_name::~Webcam_name() {
         webcamName = nullptr;
     }
 
-    Webcam_name &Webcam_name::operator=(jobject webcamName) {
+    Webcam_name &Webcam_name::operator=(const jobject &webcamName) {
         Camera_name::operator=(webcamName);
         this->webcamName = webcamName;
         return *this;

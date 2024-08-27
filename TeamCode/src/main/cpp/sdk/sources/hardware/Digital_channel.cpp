@@ -6,8 +6,9 @@
 
 namespace sdk {
     jclass Digital_channel::jclazz;
-    
-    Digital_channel::Digital_channel(jobject digitalChannel) : digitalChannel(digitalChannel) {}
+
+    Digital_channel::Digital_channel(const jobject &digitalChannel) : digitalChannel(
+            digitalChannel) {}
 
     Digital_channel::~Digital_channel() {
         if (digitalChannel) {
@@ -17,7 +18,7 @@ namespace sdk {
         }
     }
 
-    Digital_channel &Digital_channel::operator=(jobject digitalChannel) {
+    Digital_channel &Digital_channel::operator=(const jobject &digitalChannel) {
         if (this->digitalChannel) {
             attach_thread
             env->DeleteGlobalRef(this->digitalChannel);
@@ -50,7 +51,7 @@ namespace sdk {
         return Mode::INPUT;
     }
 
-    void Digital_channel::set_mode(Mode mode) const {
+    void Digital_channel::set_mode(const Mode &mode) const {
         attach_thread
         jobject modeObj;
         if (mode == Mode::INPUT) {
@@ -75,7 +76,7 @@ namespace sdk {
                                       env->GetMethodID(jclazz, "getState", "()Z"));
     }
 
-    void Digital_channel::set_state(bool state) const {
+    void Digital_channel::set_state(const bool &state) const {
         attach_thread
         env->CallVoidMethod(digitalChannel,
                             env->GetMethodID(jclazz, "setState", "(Z)V"),

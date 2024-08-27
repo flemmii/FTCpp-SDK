@@ -8,7 +8,7 @@ namespace sdk {
     jclass Dc_motor_simple::jclazz;
     jclass Dc_motor_simple::jclazz_Direction;
 
-    Dc_motor_simple::Dc_motor_simple(jobject dcMotorSimple) : dcMotorSimple(dcMotorSimple) {}
+    Dc_motor_simple::Dc_motor_simple(const jobject &dcMotorSimple) : dcMotorSimple(dcMotorSimple) {}
 
     Dc_motor_simple::~Dc_motor_simple() {
         if (dcMotorSimple) {
@@ -18,7 +18,7 @@ namespace sdk {
         }
     }
 
-    Dc_motor_simple &Dc_motor_simple::operator=(jobject dcMotorSimple) {
+    Dc_motor_simple &Dc_motor_simple::operator=(const jobject &dcMotorSimple) {
         if (this->dcMotorSimple) {
             attach_thread
             env->DeleteGlobalRef(this->dcMotorSimple);
@@ -27,7 +27,7 @@ namespace sdk {
         return *this;
     }
 
-    void Dc_motor_simple::set_direction(Dc_motor_simple::Direction direction) const {
+    void Dc_motor_simple::set_direction(const Direction &direction) const {
         attach_thread
         jobject jdirection = env->GetStaticObjectField(jclazz_Direction,
                                                        env->GetStaticFieldID(
@@ -68,7 +68,7 @@ namespace sdk {
         return Direction::FORWARD;
     }
 
-    const char *Dc_motor_simple::direction_to_string(Dc_motor_simple::Direction direction) {
+    const char *Dc_motor_simple::direction_to_string(const Direction &direction) {
         switch (direction) {
             case Direction::FORWARD:
                 return "FORWARD";
@@ -77,7 +77,7 @@ namespace sdk {
         }
     }
 
-    void Dc_motor_simple::set_power(double power) const {
+    void Dc_motor_simple::set_power(const double &power) const {
         attach_thread
         env->CallVoidMethod(dcMotorSimple, env->GetMethodID(jclazz, "setPower", "(D)V"),
                             static_cast<jdouble> (power));
@@ -85,10 +85,8 @@ namespace sdk {
 
     double Dc_motor_simple::get_power() const {
         attach_thread
-        auto result = static_cast<double> (env->CallDoubleMethod(dcMotorSimple,
-                                                                 env->GetMethodID(jclazz,
-                                                                                  "getPower",
-                                                                                  "()D")));
-        return result;
+        return static_cast<double> (env->CallDoubleMethod(dcMotorSimple,
+                                                          env->GetMethodID(jclazz, "getPower",
+                                                                           "()D")));
     }
 } // sdk

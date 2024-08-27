@@ -16,11 +16,11 @@ namespace sdk {
 
         Servo_controller() = default;
 
-        Servo_controller(jobject servoController);
+        Servo_controller(const jobject &servoController);
 
         ~Servo_controller();
 
-        Servo_controller &operator=(jobject servoController);
+        Servo_controller &operator=(const jobject &servoController);
 
         enum class Pwm_status {
             ENABLED, DISABLED, MIXED
@@ -32,9 +32,9 @@ namespace sdk {
 
         [[nodiscard]] Pwm_status get_pwm_status() const;
 
-        void set_servo_position(int servo, double position) const;
+        void set_servo_position(const int &servo, const double &position) const;
 
-        [[nodiscard]] double get_servo_position(int servo) const;
+        [[nodiscard]] double get_servo_position(const int &servo) const;
     };
 
 } // sdk

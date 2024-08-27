@@ -17,11 +17,11 @@ namespace sdk {
 
         Dc_motor_ex() = default;
 
-        Dc_motor_ex(jobject dcMotorEx);
+        Dc_motor_ex(const jobject &dcMotorEx);
 
         ~Dc_motor_ex();
 
-        Dc_motor_ex &operator=(jobject dcMotorEx) override;
+        Dc_motor_ex &operator=(const jobject &dcMotorEx) override;
 
         // DcMotorEx
 
@@ -31,16 +31,18 @@ namespace sdk {
 
         [[nodiscard]] bool is_motor_enabled() const;
 
-        void set_velocity(double angularRate) const;
+        void set_velocity(const double &angular_rate) const;
 
         [[nodiscard]] double get_velocity() const;
 
         // Only usable with RUN_USING_ENCODER or RUN_TO_POSITION
-        void set_PIDF_coefficients(Run_mode mode, PIDF_coefficients pidCoefficients) const;
+        void
+        set_PIDF_coefficients(const Run_mode &mode,
+                              const PIDF_coefficients &pid_coefficients) const;
 
-        [[nodiscard]] PIDF_coefficients get_PIDF_coefficients(Run_mode mode) const;
+        [[nodiscard]] PIDF_coefficients get_PIDF_coefficients(const Run_mode &mode) const;
 
-        void set_target_position_tolerance(int tolerance) const;
+        void set_target_position_tolerance(const int &tolerance) const;
 
         [[nodiscard]] int get_target_position_tolerance() const;
 

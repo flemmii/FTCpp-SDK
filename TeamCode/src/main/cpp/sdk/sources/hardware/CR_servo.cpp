@@ -7,13 +7,13 @@
 namespace sdk {
     jclass CR_servo::jclazz;
 
-    CR_servo::CR_servo(jobject crServo) : crServo(crServo), Dc_motor_simple(crServo) {}
+    CR_servo::CR_servo(const jobject &crServo) : crServo(crServo), Dc_motor_simple(crServo) {}
 
     CR_servo::~CR_servo() {
         crServo = nullptr;
     }
 
-    CR_servo &CR_servo::operator=(jobject crServo) {
+    CR_servo &CR_servo::operator=(const jobject &crServo) {
         Dc_motor_simple::operator=(crServo);
         this->crServo = crServo;
         return *this;

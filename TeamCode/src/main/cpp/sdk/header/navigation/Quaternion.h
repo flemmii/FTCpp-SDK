@@ -17,7 +17,9 @@ namespace sdk {
 
         Quaternion() = default;
 
-        Quaternion(float w, float x, float y, float z, long acquisition_time);
+        Quaternion(const float &w, const float &x, const float &y, const float &z,
+                   const long &acquisition_time) : w(w), x(x), y(y), z(z),
+                                                   acquisition_time(acquisition_time) {}
     };
 
 } // sdk

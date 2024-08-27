@@ -19,7 +19,7 @@ namespace sdk::linear_op_mode {
 
     void idle();
 
-    void sleep(int milliseconds);
+    void sleep(const int &milliseconds);
 
     bool op_mode_is_active();
 

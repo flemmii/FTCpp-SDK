@@ -7,7 +7,7 @@
 namespace sdk {
     jclass Camera_name::jclazz;
 
-    Camera_name::Camera_name(jobject cameraName) : cameraName(cameraName) {}
+    Camera_name::Camera_name(const jobject &cameraName) : cameraName(cameraName) {}
 
     Camera_name::~Camera_name() {
         if (cameraName) {
@@ -17,7 +17,7 @@ namespace sdk {
         }
     }
 
-    Camera_name &Camera_name::operator=(jobject cameraName) {
+    Camera_name &Camera_name::operator=(const jobject &cameraName) {
         if (this->cameraName) {
             attach_thread
             env->DeleteGlobalRef(this->cameraName);

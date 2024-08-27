@@ -17,11 +17,11 @@ namespace sdk {
 
         CR_servo() = default;
 
-        CR_servo(jobject crServo);
+        CR_servo(const jobject &crServo);
 
         ~CR_servo();
 
-        CR_servo &operator=(jobject crServo);
+        CR_servo &operator=(const jobject &crServo) override;
 
         [[nodiscard]] Servo_controller get_controller() const;
 

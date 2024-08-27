@@ -24,19 +24,19 @@ namespace sdk {
 
         Dc_motor_simple() = default;
 
-        Dc_motor_simple(jobject dcMotorSimple);
+        Dc_motor_simple(const jobject &dcMotorSimple);
 
         ~Dc_motor_simple();
 
-        virtual Dc_motor_simple &operator=(jobject dcMotorSimple);
+        virtual Dc_motor_simple &operator=(const jobject &dcMotorSimple);
 
-        void set_direction(Direction direction) const;
+        void set_direction(const Direction &direction) const;
 
         [[nodiscard]] Direction get_direction() const;
 
-        [[nodiscard]] static const char *direction_to_string(Direction direction);
+        [[nodiscard]] static const char *direction_to_string(const Direction &direction);
 
-        void set_power(double power) const;
+        void set_power(const double &power) const;
 
         [[nodiscard]] double get_power() const;
     };

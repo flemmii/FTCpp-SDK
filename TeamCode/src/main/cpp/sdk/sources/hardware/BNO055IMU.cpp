@@ -12,8 +12,8 @@ namespace sdk {
     jclass BNO055IMU::jclazz_AccelUnit;
 
     jclass BNO055IMU::Parameters::jclazz;
-    
-    BNO055IMU::BNO055IMU(jobject bno055imu) : bno055imu(bno055imu) {}
+
+    BNO055IMU::BNO055IMU(const jobject &bno055imu) : bno055imu(bno055imu) {}
 
     BNO055IMU::~BNO055IMU() {
         if (bno055imu) {
@@ -23,7 +23,7 @@ namespace sdk {
         }
     }
 
-    BNO055IMU &BNO055IMU::operator=(jobject bno055imu) {
+    BNO055IMU &BNO055IMU::operator=(const jobject &bno055imu) {
         if (this->bno055imu) {
             attach_thread
             env->DeleteGlobalRef(this->bno055imu);
@@ -32,7 +32,7 @@ namespace sdk {
         return *this;
     }
 
-    const char *BNO055IMU::angle_unit_to_string(BNO055IMU::Angle_unit angle_unit) {
+    const char *BNO055IMU::angle_unit_to_string(const BNO055IMU::Angle_unit &angle_unit) {
         switch (angle_unit) {
             case BNO055IMU::Angle_unit::DEGREES:
                 return "DEGREES";
@@ -43,7 +43,7 @@ namespace sdk {
         }
     }
 
-    const char *BNO055IMU::accel_unit_to_string(Accel_unit accel_unit) {
+    const char *BNO055IMU::accel_unit_to_string(const Accel_unit &accel_unit) {
         switch (accel_unit) {
             case BNO055IMU::Accel_unit::METERS_PERSEC_PERSEC:
                 return "METERS_PERSEC_PERSEC";
@@ -54,7 +54,7 @@ namespace sdk {
         }
     }
 
-    bool BNO055IMU::initialize(BNO055IMU::Parameters parameters) {
+    bool BNO055IMU::initialize(const BNO055IMU::Parameters &parameters) const {
         attach_thread
         jobject parametersJava = env->NewObject(Parameters::jclazz,
                                                 env->GetMethodID(Parameters::jclazz,
@@ -89,7 +89,7 @@ namespace sdk {
         return result;
     }
 
-    void BNO055IMU::start_acceleration_integration(int ms_poll_interval) {
+    void BNO055IMU::start_acceleration_integration(const int &ms_poll_interval) const {
         attach_thread
         env->CallVoidMethod(bno055imu,
                             env->GetMethodID(jclazz, "startAccelerationIntegration",
@@ -97,7 +97,7 @@ namespace sdk {
                             NULL, NULL, static_cast<jint>(ms_poll_interval));
     }
 
-    Orientation BNO055IMU::get_angular_orientation() {
+    Orientation BNO055IMU::get_angular_orientation() const {
         attach_thread
         jobject orientation = env->CallObjectMethod(bno055imu, env->GetMethodID(jclazz,
                                                                                 "getAngularOrientation",
@@ -118,7 +118,7 @@ namespace sdk {
         return {x, y, z};
     }
 
-    Acceleration BNO055IMU::get_acceleration() {
+    Acceleration BNO055IMU::get_acceleration() const {
         attach_thread
         jobject acceleration = env->CallObjectMethod(bno055imu, env->GetMethodID(jclazz,
                                                                                  "getAcceleration",
@@ -139,7 +139,7 @@ namespace sdk {
         return {x, y, z};
     }
 
-    Angular_velocity BNO055IMU::get_angular_velocity() {
+    Angular_velocity BNO055IMU::get_angular_velocity() const {
         attach_thread
         jobject angularVelocity = env->CallObjectMethod(bno055imu, env->GetMethodID(jclazz,
                                                                                     "getAngularVelocity",
