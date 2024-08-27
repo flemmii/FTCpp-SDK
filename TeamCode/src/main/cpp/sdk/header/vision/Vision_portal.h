@@ -65,6 +65,8 @@ namespace sdk {
 
         ~Vision_portal();
 
+        Vision_portal &operator=(const Vision_portal &vision_portal);
+
         Vision_portal &operator=(jobject visionPortal);
 
         [[nodiscard]] static std::vector<int>

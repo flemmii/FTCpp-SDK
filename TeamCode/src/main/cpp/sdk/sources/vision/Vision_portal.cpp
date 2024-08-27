@@ -63,6 +63,15 @@ namespace sdk {
         }
     }
 
+    Vision_portal &Vision_portal::operator=(const Vision_portal &vision_portal) {
+        if (this->visionPortal) {
+            attach_thread
+            env->DeleteGlobalRef(this->visionPortal);
+        }
+        this->visionPortal = vision_portal.visionPortal;
+        return *this;
+    }
+
     Vision_portal &Vision_portal::operator=(jobject visionPortal) {
         if (this->visionPortal) {
             attach_thread
@@ -71,7 +80,6 @@ namespace sdk {
         this->visionPortal = visionPortal;
         return *this;
     }
-
 
     vector<int>
     Vision_portal::makeMultiPortalView(int numPortals, Vision_portal::Multi_portal_layout mpl) {
