@@ -20,7 +20,7 @@ namespace sdk {
     void Vision_processor::process_frame(const Mat &input, long capture_time_nanos) const {}
 
     void Vision_processor::on_draw_frame(int onscreen_width, int onscreen_height,
-                                         Mat frame_to_draw_on) const {}
+                                         Mat &frame_to_draw_on) const {}
 
     bool operator==(const Vision_processor &lhs, const Vision_processor &rhs) {
         return lhs.id == rhs.id;

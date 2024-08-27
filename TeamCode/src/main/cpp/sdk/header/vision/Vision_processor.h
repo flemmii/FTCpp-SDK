@@ -23,7 +23,7 @@ namespace sdk {
 
         // Just draw on frame_to_draw_on using the methods given by OpenCV
         virtual void
-        on_draw_frame(int onscreen_width, int onscreen_height, cv::Mat frame_to_draw_on) const;
+        on_draw_frame(int onscreen_width, int onscreen_height, cv::Mat &frame_to_draw_on) const;
 
         friend bool operator==(const Vision_processor &lhs, const Vision_processor &rhs);
     };
