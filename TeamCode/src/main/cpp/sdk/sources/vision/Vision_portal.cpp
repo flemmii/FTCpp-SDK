@@ -103,7 +103,7 @@ namespace sdk {
     }
 
     Vision_portal Vision_portal::easy_create_with_defaults(const Camera_name &camera_name,
-                                                           const std::vector<Vision_processor> &processors) {
+                                                           const std::vector<Vision_processor *> &processors) {
         return Vision_portal::Builder().set_camera(camera_name).add_processors(processors).build();
     }
 
@@ -352,8 +352,11 @@ namespace sdk {
     }
 
     Vision_portal::Builder &
-    Vision_portal::Builder::add_processor(const Vision_processor &processor) {
-        this->processors.emplace_back(const_cast<Vision_processor *>(&processor), true);
+    Vision_portal::Builder::add_processor(Vision_processor *processor) {
+        if (processor == nullptr)
+            throw invalid_argument("Processor cannot be null");
+
+        this->processors.emplace_back(processor, true);
 
         jobject jprocessor;
         attach_thread
@@ -379,9 +382,13 @@ namespace sdk {
     }
 
     Vision_portal::Builder &Vision_portal::Builder::add_processors(
-            const vector <Vision_processor> &processors) {
-        for (const auto &processor: processors)
-            this->processors.emplace_back(const_cast<Vision_processor *>(&processor), true);
+            const vector<Vision_processor *> &processors) {
+        for (const auto &processor: processors) {
+            if (processor == nullptr)
+                throw invalid_argument("Processor cannot be null");
+
+            this->processors.emplace_back(processor, true);
+        }
 
         jobject jprocessor;
         attach_thread

@@ -69,7 +69,7 @@ namespace sdk {
         makeMultiPortalView(int numPortals, Multi_portal_layout mpl);
 
         [[nodiscard]] static Vision_portal easy_create_with_defaults(const Camera_name &camera_name,
-                                                                     const std::vector<sdk::Vision_processor> &processors);
+                                                                     const std::vector<sdk::Vision_processor *> &processors);
 
         static void enable_dual_cam_view();
 
@@ -128,10 +128,10 @@ namespace sdk {
 
             Builder &set_camera_resolution(Size cameraResolution);
 
-            Builder &add_processor(const sdk::Vision_processor &processor);
+            Builder &add_processor(sdk::Vision_processor *processor);
 
             Builder &
-            add_processors(const std::vector<sdk::Vision_processor> &processors);
+            add_processors(const std::vector<sdk::Vision_processor *> &processors);
 
             Builder &set_auto_start_stream_on_build(bool auto_start_stream_on_build);
 
