@@ -115,11 +115,54 @@ namespace sdk {
         vision_processor::dual_cam_view = false;
     }
 
+    void Vision_portal::add_processor(sdk::Vision_processor *processor) {
+        if (processor == nullptr)
+            throw invalid_argument("Processor cannot be null");
+
+        this->processors.emplace_back(processor, true);
+    }
+
+    void Vision_portal::add_processors(const vector<Vision_processor *> &processors) {
+        for (const auto &processor: processors) {
+            if (processor == nullptr)
+                throw invalid_argument("Processor cannot be null");
+
+            this->processors.emplace_back(processor, true);
+        }
+    }
+
+    void Vision_portal::remove_processor(const sdk::Vision_processor *processor) {
+        if (processor == nullptr)
+            throw invalid_argument("Processor cannot be null");
+        for (auto it = processors.begin(); it != processors.end(); it++) {
+            if (*it->first == *processor) {
+                processors.erase(it);
+                return;
+            }
+        }
+    }
+
+    void Vision_portal::remove_processors(const vector<Vision_processor *> &processors) {
+        for (const auto &processor: processors) {
+            if (processor == nullptr)
+                throw invalid_argument("Processor cannot be null");
+            for (auto it = this->processors.begin(); it != this->processors.end(); it++) {
+                if (*it->first == *processor) {
+                    this->processors.erase(it);
+                    break;
+                }
+            }
+        }
+    }
+
     void
-    Vision_portal::set_processor_enabled(const sdk::Vision_processor &processor,
+    Vision_portal::set_processor_enabled(const Vision_processor *processor,
                                          bool enabled) {
+        if (processor == nullptr)
+            throw invalid_argument("Processor cannot be null");
+
         for (auto &proc: processors) {
-            if (*proc.first == processor) {
+            if (*proc.first == *processor) {
                 proc.second = enabled;
                 return;
             }
@@ -127,9 +170,12 @@ namespace sdk {
     }
 
     bool
-    Vision_portal::get_processor_enabled(const sdk::Vision_processor &processor) {
+    Vision_portal::get_processor_enabled(const Vision_processor *processor) {
+        if (processor == nullptr)
+            throw invalid_argument("Processor cannot be null");
+
         for (const auto &proc: processors) {
-            if (*proc.first == processor)
+            if (*proc.first == *processor)
                 return proc.second;
         }
         return false;
