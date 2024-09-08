@@ -67,5 +67,4 @@ repositories {
 dependencies {
     implementation 'com.github.Eeshwar-Krishnan:PhotonFTC:v3.0.1-ALPHA'
     implementation project(':FtcRobotController')
-    annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
 }
