@@ -30,24 +30,12 @@ add_library(sdk SHARED ${SDK_SOURCES})
 add_library(april_tag_v7a SHARED IMPORTED)
 set_target_properties(april_tag_v7a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/../../../build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libapriltag.so")
 
-add_library(image_utils_v7a SHARED IMPORTED)
-set_target_properties(image_utils_v7a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/../../../build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libimage_utils.so")
-
-add_library(object_tracking_v7a SHARED IMPORTED)
-set_target_properties(object_tracking_v7a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/../../../build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libobject_tracking.so")
-
 add_library(opencv_java4_v7a SHARED IMPORTED)
 set_target_properties(opencv_java4_v7a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/../../../build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libopencv_java4.so")
 
 # Für arm64-v8a
 add_library(april_tag_v8a SHARED IMPORTED)
 set_target_properties(april_tag_v8a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/../../../build/intermediates/merged_native_libs/debug/out/lib/arm64-v8a/libapriltag.so")
-
-add_library(image_utils_v8a SHARED IMPORTED)
-set_target_properties(image_utils_v8a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/../../../build/intermediates/merged_native_libs/debug/out/lib/arm64-v8a/libimage_utils.so")
-
-add_library(object_tracking_v8a SHARED IMPORTED)
-set_target_properties(object_tracking_v8a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/../../../build/intermediates/merged_native_libs/debug/out/lib/arm64-v8a/libobject_tracking.so")
 
 add_library(opencv_java4_v8a SHARED IMPORTED)
 set_target_properties(opencv_java4_v8a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/../../../build/intermediates/merged_native_libs/debug/out/lib/arm64-v8a/libopencv_java4.so")
@@ -59,12 +47,8 @@ target_link_libraries(
         sdk
         ${log-lib}
         $<$<STREQUAL:${ANDROID_ABI},armeabi-v7a>:april_tag_v7a>
-        $<$<STREQUAL:${ANDROID_ABI},armeabi-v7a>:image_utils_v7a>
-        $<$<STREQUAL:${ANDROID_ABI},armeabi-v7a>:object_tracking_v7a>
         $<$<STREQUAL:${ANDROID_ABI},armeabi-v7a>:opencv_java4_v7a>
         $<$<STREQUAL:${ANDROID_ABI},arm64-v8a>:april_tag_v8a>
-        $<$<STREQUAL:${ANDROID_ABI},arm64-v8a>:image_utils_v8a>
-        $<$<STREQUAL:${ANDROID_ABI},arm64-v8a>:object_tracking_v8a>
         $<$<STREQUAL:${ANDROID_ABI},arm64-v8a>:opencv_java4_v8a>
 )
 
