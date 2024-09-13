@@ -21,7 +21,7 @@ namespace sdk {
 
         ~Analog_input();
 
-        Analog_input &operator=(const jobject &analogInput);
+        virtual Analog_input &operator=(const jobject &analogInput);
 
         [[nodiscard]] int get_voltage() const;
 

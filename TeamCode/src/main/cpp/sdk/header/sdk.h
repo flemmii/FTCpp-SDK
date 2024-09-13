@@ -25,6 +25,7 @@
 #include "hardware/IMU.h"
 #include "hardware/Lynx_module.h"
 #include "hardware/PIDF_coefficients.h"
+#include "hardware/Potentiometer.h"
 #include "hardware/Servo.h"
 #include "hardware/Servo_controller.h"
 #include "hardware/Touch_sensor.h"
