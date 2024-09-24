@@ -30,14 +30,14 @@ namespace sdk {
         attach_thread
         return static_cast<int>(env->CallIntMethod(analogInput,
                                                    env->GetMethodID(jclazz, "getVoltage",
-                                                                    "()I")));
+                                                                    "()D")));
     }
 
     int Analog_input::get_max_voltage() const {
         attach_thread
         return static_cast<int>(env->CallIntMethod(analogInput,
                                                    env->GetMethodID(jclazz, "getMaxVoltage",
-                                                                    "()I")));
+                                                                    "()D")));
     }
 
     std::string Analog_input::get_device_name() const {
