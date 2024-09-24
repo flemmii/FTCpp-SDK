@@ -6,7 +6,7 @@
 
 namespace sdk {
 
-    double Potentiometer::voltage_to_angle(const int &voltage) {
+    double Potentiometer::voltage_to_angle(const double &voltage) {
         double common_root = sqrt(363 - 440 * voltage + 400 * voltage * voltage);
         return ((-135 * (-33 * sqrt(3) + 20 * sqrt(3) * voltage - common_root)) /
                 (11 * sqrt(3) + common_root));

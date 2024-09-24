@@ -10,7 +10,7 @@
 namespace sdk {
     class Potentiometer : public Analog_input {
     private:
-        [[nodiscard]] static double voltage_to_angle(const int &voltage);
+        [[nodiscard]] static double voltage_to_angle(const double &voltage);
 
     public:
         Potentiometer() = default;
