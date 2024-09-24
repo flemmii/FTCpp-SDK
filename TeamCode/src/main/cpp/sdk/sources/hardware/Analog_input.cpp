@@ -26,16 +26,16 @@ namespace sdk {
         return *this;
     }
 
-    int Analog_input::get_voltage() const {
+    double Analog_input::get_voltage() const {
         attach_thread
-        return static_cast<int>(env->CallIntMethod(analogInput,
+        return static_cast<double>(env->CallDoubleMethod(analogInput,
                                                    env->GetMethodID(jclazz, "getVoltage",
                                                                     "()D")));
     }
 
-    int Analog_input::get_max_voltage() const {
+    double Analog_input::get_max_voltage() const {
         attach_thread
-        return static_cast<int>(env->CallIntMethod(analogInput,
+        return static_cast<double>(env->CallDoubleMethod(analogInput,
                                                    env->GetMethodID(jclazz, "getMaxVoltage",
                                                                     "()D")));
     }

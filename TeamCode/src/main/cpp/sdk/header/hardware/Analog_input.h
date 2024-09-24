@@ -23,9 +23,9 @@ namespace sdk {
 
         virtual Analog_input &operator=(const jobject &analogInput);
 
-        [[nodiscard]] int get_voltage() const;
+        [[nodiscard]] double get_voltage() const;
 
-        [[nodiscard]] int get_max_voltage() const;
+        [[nodiscard]] double get_max_voltage() const;
 
         [[nodiscard]] std::string get_device_name() const;
 
