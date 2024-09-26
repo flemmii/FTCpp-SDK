@@ -15,8 +15,8 @@ Java_org_firstinspires_ftc_teamcode_tests_cpp_TrackPositionCpp_opMode(JNIEnv *en
                                                                       jobject thiz) {
     init_sdk
 
-    sdk::Dc_motor_ex dead_wheel_forwards = hardware_map::get(DcMotorEx, "rear_left");
-    sdk::Dc_motor_ex dead_wheel_sidewards = hardware_map::get(DcMotorEx, "front_right");
+    Dc_motor_ex dead_wheel_forwards = hardware_map::get<Dc_motor_ex>("rear_left");
+    Dc_motor_ex dead_wheel_sidewards = hardware_map::get<Dc_motor_ex>("front_right");
 
     dead_wheel_forwards.set_mode(Dc_motor_ex::Run_mode::STOP_AND_RESET_ENCODER);
     dead_wheel_sidewards.set_mode(Dc_motor_ex::Run_mode::STOP_AND_RESET_ENCODER);
@@ -24,12 +24,12 @@ Java_org_firstinspires_ftc_teamcode_tests_cpp_TrackPositionCpp_opMode(JNIEnv *en
     dead_wheel_forwards.set_mode(Dc_motor_ex::Run_mode::RUN_WITHOUT_ENCODER);
     dead_wheel_sidewards.set_mode(Dc_motor_ex::Run_mode::RUN_WITHOUT_ENCODER);
 
-    Lynx_module control_hub = hardware_map::get(LynxModule, "Control Hub");
-    Lynx_module expansion_hub = hardware_map::get(LynxModule, "Expansion Hub 2");
+    Lynx_module control_hub = hardware_map::get<Lynx_module>("Control Hub");
+    Lynx_module expansion_hub = hardware_map::get<Lynx_module>("Expansion Hub 2");
     control_hub.set_bulk_caching_mode(Lynx_module::Bulk_caching_mode::MANUAL);
     expansion_hub.set_bulk_caching_mode(Lynx_module::Bulk_caching_mode::MANUAL);
 
-    class BNO055IMU imu = hardware_map::get(BNO055IMU, "imu1");
+    class BNO055IMU imu = hardware_map::get<BNO055IMU>("imu1");
     BNO055IMU::Parameters parameters;
     parameters.angle_unit = BNO055IMU::Angle_unit::DEGREES;
     parameters.accel_unit = BNO055IMU::Accel_unit::METERS_PERSEC_PERSEC;
@@ -50,10 +50,10 @@ Java_org_firstinspires_ftc_teamcode_tests_cpp_TrackPositionCpp_opMode(JNIEnv *en
     chrono::high_resolution_clock::time_point last_time = chrono::high_resolution_clock::now();
     chrono::high_resolution_clock::time_point start_time = chrono::high_resolution_clock::now();
     int loop_time;
-    vector<int> loop_times;
+    int count = 0;
     int min_loop_time = 1000000000;
     int max_loop_time = 0;
-    double avarage_loop_time;
+    double average_loop_time = 0;
 
     vector<double> ring_buffer_x_speed(5, 0);
     vector<double> ring_buffer_y_speed(5, 0);
@@ -69,7 +69,8 @@ Java_org_firstinspires_ftc_teamcode_tests_cpp_TrackPositionCpp_opMode(JNIEnv *en
     start_time = chrono::high_resolution_clock::now();
     last_time = chrono::high_resolution_clock::now();
 
-    while (!is_stop_requested() && chrono::duration_cast<chrono::milliseconds>(chrono::high_resolution_clock::now() - start_time).count() < 60000) {
+    while (!is_stop_requested() && chrono::duration_cast<chrono::milliseconds>(
+            chrono::high_resolution_clock::now() - start_time).count() < 60000) {
         // Getting all the data of the hubs
         control_hub.get_bulk_data();
         if (control_hub.is_not_responding())
@@ -158,10 +159,9 @@ Java_org_firstinspires_ftc_teamcode_tests_cpp_TrackPositionCpp_opMode(JNIEnv *en
         // Calculating loop times
         loop_time = chrono::duration_cast<chrono::microseconds>(
                 chrono::high_resolution_clock::now() - last_time).count();
-        last_time = chrono::high_resolution_clock::now();
 
-        loop_times.push_back(loop_time);
-        avarage_loop_time = accumulate(loop_times.begin(), loop_times.end(), 0) / (double) (loop_times.size());
+        average_loop_time = (average_loop_time * count + loop_time) / (count + 1);
+        count++;
 
         if (loop_time > max_loop_time)
             max_loop_time = loop_time;
@@ -170,11 +170,13 @@ Java_org_firstinspires_ftc_teamcode_tests_cpp_TrackPositionCpp_opMode(JNIEnv *en
             min_loop_time = loop_time;
 
         telemetry::add_data("Loop time", loop_time);
-        telemetry::add_data("Loop times size", (double) (loop_times.size()));
-        telemetry::add_data("Avarage loop time", avarage_loop_time);
+        telemetry::add_data("Loop count", count);
+        telemetry::add_data("Average loop time", average_loop_time);
         telemetry::add_data("Max loop time", max_loop_time);
         telemetry::add_data("Min loop time", min_loop_time);
         telemetry::update();
+
+        last_time = chrono::high_resolution_clock::now();
     }
 
     while (!is_stop_requested());

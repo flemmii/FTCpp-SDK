@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 @TeleOp(name = "DrivingJava", group = "tests")
 public class DrivingJava extends LinearOpMode {
-    
+
     @Override
     public void runOpMode() throws InterruptedException {
         // This gets all the drive motors from the hardware map
@@ -25,10 +25,10 @@ public class DrivingJava extends LinearOpMode {
         long lastTimeMicros = System.nanoTime() / 1000;
         long startTime = System.currentTimeMillis();
         int loopTime;
-        ArrayList<Integer> loopTimes = new ArrayList<>();
+        int count = 0;
         int minLoopTime = 1000000000;
         int maxLoopTime = 0;
-        double avarageLoopTime;
+        double averageLoopTime = 0;
 
         telemetry.addLine("Initialized");
         telemetry.update();
@@ -52,10 +52,9 @@ public class DrivingJava extends LinearOpMode {
 
             // Calculating loop times
             loopTime = (int) (System.nanoTime() / 1000 - lastTimeMicros);
-            lastTimeMicros = System.nanoTime() / 1000;
 
-            loopTimes.add(loopTime);
-            avarageLoopTime = loopTimes.stream().mapToInt(Integer::intValue).sum() / (double) (loopTimes.size());
+            averageLoopTime = (averageLoopTime * count + loopTime) / (count + 1);
+            count++;
 
             if (loopTime > maxLoopTime)
                 maxLoopTime = loopTime;
@@ -64,14 +63,16 @@ public class DrivingJava extends LinearOpMode {
                 minLoopTime = loopTime;
 
             telemetry.addData("Loop time", loopTime);
-            telemetry.addData("Loop times size", (double) (loopTimes.size()));
-            telemetry.addData("Avarage loop time", avarageLoopTime);
+            telemetry.addData("Loop count", count);
+            telemetry.addData("Average loop time", averageLoopTime);
             telemetry.addData("Max loop time", maxLoopTime);
             telemetry.addData("Min loop time", minLoopTime);
             telemetry.update();
+
+            lastTimeMicros = System.nanoTime() / 1000;
         }
 
-        while(!isStopRequested());
+        while (!isStopRequested()) ;
 
         stop();
     }

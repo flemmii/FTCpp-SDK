@@ -31,10 +31,10 @@ public class TeamPropDetectionJava extends LinearOpMode {
     long lastTimeMicros = System.nanoTime() / 1000;
     long startTime = System.currentTimeMillis();
     int loopTime;
-    ArrayList<Integer> loopTimes = new ArrayList<>();
+    int count = 0;
     int minLoopTime = 1000000000;
     int maxLoopTime = 0;
-    double avarageLoopTime;
+    double averageLoopTime = 0;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -46,12 +46,12 @@ public class TeamPropDetectionJava extends LinearOpMode {
         startTime = System.currentTimeMillis();
         lastTimeMicros = System.nanoTime() / 1000;
 
-        TeamPropDetection detection = new TeamPropDetection(lastTimeMicros, startTime, loopTime, loopTimes, minLoopTime, maxLoopTime, avarageLoopTime, telemetry);
+        TeamPropDetection detection = new TeamPropDetection(lastTimeMicros, startTime, loopTime, count, minLoopTime, maxLoopTime, averageLoopTime, telemetry);
         VisionPortal portal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "front_webcam"), detection);
 
-        while (!isStopRequested() && System.currentTimeMillis() - startTime < 60000);
+        while (!isStopRequested() && System.currentTimeMillis() - startTime < 60000) ;
         portal.setProcessorEnabled(detection, false);
-        while (!isStopRequested());
+        while (!isStopRequested()) ;
 
         stop();
     }
@@ -77,21 +77,21 @@ class TeamPropDetection implements VisionProcessor {
     long lastTimeMicros;
     long startTime;
     int loopTime;
-    ArrayList<Integer> loopTimes;
+    int count;
     int minLoopTime;
     int maxLoopTime;
-    double avarageLoopTime;
+    double averageLoopTime;
 
     Telemetry telemetry;
 
-    TeamPropDetection(long lastTimeMicros, long startTime, int loopTime, ArrayList<Integer> loopTimes, int minLoopTime, int maxLoopTime, double avarageLoopTime, Telemetry telemetry) {
+    TeamPropDetection(long lastTimeMicros, long startTime, int loopTime, int count, int minLoopTime, int maxLoopTime, double averageLoopTime, Telemetry telemetry) {
         this.lastTimeMicros = lastTimeMicros;
         this.startTime = startTime;
         this.loopTime = loopTime;
-        this.loopTimes = loopTimes;
+        this.count = count;
         this.minLoopTime = minLoopTime;
         this.maxLoopTime = maxLoopTime;
-        this.avarageLoopTime = avarageLoopTime;
+        this.averageLoopTime = averageLoopTime;
         this.telemetry = telemetry;
     }
 
@@ -184,10 +184,9 @@ class TeamPropDetection implements VisionProcessor {
 
         // Calculating loop times
         loopTime = (int) (System.nanoTime() / 1000 - lastTimeMicros);
-        lastTimeMicros = System.nanoTime() / 1000;
 
-        loopTimes.add(loopTime);
-        avarageLoopTime = loopTimes.stream().mapToInt(Integer::intValue).sum() / (double) (loopTimes.size());
+        averageLoopTime = (averageLoopTime * count + loopTime) / (count + 1);
+        count++;
 
         if (loopTime > maxLoopTime)
             maxLoopTime = loopTime;
@@ -196,11 +195,13 @@ class TeamPropDetection implements VisionProcessor {
             minLoopTime = loopTime;
 
         telemetry.addData("Loop time", loopTime);
-        telemetry.addData("Loop times size", (double) (loopTimes.size()));
-        telemetry.addData("Avarage loop time", avarageLoopTime);
+        telemetry.addData("Loop count", count);
+        telemetry.addData("Average loop time", averageLoopTime);
         telemetry.addData("Max loop time", maxLoopTime);
         telemetry.addData("Min loop time", minLoopTime);
         telemetry.update();
+
+        lastTimeMicros = System.nanoTime() / 1000;
 
         return null;
     }
@@ -217,7 +218,7 @@ class TeamPropDetection implements VisionProcessor {
 
         Bitmap bitmap = Bitmap.createBitmap(640, 480, Bitmap.Config.ARGB_8888);
         Utils.matToBitmap(frame, bitmap);
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, (int)(640 * scaleBmpPxToCanvasPx), (int) (480 * scaleBmpPxToCanvasPx), true);
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, (int) (640 * scaleBmpPxToCanvasPx), (int) (480 * scaleBmpPxToCanvasPx), true);
         canvas.drawBitmap(scaledBitmap, 0, 0, null);
 
     }

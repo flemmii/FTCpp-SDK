@@ -13,15 +13,15 @@ using namespace team_prop_detection;
 chrono::high_resolution_clock::time_point last_time = chrono::high_resolution_clock::now();
 chrono::high_resolution_clock::time_point start_time = chrono::high_resolution_clock::now();
 int loop_time;
-vector<int> loop_times;
+int count = 0;
 int min_loop_time = 1000000000;
 int max_loop_time = 0;
-double avarage_loop_time;
+double average_loop_time = 0;
 
 extern "C"
 JNIEXPORT void JNICALL
 Java_org_firstinspires_ftc_teamcode_tests_cpp_TeamPropDetectionCpp_opMode(JNIEnv *env,
-                                                                      jobject thiz) {
+                                                                          jobject thiz) {
     init_sdk
 
     telemetry::add_line("Initialized");
@@ -32,10 +32,12 @@ Java_org_firstinspires_ftc_teamcode_tests_cpp_TeamPropDetectionCpp_opMode(JNIEnv
     start_time = chrono::high_resolution_clock::now();
     last_time = chrono::high_resolution_clock::now();
 
-    Team_prop_detection detection;
-    Vision_portal portal = Vision_portal::Builder().add_processor(detection).set_camera(hardware_map::get(WebcamName, "front_webcam")).build();
+    Team_prop_detection *detection = new Team_prop_detection();
+    Vision_portal portal = Vision_portal::Builder().add_processor(detection).set_camera(
+            hardware_map::get<Webcam_name>("Webcam")).build();
 
-    while (!is_stop_requested() && chrono::duration_cast<chrono::milliseconds>(chrono::high_resolution_clock::now() - start_time).count() < 60000);
+    while (!is_stop_requested() && chrono::duration_cast<chrono::milliseconds>(
+            chrono::high_resolution_clock::now() - start_time).count() < 60000);
     portal.set_processor_enabled(detection, false);
     while (!is_stop_requested());
 
@@ -60,7 +62,7 @@ Scalar high_hsv1(120, 255, 255);
 
 Scalar alliance_color(0, 0, 255);
 
-void Team_prop_detection::process_frame(const Mat &input, long capture_time_nanos) const {
+void Team_prop_detection::process_frame(const Mat &input, const long &capture_time_nanos) const {
     Mat hsv;
     cvtColor(input, hsv, COLOR_RGB2HSV);
 
@@ -147,10 +149,9 @@ void Team_prop_detection::process_frame(const Mat &input, long capture_time_nano
     // Calculating loop times
     loop_time = chrono::duration_cast<chrono::microseconds>(
             chrono::high_resolution_clock::now() - last_time).count();
-    last_time = chrono::high_resolution_clock::now();
 
-    loop_times.push_back(loop_time);
-    avarage_loop_time = accumulate(loop_times.begin(), loop_times.end(), 0) / (double) (loop_times.size());
+    average_loop_time = (average_loop_time * ::count + loop_time) / (::count + 1);
+    ::count++;
 
     if (loop_time > max_loop_time)
         max_loop_time = loop_time;
@@ -159,15 +160,17 @@ void Team_prop_detection::process_frame(const Mat &input, long capture_time_nano
         min_loop_time = loop_time;
 
     telemetry::add_data("Loop time", loop_time);
-    telemetry::add_data("Loop times size", (double) (loop_times.size()));
-    telemetry::add_data("Avarage loop time", avarage_loop_time);
+    telemetry::add_data("Loop count", ::count);
+    telemetry::add_data("Average loop time", average_loop_time);
     telemetry::add_data("Max loop time", max_loop_time);
     telemetry::add_data("Min loop time", min_loop_time);
     telemetry::update();
+
+    last_time = chrono::high_resolution_clock::now();
 }
 
-void Team_prop_detection::on_draw_frame(int onscreen_width, int onscreen_height,
-                                        cv::Mat frame_to_draw_on) const {
+void Team_prop_detection::on_draw_frame(const int &onscreen_width, const int &onscreen_height,
+                                        cv::Mat &frame_to_draw_on) const {
     if (!largest_contour.empty()) {
         drawContours(frame_to_draw_on, vector<vector<Point>>{largest_contour}, -1,
                      largest_contour_color, 5);
