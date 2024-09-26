@@ -7,7 +7,7 @@
 namespace sdk {
     jclass Color_sensor::jclazz;
 
-    Color_sensor::Color_sensor(jobject colorSensor) : colorSensor(colorSensor) {}
+    Color_sensor::Color_sensor(const jobject &colorSensor) : colorSensor(colorSensor) {}
 
     Color_sensor::~Color_sensor() {
         if (colorSensor) {
@@ -17,7 +17,7 @@ namespace sdk {
         }
     }
 
-    Color_sensor &Color_sensor::operator=(jobject colorSensor) {
+    Color_sensor &Color_sensor::operator=(const jobject &colorSensor) {
         if (this->colorSensor) {
             attach_thread
             env->DeleteGlobalRef(this->colorSensor);
@@ -56,7 +56,7 @@ namespace sdk {
                                                    env->GetMethodID(jclazz, "argb", "()I")));
     }
 
-    void Color_sensor::enable_led(bool enable) const {
+    void Color_sensor::enable_led(const bool &enable) const {
         attach_thread
         env->CallVoidMethod(colorSensor, env->GetMethodID(jclazz, "enableLed", "(Z)V"),
                             enable);

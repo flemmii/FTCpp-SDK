@@ -22,19 +22,19 @@ namespace sdk {
 
         Digital_channel() = default;
 
-        Digital_channel(jobject digitalChannel);
+        Digital_channel(const jobject &digitalChannel);
 
         ~Digital_channel();
 
-        Digital_channel &operator=(jobject digitalChannel);
+        Digital_channel &operator=(const jobject &digitalChannel);
 
         [[nodiscard]] Mode get_mode() const;
 
-        void set_mode(Mode mode) const;
+        void set_mode(const Mode &mode) const;
 
         [[nodiscard]] bool get_state() const;
 
-        void set_state(bool state) const;
+        void set_state(const bool &state) const;
     };
 
 } // sdk

@@ -22,18 +22,18 @@ namespace sdk {
         const long acquisition_time;
 
     public:
-        Yaw_pitch_roll_angles(Angle_unit angle_unit, double yaw, double pitch, double roll,
-                              long acquisition_time);
+        Yaw_pitch_roll_angles(const Angle_unit &angle_unit, const double &yaw, const double &pitch,
+                              const double &roll, const long &acquisition_time);
 
-        double get_yaw(Angle_unit angle_unit);
+        double get_yaw(const Angle_unit &angle_unit) const;
 
-        double get_pitch(Angle_unit angle_unit);
+        double get_pitch(const Angle_unit &angle_unit) const;
 
-        double get_roll(Angle_unit angle_unit);
+        double get_roll(const Angle_unit &angle_unit) const;
 
-        long get_acquisition_time();
+        long get_acquisition_time() const;
 
-        std::string to_string();
+        std::string to_string() const;
     };
 
 } // sdk

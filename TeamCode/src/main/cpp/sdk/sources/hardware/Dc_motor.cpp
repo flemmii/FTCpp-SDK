@@ -11,14 +11,14 @@ namespace sdk {
     jclass Dc_motor::jclazz_RunMode;
     jclass Dc_motor::jclazz_ZeroPowerBehavior;
 
-    Dc_motor::Dc_motor(jobject dcMotor) : dcMotor(dcMotor),
-                                          Dc_motor_simple(dcMotor) {}
+    Dc_motor::Dc_motor(const jobject &dcMotor) : dcMotor(dcMotor),
+                                                 Dc_motor_simple(dcMotor) {}
 
     Dc_motor::~Dc_motor() {
         dcMotor = nullptr;
     }
 
-    Dc_motor &Dc_motor::operator=(jobject dcMotor) {
+    Dc_motor &Dc_motor::operator=(const jobject &dcMotor) {
         Dc_motor_simple::operator=(dcMotor);
         this->dcMotor = dcMotor;
         return *this;
@@ -26,13 +26,12 @@ namespace sdk {
 
     int Dc_motor::get_port_number() const {
         attach_thread
-        int result = static_cast<int> (env->CallIntMethod(dcMotor, env->GetMethodID(jclazz,
-                                                                                    "getPortNumber",
-                                                                                    "()I")));
-        return result;
+        return static_cast<int> (env->CallIntMethod(dcMotor, env->GetMethodID(jclazz,
+                                                                              "getPortNumber",
+                                                                              "()I")));
     }
 
-    void Dc_motor::set_mode(Run_mode mode) const {
+    void Dc_motor::set_mode(const Run_mode &mode) const {
         attach_thread
         jobject runMode = env->GetStaticObjectField(jclazz_RunMode,
                                                     env->GetStaticFieldID(jclazz_RunMode,
@@ -72,7 +71,7 @@ namespace sdk {
         return Run_mode::RUN_WITHOUT_ENCODER;
     }
 
-    const char *Dc_motor::run_mode_to_string(Run_mode mode) {
+    const char *Dc_motor::run_mode_to_string(const Run_mode &mode) {
         switch (mode) {
             case Run_mode::RUN_TO_POSITION:
                 return "RUN_TO_POSITION";
@@ -87,7 +86,7 @@ namespace sdk {
         }
     }
 
-    void Dc_motor::set_zero_power_behavior(Zero_power_behavior zero_power_behavior) const {
+    void Dc_motor::set_zero_power_behavior(const Zero_power_behavior &zero_power_behavior) const {
         attach_thread
         jobject zeroPowerBehavior = env->GetStaticObjectField(jclazz_ZeroPowerBehavior,
                                                               env->GetStaticFieldID(
@@ -128,7 +127,7 @@ namespace sdk {
     }
 
     const char *
-    Dc_motor::zero_power_behavior_to_string(Zero_power_behavior zero_power_behavior) {
+    Dc_motor::zero_power_behavior_to_string(const Zero_power_behavior &zero_power_behavior) {
         switch (zero_power_behavior) {
             case Zero_power_behavior::UNKNOWN:
                 return "UNKNOWN";
@@ -141,7 +140,7 @@ namespace sdk {
         }
     }
 
-    void Dc_motor::set_target_position(int position) const {
+    void Dc_motor::set_target_position(const int &position) const {
         attach_thread
         env->CallVoidMethod(dcMotor, env->GetMethodID(jclazz, "setTargetPosition", "(I)V"),
                             static_cast<jint> (position));
@@ -157,16 +156,14 @@ namespace sdk {
 
     bool Dc_motor::is_busy() const {
         attach_thread
-        bool result = env->CallBooleanMethod(dcMotor,
-                                             env->GetMethodID(jclazz, "isBusy", "()Z"));
-        return result;
+        return env->CallBooleanMethod(dcMotor,
+                                      env->GetMethodID(jclazz, "isBusy", "()Z"));
     }
 
     int Dc_motor::get_current_position() const {
         attach_thread
-        int result = static_cast<int> (env->CallIntMethod(dcMotor, env->GetMethodID(jclazz,
-                                                                                    "getCurrentPosition",
-                                                                                    "()I")));
-        return result;
+        return static_cast<int> (env->CallIntMethod(dcMotor, env->GetMethodID(jclazz,
+                                                                              "getCurrentPosition",
+                                                                              "()I")));
     }
 } // sdk

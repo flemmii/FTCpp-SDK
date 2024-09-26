@@ -6,7 +6,7 @@
 
 using namespace std;
 
-void logcat_log(int ERROR_LEVEL, const char *tag, const char *text, ...) {
+void logcat_log(const int &ERROR_LEVEL, const char *tag, const char *text, ...) {
     va_list args;
     va_start(args, text);
     __android_log_vprint(ERROR_LEVEL, tag, text, args);

@@ -49,36 +49,47 @@ namespace sdk {
         };
 
         struct Size {
-            Size(int width, int height) : width(width), height(height) {}
+            Size(const int &width, const int &height) : width(width), height(height) {}
 
             int width;
             int height;
         };
 
-        static const char *multi_portal_layout_to_string(Vision_portal::Multi_portal_layout mpl);
+        static const char *
+        multi_portal_layout_to_string(const Vision_portal::Multi_portal_layout &mpl);
 
-        static const char *stream_format_to_string(Vision_portal::Stream_format sf);
+        static const char *stream_format_to_string(const Vision_portal::Stream_format &sf);
 
-        Vision_portal(jobject visionPortal);
+        Vision_portal() = default;
+
+        Vision_portal(const jobject &visionPortal);
 
         ~Vision_portal();
 
-        Vision_portal &operator=(jobject visionPortal);
+        Vision_portal &operator=(const jobject &visionPortal);
 
         [[nodiscard]] static std::vector<int>
-        makeMultiPortalView(int numPortals, Multi_portal_layout mpl);
+        makeMultiPortalView(const int &numPortals, const Multi_portal_layout &mpl);
 
         [[nodiscard]] static Vision_portal easy_create_with_defaults(const Camera_name &camera_name,
-                                                                     const std::vector<sdk::Vision_processor> &processors);
+                                                                     const std::vector<sdk::Vision_processor *> &processors = {});
 
         static void enable_dual_cam_view();
 
         static void disable_dual_cam_view();
 
-        void set_processor_enabled(const sdk::Vision_processor &processor,
-                                   bool enabled);
+        void add_processor(sdk::Vision_processor *processor);
 
-        [[nodiscard]] bool get_processor_enabled(const sdk::Vision_processor &processor);
+        void add_processors(const std::vector<sdk::Vision_processor *> &processors);
+
+        void remove_processor(const sdk::Vision_processor *processor);
+
+        void remove_processors(const std::vector<sdk::Vision_processor *> &processors);
+
+        void set_processor_enabled(const sdk::Vision_processor *processor,
+                                   const bool &enabled);
+
+        [[nodiscard]] bool get_processor_enabled(const sdk::Vision_processor *processor);
 
         [[nodiscard]] Camera_state get_camera_state() const;
 
@@ -114,28 +125,28 @@ namespace sdk {
 
             ~Builder();
 
-            Builder &operator=(jobject builder);
+            Builder &operator=(const jobject &builder);
 
             Builder &set_camera(const Camera_name &camera);
 
-            Builder &set_stream_format(Stream_format stream_format);
+            Builder &set_stream_format(const Stream_format &stream_format);
 
-            Builder &enable_live_view(bool enableLiveView);
+            Builder &enable_live_view(const bool &enable_live_view);
 
-            Builder &set_auto_stop_live_view(bool auto_pause);
+            Builder &set_auto_stop_live_view(const bool &auto_pause);
 
-            Builder &set_live_view_container_id(int live_view_container_id);
+            Builder &set_live_view_container_id(const int &live_view_container_id);
 
-            Builder &set_camera_resolution(Size cameraResolution);
+            Builder &set_camera_resolution(const Size &camera_resolution);
 
-            Builder &add_processor(const sdk::Vision_processor &processor);
+            Builder &add_processor(sdk::Vision_processor *processor);
 
             Builder &
-            add_processors(const std::vector<sdk::Vision_processor> &processors);
+            add_processors(const std::vector<sdk::Vision_processor *> &processors);
 
-            Builder &set_auto_start_stream_on_build(bool auto_start_stream_on_build);
+            Builder &set_auto_start_stream_on_build(const bool &auto_start_stream_on_build);
 
-            Builder &set_show_stats_overlay(bool show_stats_overlay);
+            Builder &set_show_stats_overlay(const bool &show_stats_overlay);
 
             Vision_portal build();
         };

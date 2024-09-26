@@ -6,8 +6,8 @@
 
 namespace sdk {
     jclass Touch_sensor::jclazz;
-    
-    Touch_sensor::Touch_sensor(jobject touchSensor) : touchSensor(touchSensor) {}
+
+    Touch_sensor::Touch_sensor(const jobject &touchSensor) : touchSensor(touchSensor) {}
 
     Touch_sensor::~Touch_sensor() {
         if (touchSensor) {
@@ -17,7 +17,7 @@ namespace sdk {
         }
     }
 
-    Touch_sensor &Touch_sensor::operator=(jobject touchSensor) {
+    Touch_sensor &Touch_sensor::operator=(const jobject &touchSensor) {
         if (this->touchSensor) {
             attach_thread
             env->DeleteGlobalRef(this->touchSensor);

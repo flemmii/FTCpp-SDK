@@ -32,27 +32,28 @@ namespace sdk {
 
         Dc_motor() = default;
 
-        Dc_motor(jobject dcMotor);
+        Dc_motor(const jobject &dcMotor);
 
         ~Dc_motor();
 
-        Dc_motor &operator=(jobject dcMotor) override;
+        Dc_motor &operator=(const jobject &dcMotor) override;
 
         [[nodiscard]] int get_port_number() const;
 
-        void set_mode(Run_mode mode) const;
+        void set_mode(const Run_mode &mode) const;
 
         [[nodiscard]] Run_mode get_mode() const;
 
-        static const char *run_mode_to_string(Run_mode mode);
+        static const char *run_mode_to_string(const Run_mode &mode);
 
-        void set_zero_power_behavior(Zero_power_behavior zero_power_behavior) const;
+        void set_zero_power_behavior(const Zero_power_behavior &zero_power_behavior) const;
 
         [[nodiscard]] Zero_power_behavior get_zero_power_behavior() const;
 
-        static const char *zero_power_behavior_to_string(Zero_power_behavior zero_power_behavior);
+        static const char *
+        zero_power_behavior_to_string(const Zero_power_behavior &zero_power_behavior);
 
-        void set_target_position(int position) const;
+        void set_target_position(const int &position) const;
 
         [[nodiscard]] int get_target_position() const;
 

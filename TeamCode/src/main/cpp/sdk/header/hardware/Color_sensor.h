@@ -15,11 +15,11 @@ namespace sdk {
 
         Color_sensor() = default;
 
-        Color_sensor(jobject colorSensor);
+        Color_sensor(const jobject &colorSensor);
 
         ~Color_sensor();
 
-        Color_sensor &operator=(jobject colorSensor);
+        Color_sensor &operator=(const jobject &colorSensor);
 
         [[nodiscard]] int red() const;
 
@@ -31,7 +31,7 @@ namespace sdk {
 
         [[nodiscard]] int argb() const;
 
-        void enable_led(bool enable) const;
+        void enable_led(const bool &enable) const;
     };
 
 } // sdk

@@ -17,11 +17,11 @@ namespace sdk {
 
         Analog_input() = default;
 
-        Analog_input(jobject analogInput);
+        Analog_input(const jobject &analogInput);
 
         ~Analog_input();
 
-        Analog_input &operator=(jobject analogInput);
+        virtual Analog_input &operator=(const jobject &analogInput);
 
         [[nodiscard]] int get_voltage() const;
 

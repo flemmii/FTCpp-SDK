@@ -36,8 +36,6 @@ android {
 
     // Überprüfen, ob die benötigten Bibliotheken vorhanden sind
     if (fileExists("build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libapriltag.so") &&
-            fileExists("build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libimage_utils.so") &&
-            fileExists("build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libobject_tracking.so") &&
             fileExists("build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libopencv_java4.so")) {
 
         externalNativeBuild {
@@ -67,5 +65,4 @@ repositories {
 dependencies {
     implementation 'com.github.Eeshwar-Krishnan:PhotonFTC:v3.0.1-ALPHA'
     implementation project(':FtcRobotController')
-    annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
 }

@@ -3,7 +3,7 @@
 namespace sdk {
     jclass Gamepad::jclazz;
 
-    Gamepad::Gamepad(jobject gamepad) : gamepad(gamepad) {}
+    Gamepad::Gamepad(const jobject &gamepad) : gamepad(gamepad) {}
 
     Gamepad::~Gamepad() {
         if (gamepad) {
@@ -13,7 +13,7 @@ namespace sdk {
         }
     }
 
-    class Gamepad &Gamepad::operator=(jobject gamepad) {
+    class Gamepad &Gamepad::operator=(const jobject &gamepad) {
         if (this->gamepad) {
             attach_thread
             env->DeleteGlobalRef(this->gamepad);
@@ -118,13 +118,14 @@ namespace sdk {
         ps = env->GetBooleanField(gamepad, env->GetFieldID(jclazz, "ps", "Z"));
     }
 
-    void Gamepad::rumble(int duration_ms) const {
+    void Gamepad::rumble(const int &duration_ms) const {
         attach_thread
         env->CallVoidMethod(gamepad, env->GetMethodID(jclazz, "rumble", "(I)V"),
                             static_cast<jint>(duration_ms));
     }
 
-    void Gamepad::rumble(double rumble1, double rumble2, int duration_ms) const {
+    void
+    Gamepad::rumble(const double &rumble1, const double &rumble2, const int &duration_ms) const {
         attach_thread
         env->CallVoidMethod(gamepad, env->GetMethodID(jclazz, "rumble", "(DDI)V"),
                             static_cast<jdouble>(rumble1), static_cast<jdouble>(rumble2),

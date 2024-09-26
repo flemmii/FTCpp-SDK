@@ -22,33 +22,33 @@ namespace sdk {
 
         BNO055IMU() = default;
 
-        BNO055IMU(jobject bno055imu);
+        BNO055IMU(const jobject &bno055imu);
 
         ~BNO055IMU();
 
-        BNO055IMU &operator=(jobject bno055imu);
+        BNO055IMU &operator=(const jobject &bno055imu);
 
         enum class Angle_unit {
             DEGREES,
             RADIANS
         };
 
-        static Angle_unit to_angle_unit(Angle_unit angle_unit) {
+        static Angle_unit to_angle_unit(const Angle_unit &angle_unit) {
             return (angle_unit == Angle_unit::DEGREES) ? Angle_unit::DEGREES : Angle_unit::RADIANS;
         }
 
-        static Angle_unit from_angle_unit(Angle_unit angle_unit) {
+        static Angle_unit from_angle_unit(const Angle_unit &angle_unit) {
             return (angle_unit == Angle_unit::DEGREES) ? Angle_unit::DEGREES : Angle_unit::RADIANS;
         }
 
-        static const char *angle_unit_to_string(BNO055IMU::Angle_unit angle_unit);
+        static const char *angle_unit_to_string(const BNO055IMU::Angle_unit &angle_unit);
 
         enum class Accel_unit {
             METERS_PERSEC_PERSEC,
             MILLI_EARTH_GRAVITY
         };
 
-        static const char *accel_unit_to_string(Accel_unit accel_unit);
+        static const char *accel_unit_to_string(const Accel_unit &accel_unit);
 
         struct Parameters {
             static jclass jclazz;
@@ -57,16 +57,16 @@ namespace sdk {
             Accel_unit accel_unit = Accel_unit::METERS_PERSEC_PERSEC;
         };
 
-        bool initialize(Parameters parameters);
+        bool initialize(const Parameters &parameters) const;
 
         // There are more parameters in Java but I am to lazy to implement them
-        void start_acceleration_integration(int ms_poll_interval);
+        void start_acceleration_integration(const int &ms_poll_interval) const;
 
-        [[nodiscard]] Orientation get_angular_orientation();
+        [[nodiscard]] Orientation get_angular_orientation() const;
 
-        [[nodiscard]] Acceleration get_acceleration();
+        [[nodiscard]] Acceleration get_acceleration() const;
 
-        [[nodiscard]] Angular_velocity get_angular_velocity();
+        [[nodiscard]] Angular_velocity get_angular_velocity() const;
     };
 
 } // sdk

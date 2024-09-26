@@ -9,14 +9,14 @@ using namespace std;
 namespace sdk {
     jclass Dc_motor_ex::jclazz;
 
-    Dc_motor_ex::Dc_motor_ex(jobject dcMotorEx) : dcMotorEx(dcMotorEx),
-                                                  Dc_motor(dcMotorEx) {}
+    Dc_motor_ex::Dc_motor_ex(const jobject &dcMotorEx) : dcMotorEx(dcMotorEx),
+                                                         Dc_motor(dcMotorEx) {}
 
     Dc_motor_ex::~Dc_motor_ex() {
         dcMotorEx = nullptr;
     }
 
-    Dc_motor_ex &Dc_motor_ex::operator=(jobject dcMotorEx) {
+    Dc_motor_ex &Dc_motor_ex::operator=(const jobject &dcMotorEx) {
         Dc_motor::operator=(dcMotorEx);
         this->dcMotorEx = dcMotorEx;
         return *this;
@@ -34,28 +34,27 @@ namespace sdk {
 
     bool Dc_motor_ex::is_motor_enabled() const {
         attach_thread
-        bool result = env->CallBooleanMethod(dcMotorEx,
-                                             env->GetMethodID(jclazz, "isMotorEnabled", "()Z"));
-        return result;
+        return env->CallBooleanMethod(dcMotorEx,
+                                      env->GetMethodID(jclazz, "isMotorEnabled", "()Z"));
     }
 
-    void Dc_motor_ex::set_velocity(double angularRate) const {
+    void Dc_motor_ex::set_velocity(const double &angular_rate) const {
         attach_thread
         env->CallVoidMethod(dcMotorEx, env->GetMethodID(jclazz, "setVelocity", "(D)V"),
-                            static_cast<jdouble>(angularRate));
+                            static_cast<jdouble>(angular_rate));
     }
 
     double Dc_motor_ex::get_velocity() const {
         attach_thread
-        auto result = static_cast<double>(env->CallDoubleMethod(dcMotorEx,
-                                                                env->GetMethodID(jclazz,
-                                                                                 "getVelocity",
-                                                                                 "()D")));
-        return result;
+        return static_cast<double>(env->CallDoubleMethod(dcMotorEx,
+                                                         env->GetMethodID(jclazz,
+                                                                          "getVelocity",
+                                                                          "()D")));
     }
 
     void
-    Dc_motor_ex::set_PIDF_coefficients(Run_mode mode, PIDF_coefficients pid_coefficients) const {
+    Dc_motor_ex::set_PIDF_coefficients(const Run_mode &mode,
+                                       const PIDF_coefficients &pid_coefficients) const {
         attach_thread
         jobject runMode = env->GetStaticObjectField(jclazz_RunMode,
                                                     env->GetStaticFieldID(jclazz_RunMode,
@@ -77,7 +76,7 @@ namespace sdk {
         env->DeleteLocalRef(pidfCoefficients);
     }
 
-    PIDF_coefficients Dc_motor_ex::get_PIDF_coefficients(Run_mode mode) const {
+    PIDF_coefficients Dc_motor_ex::get_PIDF_coefficients(const Run_mode &mode) const {
         attach_thread
         jobject RunMode = env->GetStaticObjectField(jclazz_RunMode,
                                                     env->GetStaticFieldID(
@@ -114,7 +113,7 @@ namespace sdk {
         return {p, i, d, f};
     }
 
-    void Dc_motor_ex::set_target_position_tolerance(int tolerance) const {
+    void Dc_motor_ex::set_target_position_tolerance(const int &tolerance) const {
         attach_thread
         env->CallVoidMethod(dcMotorEx,
                             env->GetMethodID(jclazz, "setTargetPositionTolerance", "(I)V"),

@@ -10,7 +10,7 @@ namespace sdk {
     jclass Lynx_module::jclazz;
     jclass Lynx_module::jclazz_BulkCachingMode;
 
-    Lynx_module::Lynx_module(jobject lynxModule) : lynxModule(lynxModule) {}
+    Lynx_module::Lynx_module(const jobject &lynxModule) : lynxModule(lynxModule) {}
 
     Lynx_module::~Lynx_module() {
         if (lynxModule) {
@@ -20,7 +20,7 @@ namespace sdk {
         }
     }
 
-    Lynx_module &Lynx_module::operator=(jobject lynxModule) {
+    Lynx_module &Lynx_module::operator=(const jobject &lynxModule) {
         if (this->lynxModule) {
             attach_thread
             env->DeleteGlobalRef(this->lynxModule);
@@ -30,7 +30,7 @@ namespace sdk {
     }
 
     const char *
-    Lynx_module::bulk_caching_mode_to_string(Lynx_module::Bulk_caching_mode bulk_caching_mode) {
+    Lynx_module::bulk_caching_mode_to_string(const Bulk_caching_mode &bulk_caching_mode) {
         switch (bulk_caching_mode) {
             case Bulk_caching_mode::OFF:
                 return "OFF";
@@ -49,7 +49,7 @@ namespace sdk {
                                       env->GetMethodID(jclazz, "isNotResponding", "()Z"));
     }
 
-    void Lynx_module::set_bulk_caching_mode(Bulk_caching_mode bulk_caching_mode) const {
+    void Lynx_module::set_bulk_caching_mode(const Bulk_caching_mode &bulk_caching_mode) const {
         attach_thread
         jobject bulkCachingMode = env->GetStaticObjectField(jclazz_BulkCachingMode,
                                                             env->GetStaticFieldID(
@@ -70,7 +70,7 @@ namespace sdk {
                                                                    "()Lcom/qualcomm/hardware/lynx/LynxModule$BulkData;")));
     }
 
-    double Lynx_module::get_input_voltage(Voltage_unit unit) const {
+    double Lynx_module::get_input_voltage(const Voltage_unit &unit) const {
         attach_thread
         string unit_string = "NO_TYPE";
         switch (unit) {

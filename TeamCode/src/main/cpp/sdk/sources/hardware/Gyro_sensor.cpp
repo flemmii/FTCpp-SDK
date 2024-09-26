@@ -6,8 +6,8 @@
 
 namespace sdk {
     jclass Gyro_sensor::jclazz;
-    
-    Gyro_sensor::Gyro_sensor(jobject gyroSensor) : gyroSensor(gyroSensor) {}
+
+    Gyro_sensor::Gyro_sensor(const jobject &gyroSensor) : gyroSensor(gyroSensor) {}
 
     Gyro_sensor::~Gyro_sensor() {
         if (gyroSensor) {
@@ -17,7 +17,7 @@ namespace sdk {
         }
     }
 
-    Gyro_sensor &Gyro_sensor::operator=(jobject gyroSensor) {
+    Gyro_sensor &Gyro_sensor::operator=(const jobject &gyroSensor) {
         if (this->gyroSensor) {
             attach_thread
             env->DeleteGlobalRef(this->gyroSensor);
@@ -47,9 +47,9 @@ namespace sdk {
 
     double Gyro_sensor::get_rotation_fraction() const {
         attach_thread
-        return static_cast<double >(env->CallDoubleMethod(gyroSensor, env->GetMethodID(jclazz,
-                                                                                       "getRotationFraction",
-                                                                                       "()D")));
+        return static_cast<double>(env->CallDoubleMethod(gyroSensor, env->GetMethodID(jclazz,
+                                                                                      "getRotationFraction",
+                                                                                      "()D")));
     }
 
     int Gyro_sensor::raw_x() const {

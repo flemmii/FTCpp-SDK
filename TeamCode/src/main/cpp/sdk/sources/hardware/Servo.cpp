@@ -10,7 +10,7 @@ namespace sdk {
     jclass Servo::jclazz;
     jclass Servo::jclazz_Direction;
 
-    Servo::Servo(jobject servo) : servo(servo) {}
+    Servo::Servo(const jobject &servo) : servo(servo) {}
 
     Servo::~Servo() {
         if (servo) {
@@ -20,7 +20,7 @@ namespace sdk {
         }
     }
 
-    class Servo &Servo::operator=(jobject servo) {
+    class Servo &Servo::operator=(const jobject &servo) {
         if (this->servo) {
             attach_thread
             env->DeleteGlobalRef(this->servo);
@@ -47,7 +47,7 @@ namespace sdk {
                                                                     "()I")));
     }
 
-    void Servo::set_direction(Servo::Direction direction) {
+    void Servo::set_direction(const Direction &direction) const {
         attach_thread
         jobject jdirection = env->GetStaticObjectField(jclazz_Direction,
                                                        env->GetStaticFieldID(jclazz_Direction,
@@ -85,7 +85,7 @@ namespace sdk {
         return Direction::FORWARD;
     }
 
-    const char *Servo::direction_to_string(Servo::Direction direction) {
+    const char *Servo::direction_to_string(const Direction &direction) {
         switch (direction) {
             case Direction::FORWARD:
                 return "FORWARD";
@@ -94,7 +94,7 @@ namespace sdk {
         }
     }
 
-    void Servo::set_position(double position) const {
+    void Servo::set_position(const double &position) const {
         attach_thread
         env->CallVoidMethod(servo, env->GetMethodID(jclazz, "setPosition", "(D)V"),
                             static_cast<jdouble> (position));
@@ -107,7 +107,7 @@ namespace sdk {
                                                                           "()D")));
     }
 
-    void Servo::scale_range(double min, double max) {
+    void Servo::scale_range(const double &min, const double &max) {
         attach_thread
         env->CallVoidMethod(servo, env->GetMethodID(jclazz, "scaleRange", "(DD)V"),
                             static_cast<jdouble>(min), static_cast<jdouble>(max));

@@ -24,21 +24,21 @@ namespace sdk {
 
         Lynx_module() = default;
 
-        Lynx_module(jobject lynxModule);
+        Lynx_module(const jobject &lynxModule);
 
         ~Lynx_module();
 
-        Lynx_module &operator=(jobject lynxModule);
+        Lynx_module &operator=(const jobject &lynxModule);
 
-        static const char *bulk_caching_mode_to_string(Bulk_caching_mode bulk_caching_mode);
+        static const char *bulk_caching_mode_to_string(const Bulk_caching_mode &bulk_caching_mode);
 
         [[nodiscard]] bool is_not_responding() const;
 
-        void set_bulk_caching_mode(Bulk_caching_mode bulk_caching_mode) const;
+        void set_bulk_caching_mode(const Bulk_caching_mode &bulk_caching_mode) const;
 
         void get_bulk_data() const;
 
-        [[nodiscard]] double get_input_voltage(Voltage_unit unit) const;
+        [[nodiscard]] double get_input_voltage(const Voltage_unit &unit) const;
     };
 
 } // sdk

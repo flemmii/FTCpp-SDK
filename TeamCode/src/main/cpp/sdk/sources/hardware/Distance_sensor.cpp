@@ -5,7 +5,8 @@ namespace sdk {
     jclass Distance_sensor::jclazz;
     jclass Distance_sensor::DistanceUnit;
 
-    Distance_sensor::Distance_sensor(jobject distanceSensor) : distanceSensor(distanceSensor) {}
+    Distance_sensor::Distance_sensor(const jobject &distanceSensor) : distanceSensor(
+            distanceSensor) {}
 
     Distance_sensor::~Distance_sensor() {
         if (distanceSensor) {
@@ -15,7 +16,7 @@ namespace sdk {
         }
     }
 
-    Distance_sensor &Distance_sensor::operator=(jobject distanceSensor) {
+    Distance_sensor &Distance_sensor::operator=(const jobject &distanceSensor) {
         if (this->distanceSensor) {
             attach_thread
             env->DeleteGlobalRef(this->distanceSensor);
@@ -25,7 +26,7 @@ namespace sdk {
     }
 
 
-    double Distance_sensor::get_distance() {
+    double Distance_sensor::get_distance() const {
         attach_thread
         jobject mmObject = env->GetStaticObjectField(DistanceUnit,
                                                      env->GetStaticFieldID(DistanceUnit, "MM",

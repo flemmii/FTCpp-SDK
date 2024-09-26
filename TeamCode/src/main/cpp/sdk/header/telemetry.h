@@ -7,71 +7,74 @@
 
 #include "utils.h"
 
-namespace sdk {
-    namespace telemetry {
-        extern jclass jclazz;
-        extern jobject telemetry;
 
-        enum class display_format {
-            CLASSIC,
-            MONOSPACE,
-            HTML
-        };
+namespace sdk::telemetry {
+    extern jclass jclazz;
+    extern jclass jclazz_DisplayFormat;
+    extern jobject telemetry;
 
-        template<typename T, typename = void>
-        struct has_to_string : std::false_type {
-        };
+    enum class Display_format {
+        CLASSIC,
+        MONOSPACE,
+        HTML
+    };
 
-        template<typename T>
-        struct has_to_string<T, std::void_t<decltype(std::declval<T>().to_string())>>
-                : std::true_type {
-        };
+    template<typename T, typename = void>
+    struct has_to_string : std::false_type {
+    };
 
-        template<typename T>
-        void add_data(const std::string &caption, T value);
+    template<typename T>
+    struct has_to_string<T, std::void_t<decltype(std::declval<T>().to_string())>>
+            : std::true_type {
+    };
 
-        void add_line(const std::string &line_caption);
+    template<typename T>
+    void add_data(const std::string &caption, const T &value);
 
-        void set_auto_clear(const bool &auto_clear);
+    void add_data(const std::string &caption, const char *value);
 
-        bool update();
+    void add_line(const std::string &line_caption);
 
-        void clear();
+    void set_auto_clear(const bool &auto_clear);
 
-        void clear_all();
+    bool update();
 
-        void speak(const std::string &text, const std::string &language_code,
-                   const std::string &country_code);
+    void clear();
 
-        void speak(const std::string &text);
+    void clear_all();
 
-        std::string get_caption();
+    void speak(const std::string &text, const std::string &language_code,
+               const std::string &country_code);
 
-        void set_caption(const std::string &caption);
+    void speak(const std::string &text);
 
-        void set_display_format(display_format display_format);
+    std::string get_caption();
 
-        //TODO: FInd a way to implement setValue (because of args)
+    void set_caption(const std::string &caption);
 
-        std::string get_item_separator();
+    void set_display_format(const Display_format &display_format);
 
-        void set_item_separator(const std::string &item_separator);
+    //TODO: FInd a way to implement setValue (because of args)
 
-        void set_caption_value_separator(const std::string &caption_value_separator);
+    std::string get_item_separator();
 
-        std::string get_caption_value_separator();
+    void set_item_separator(const std::string &item_separator);
 
-        bool is_auto_clear();
+    void set_caption_value_separator(const std::string &caption_value_separator);
 
-        int get_ms_transmission_interval();
+    std::string get_caption_value_separator();
 
-        void set_ms_transmission_interval(int ms_transmission_interval);
+    bool is_auto_clear();
 
-        void set_retained(bool retained);
+    int get_ms_transmission_interval();
 
-        bool is_retained();
+    void set_ms_transmission_interval(const int &ms_transmission_interval);
 
-    }
-} // sdk
+    void set_retained(const bool &retained);
+
+    bool is_retained();
+
+}
+// sdk
 
 #endif //FTCROBOTCONTROLLER_TELEMETRY_H
