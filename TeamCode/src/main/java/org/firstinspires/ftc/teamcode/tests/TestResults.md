@@ -1,7 +1,3 @@
-# !!! WARNING  !!!
-
-This file is not up to date and will be updated soon
-
 # Results of the tests
 
 This test files are designed to test the performance of C++ versus Java in various realistic
@@ -11,16 +7,15 @@ compared
 
 ## Location of the test files
 
-[Java Test files](https://github.com/flemmii/FTCpp-SDK/new/Tests/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/tests/java)
+[Java Test files](https://github.com/flemmii/FTCpp-SDK/new/Tests/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/tests/java)  
 [Cpp Test files](https://github.com/flemmii/FTCpp-SDK/new/Tests/TeamCode/src/main/cpp/teamcode/sources/tests)
 
 ## How the tests were done
 
-At first the C++ program got executed and afterwards with (no) time between the Java program got
+At first the Java program got executed and afterwards with (no) time between the C++ program got
 executed.
 Both programs ran 1 minute long and mesaured the time one loop took in Microseconds.
-The robot was not moved or was influenced from outside in the entire test (except for the last
-driving test).
+The robot was not moved or was influenced from outside in the entire test.
 
 ## Results
 
@@ -28,70 +23,46 @@ driving test).
 
 #### <span style="color:DodgerBlue"> C++ </span>
 
-Overall loops: 4919 loops  
-Avarage loop time: 12.1981 ms  
-Loops per second: 81.9800 loops/s  
-Max loop time: 24.625 ms  
-Min loop time: 8.766 ms
+Execution Rate: 144.1649 Hz  
+Avarage loop time: 6.9365 ms  
+Max loop time: 18.779 ms  
+Min loop time: 4.587 ms
 
 #### <span style="color:Orange"> Java </span>
 
-Overall loops: 4834 loops  
-Avarage loop time: 12.4047 ms  
-Loops per second: 80.6146 loops/s  
-Max loop time: 28.681 ms  
-Min loop time: 8.579 ms
+Execution rate: 141.0019 Hz  
+Avarage loop time: 7.0921 ms  
+Max loop time: 16.707 ms  
+Min loop time: 4.538 ms
 
 ### TeamPropDetection
 
 #### <span style="color:DodgerBlue"> C++ </span>
 
-Overall loops: 883 loops  
-Avarage loop time: 67.8918 ms  
-Loops per second: 14.7293 loops/s  
-Max loop time: 1138.217 ms (This may be the time it took to create the vision portal)  
-Min loop time: 49.037 ms
+Execution rate: 28.9064 Hz  
+Avarage loop time: 34.5944 ms  
+Max loop time: 2500.715 ms (This may be the time it took to create the vision portal)  
+Min loop time: 11.317 ms
 
 #### <span style="color:Orange"> Java </span>
 
-Overall loops: 883 loops  
-Avarage loop time: 67.9092 ms  
-Loops per second: 14.7076 loops/s  
-Max loop time: 1162.971 ms (This may be the time it took to create the vision portal)  
-Min loop time: 36.211 ms
+Execution rate: 28.5802 Hz  
+Avarage loop time: 34.9893 ms  
+Max loop time: 2551.550 ms (This may be the time it took to create the vision portal)  
+Min loop time: 10.975 ms
 
-### Driving (No movement)
+### Driving
 
 #### <span style="color:DodgerBlue"> C++ </span>
 
-Overall loops: 31559 loops  
-Avarage loop time: 1.8993 ms  
-Loops per second: 526.5100 loops/s  
-Max loop time: 34.700 ms  
-Min loop time: 0.597 ms
+Execution rate: 2,260.3978 Hz  
+Avarage loop time: 0.4424 ms  
+Max loop time: 33.898 ms  
+Min loop time: 0.368 ms
 
 #### <span style="color:Orange"> Java </span>
 
-Overall loops: 22333 loops  
-Avarage loop time: 2.6848 ms  
-Loops per second: 372.4672 loops/s  
-Max loop time: 21.677 ms  
-Min loop time: 0.235 ms
-
-### Driving (Driving around the field)
-
-#### <span style="color:DodgerBlue"> C++ </span>
-
-Overall loops: 30561 loops  
-Avarage loop time: 1.9613 ms  
-Loops per second: 509.8659 loops/s  
-Max loop time: 20.929 ms  
-Min loop time: 0.593 ms
-
-#### <span style="color:Orange"> Java </span>
-
-Overall loops: 22004 loops  
-Avarage loop time: 2.7254 ms  
-Loops per second: 366.9186 loops/s  
-Max loop time: 17.143 ms  
-Min loop time: 0.145 ms  
+Execution rate: 18,867.9245 Hz  
+Avarage loop time: 0.0530 ms  
+Max loop time: 20.934 ms  
+Min loop time: 0.0410 ms
