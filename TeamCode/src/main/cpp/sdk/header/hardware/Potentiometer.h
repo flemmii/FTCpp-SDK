@@ -11,7 +11,6 @@ namespace sdk {
     class Potentiometer : public Analog_input {
     private:
         /**
-         * Not yet tested
          * <p>
          * Formula based on experimental values
          * </p><p>
