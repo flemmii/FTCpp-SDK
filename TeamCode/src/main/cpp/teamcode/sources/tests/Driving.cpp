@@ -11,7 +11,7 @@ using namespace linear_op_mode;
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_org_firstinspires_ftc_teamcode_cpp_tests_DrivingCpp_opMode(JNIEnv *env,
+Java_org_firstinspires_ftc_teamcode_tests_cpp_DrivingCpp_opMode(JNIEnv *env,
                                                                 jobject thiz) {
     // This initializes the SDK, it needs to be called at the start of every opmode
     init_sdk

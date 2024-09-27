@@ -47,7 +47,7 @@ public class TeamPropDetectionJava extends LinearOpMode {
         lastTimeMicros = System.nanoTime() / 1000;
 
         TeamPropDetection detection = new TeamPropDetection(lastTimeMicros, startTime, loopTime, count, minLoopTime, maxLoopTime, averageLoopTime, telemetry);
-        VisionPortal portal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "front_webcam"), detection);
+        VisionPortal portal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Webcam"), detection);
 
         while (!isStopRequested() && System.currentTimeMillis() - startTime < 60000) ;
         portal.setProcessorEnabled(detection, false);
