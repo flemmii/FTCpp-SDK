@@ -7,8 +7,18 @@
 namespace sdk {
 
     double Potentiometer::voltage_to_angle(const double &voltage) {
-        double common_root = sqrt(400 * voltage * voltage - 440 * voltage + 363);
-        return -(135 * (-common_root + 20 * sqrt(3) * voltage - 33 * sqrt(3))) / (common_root + 11 * sqrt(3));
+        if(voltage < 0){
+            // returning a value even if there is a fault
+            return 270;
+        }else if(voltage < 1.200){
+            return 265.835 - (114.863 * voltage)
+        }else if(voltage < 2.077){
+            return 222.438 -(76.143 *voltage)
+        }else if(voltage < 3.26){
+            return (1000-260*voltage)/(3+2*voltage)
+        }else{
+            return 0;
+        }
     }
 
     Potentiometer::Potentiometer(const jobject &potentiometer) : Analog_input(potentiometer) {}
