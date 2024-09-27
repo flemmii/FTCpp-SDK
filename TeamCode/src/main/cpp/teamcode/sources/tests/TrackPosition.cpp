@@ -25,9 +25,7 @@ Java_org_firstinspires_ftc_teamcode_tests_cpp_TrackPositionCpp_opMode(JNIEnv *en
     dead_wheel_sidewards.set_mode(Dc_motor_ex::Run_mode::RUN_WITHOUT_ENCODER);
 
     Lynx_module control_hub = hardware_map::get<Lynx_module>("Control Hub");
-    Lynx_module expansion_hub = hardware_map::get<Lynx_module>("Expansion Hub 2");
     control_hub.set_bulk_caching_mode(Lynx_module::Bulk_caching_mode::MANUAL);
-    expansion_hub.set_bulk_caching_mode(Lynx_module::Bulk_caching_mode::MANUAL);
 
     class BNO055IMU imu = hardware_map::get<BNO055IMU>("imu1");
     BNO055IMU::Parameters parameters;
@@ -75,10 +73,6 @@ Java_org_firstinspires_ftc_teamcode_tests_cpp_TrackPositionCpp_opMode(JNIEnv *en
         control_hub.get_bulk_data();
         if (control_hub.is_not_responding())
             logcat_log(ANDROID_LOG_FATAL, "track_position", "control hub not responding");
-
-        expansion_hub.get_bulk_data();
-        if (expansion_hub.is_not_responding())
-            logcat_log(ANDROID_LOG_FATAL, "track_position", "expansion hub not responding");
 
         // Writing all the necessary logged data from the loop before into variables
         double previous_rotation_deg = rotation_deg;

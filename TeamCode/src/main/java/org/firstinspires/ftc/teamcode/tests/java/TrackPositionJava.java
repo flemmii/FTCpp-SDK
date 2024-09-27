@@ -31,9 +31,7 @@ public class TrackPositionJava extends LinearOpMode {
         deadWheelSidewards.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
         LynxModule controlHub = hardwareMap.get(LynxModule.class, "Control Hub");
-        LynxModule expansionHub = hardwareMap.get(LynxModule.class, "Expansion Hub 2");
         controlHub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
-        expansionHub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
 
         BNO055IMU imu = hardwareMap.get(BNO055IMU.class, "imu1");
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -80,10 +78,6 @@ public class TrackPositionJava extends LinearOpMode {
             controlHub.getBulkData();
             if (controlHub.isNotResponding())
                 Log.e("trackPosition", "control hub not responding");
-
-            expansionHub.getBulkData();
-            if (expansionHub.isNotResponding())
-                Log.e("trackPosition", "expansion hub not responding");
 
             // Writing all the necessary logged data from the loop before into variables
             double previousRotationDeg = rotationDeg;
