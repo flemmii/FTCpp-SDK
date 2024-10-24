@@ -20,6 +20,8 @@ namespace sdk {
 
         ~Servo_controller();
 
+        Servo_controller &operator=(const Servo_controller &servo_controller);
+
         Servo_controller &operator=(const jobject &servoController);
 
         enum class Pwm_status {
