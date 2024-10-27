@@ -28,6 +28,7 @@
 #include "hardware/Potentiometer.h"
 #include "hardware/Servo.h"
 #include "hardware/Servo_controller.h"
+#include "hardware/Servo_impl_ex.h"
 #include "hardware/Touch_sensor.h"
 
 #include "hardware/camera/Webcam_name.h"

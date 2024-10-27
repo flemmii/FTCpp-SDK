@@ -59,6 +59,7 @@
     find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/Servo$Direction", Servo::jclazz_Direction)             \
     find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/ServoController", Servo_controller::jclazz)            \
     find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/ServoController$PwmStatus", Servo_controller::jclazz_PwmStatus)                                                 \
+    find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/ServoImplEx", Servo_impl_ex::jclazz)             \
     find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/TouchSensor", Touch_sensor::jclazz)                                           \
     find_class_and_create_global_ref("org/firstinspires/ftc/robotcore/external/hardware/camera/CameraName", Camera_name::jclazz)    \
     find_class_and_create_global_ref("org/firstinspires/ftc/robotcore/external/hardware/camera/WebcamName", Webcam_name::jclazz)    \
