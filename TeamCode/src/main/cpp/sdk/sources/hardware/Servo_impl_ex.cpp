@@ -7,21 +7,15 @@
 namespace sdk {
     jclass Servo_impl_ex::jclazz;
 
-    Servo_impl_ex::Servo_impl_ex(const jobject &servoImplEx) : servoImplEx(servoImplEx) {}
+    Servo_impl_ex::Servo_impl_ex(const jobject &servoImplEx) : servoImplEx(servoImplEx),
+                                                               Servo(servoImplEx) {}
 
     Servo_impl_ex::~Servo_impl_ex() {
-        if (servoImplEx) {
-            attach_thread
-            env->DeleteGlobalRef(servoImplEx);
-            servoImplEx = nullptr;
-        }
+        servoImplEx = nullptr;
     }
 
     Servo_impl_ex &Servo_impl_ex::operator=(const jobject &servoImplEx) {
-        if (this->servoImplEx) {
-            attach_thread
-            env->DeleteGlobalRef(this->servoImplEx);
-        }
+        Servo::operator=(servoImplEx);
         this->servoImplEx = servoImplEx;
         return *this;
     }

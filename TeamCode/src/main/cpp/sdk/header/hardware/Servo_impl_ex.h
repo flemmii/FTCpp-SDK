@@ -6,9 +6,10 @@
 #define FTCROBOTCONTROLLER_SERVO_IMPL_EX_H
 
 #include "utils.h"
+#include "hardware/Servo.h"
 
 namespace sdk {
-    class Servo_impl_ex {
+    class Servo_impl_ex : public Servo {
     public:
         static jclass jclazz;
         jobject servoImplEx{};
@@ -19,7 +20,7 @@ namespace sdk {
 
         ~Servo_impl_ex();
 
-        Servo_impl_ex &operator=(const jobject &servoImplEx);
+        Servo_impl_ex &operator=(const jobject &servoImplEx) override;
 
 
         // TODO: Implement Pwm_range

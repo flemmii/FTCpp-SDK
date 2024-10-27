@@ -30,7 +30,7 @@ namespace sdk {
 
         ~Servo();
 
-        Servo &operator=(const jobject &servo);
+        virtual Servo &operator=(const jobject &servo);
 
         [[nodiscard]] Servo_controller get_controller() const;
 
