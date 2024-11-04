@@ -21,6 +21,8 @@ namespace sdk {
 
         ~Dc_motor_ex();
 
+        Dc_motor_ex &operator=(const Dc_motor_ex &dc_motor_ex);
+
         Dc_motor_ex &operator=(const jobject &dcMotorEx) override;
 
         // DcMotorEx

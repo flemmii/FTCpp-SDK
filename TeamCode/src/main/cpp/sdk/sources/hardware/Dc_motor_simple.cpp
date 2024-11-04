@@ -18,6 +18,14 @@ namespace sdk {
         }
     }
 
+    Dc_motor_simple &Dc_motor_simple::operator=(const Dc_motor_simple &dc_motor_simple) {
+        if (this != &dc_motor_simple && dc_motor_simple.dcMotorSimple) {
+            attach_thread
+            this->dcMotorSimple = env->NewGlobalRef(dc_motor_simple.dcMotorSimple);
+        }
+        return *this;
+    }
+
     Dc_motor_simple &Dc_motor_simple::operator=(const jobject &dcMotorSimple) {
         if (this->dcMotorSimple) {
             attach_thread

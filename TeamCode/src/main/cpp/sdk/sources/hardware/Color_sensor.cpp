@@ -17,6 +17,14 @@ namespace sdk {
         }
     }
 
+    Color_sensor &Color_sensor::operator=(const Color_sensor &color_sensor) {
+        if (this != &color_sensor && color_sensor.colorSensor) {
+            attach_thread
+            this->colorSensor = env->NewGlobalRef(color_sensor.colorSensor);
+        }
+        return *this;
+    }
+
     Color_sensor &Color_sensor::operator=(const jobject &colorSensor) {
         if (this->colorSensor) {
             attach_thread

@@ -21,6 +21,8 @@ namespace sdk {
 
         ~CR_servo();
 
+        CR_servo &operator=(const CR_servo &cr_servo);
+
         CR_servo &operator=(const jobject &crServo) override;
 
         [[nodiscard]] Servo_controller get_controller() const;

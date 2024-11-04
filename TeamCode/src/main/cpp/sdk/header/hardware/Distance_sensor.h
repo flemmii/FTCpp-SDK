@@ -17,6 +17,8 @@ namespace sdk {
 
         ~Distance_sensor();
 
+        Distance_sensor &operator=(const Distance_sensor &distance_sensor);
+
         Distance_sensor &operator=(const jobject &distanceSensor);
 
         // TODO: Add Distance_unit

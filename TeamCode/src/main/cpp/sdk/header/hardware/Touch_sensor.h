@@ -19,6 +19,8 @@ namespace sdk {
 
         ~Touch_sensor();
 
+        Touch_sensor &operator=(const Touch_sensor &touch_sensor);
+
         Touch_sensor &operator=(const jobject &touchSensor);
 
         [[nodiscard]] double get_value() const;

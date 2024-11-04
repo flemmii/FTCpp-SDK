@@ -18,6 +18,12 @@ namespace sdk {
         dcMotor = nullptr;
     }
 
+    Dc_motor &Dc_motor::operator=(const Dc_motor &dc_motor) {
+        Dc_motor_simple::operator=(dc_motor);
+        this->dcMotor = Dc_motor_simple::dcMotorSimple;
+        return *this;
+    }
+
     Dc_motor &Dc_motor::operator=(const jobject &dcMotor) {
         Dc_motor_simple::operator=(dcMotor);
         this->dcMotor = dcMotor;

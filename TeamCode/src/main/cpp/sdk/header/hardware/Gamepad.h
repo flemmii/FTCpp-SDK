@@ -65,6 +65,8 @@ namespace sdk {
 
         ~Gamepad();
 
+        Gamepad &operator=(const Gamepad &gamepad);
+
         Gamepad &operator=(const jobject &gamepad);
 
         void update();

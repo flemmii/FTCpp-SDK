@@ -28,6 +28,8 @@ namespace sdk {
 
         ~Dc_motor_simple();
 
+        Dc_motor_simple &operator=(const Dc_motor_simple &dc_motor_simple);
+
         virtual Dc_motor_simple &operator=(const jobject &dcMotorSimple);
 
         void set_direction(const Direction &direction) const;

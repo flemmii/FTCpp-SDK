@@ -16,6 +16,14 @@ namespace sdk {
         }
     }
 
+    Distance_sensor &Distance_sensor::operator=(const Distance_sensor &distance_sensor) {
+        if (this != &distance_sensor && distance_sensor.distanceSensor) {
+            attach_thread
+            this->distanceSensor = env->NewGlobalRef(distance_sensor.distanceSensor);
+        }
+        return *this;
+    }
+
     Distance_sensor &Distance_sensor::operator=(const jobject &distanceSensor) {
         if (this->distanceSensor) {
             attach_thread

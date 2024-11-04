@@ -20,6 +20,8 @@ namespace sdk {
 
         ~Servo_impl_ex();
 
+        Servo_impl_ex &operator=(const Servo_impl_ex &servo_impl_ex);
+
         Servo_impl_ex &operator=(const jobject &servoImplEx) override;
 
 

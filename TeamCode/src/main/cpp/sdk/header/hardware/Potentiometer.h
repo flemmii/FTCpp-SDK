@@ -25,6 +25,10 @@ namespace sdk {
 
         Potentiometer(const jobject &potentiometer);
 
+        ~Potentiometer() = default;
+
+        Potentiometer &operator=(const Potentiometer &potentiometer) = default;
+
         Potentiometer &operator=(const jobject &potentiometer) override;
 
         [[nodiscard]] double get_angle() const;

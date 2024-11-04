@@ -21,6 +21,8 @@ namespace sdk {
 
         ~Gyro_sensor();
 
+        Gyro_sensor &operator=(const Gyro_sensor &gyro_sensor);
+
         Gyro_sensor &operator=(const jobject &gyroSensor);
 
         void calibrate() const;

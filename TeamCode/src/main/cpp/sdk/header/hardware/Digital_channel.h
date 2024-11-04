@@ -26,6 +26,8 @@ namespace sdk {
 
         ~Digital_channel();
 
+        Digital_channel &operator=(const Digital_channel &digital_channel);
+
         Digital_channel &operator=(const jobject &digitalChannel);
 
         [[nodiscard]] Mode get_mode() const;

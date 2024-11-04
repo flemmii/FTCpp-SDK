@@ -26,6 +26,8 @@ namespace sdk {
 
         ~BNO055IMU();
 
+        BNO055IMU &operator=(const BNO055IMU &bno055imu);
+
         BNO055IMU &operator=(const jobject &bno055imu);
 
         enum class Angle_unit {

@@ -28,6 +28,8 @@ namespace sdk {
 
         ~Lynx_module();
 
+        Lynx_module &operator=(const Lynx_module &lynx_module);
+
         Lynx_module &operator=(const jobject &lynxModule);
 
         static const char *bulk_caching_mode_to_string(const Bulk_caching_mode &bulk_caching_mode);

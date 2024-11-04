@@ -13,6 +13,14 @@ namespace sdk {
         }
     }
 
+    Gamepad &Gamepad::operator=(const Gamepad &gamepad) {
+        if (this != &gamepad && gamepad.gamepad) {
+            attach_thread
+            this->gamepad = env->NewGlobalRef(gamepad.gamepad);
+        }
+        return *this;
+    }
+
     class Gamepad &Gamepad::operator=(const jobject &gamepad) {
         if (this->gamepad) {
             attach_thread

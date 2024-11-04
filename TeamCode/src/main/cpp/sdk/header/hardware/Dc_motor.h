@@ -36,6 +36,8 @@ namespace sdk {
 
         ~Dc_motor();
 
+        Dc_motor &operator=(const Dc_motor &dc_motor);
+
         Dc_motor &operator=(const jobject &dcMotor) override;
 
         [[nodiscard]] int get_port_number() const;

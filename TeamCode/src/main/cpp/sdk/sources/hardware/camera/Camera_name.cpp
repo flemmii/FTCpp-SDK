@@ -17,6 +17,14 @@ namespace sdk {
         }
     }
 
+    Camera_name &Camera_name::operator=(const Camera_name &camera_name) {
+        if (this != &camera_name && camera_name.cameraName) {
+            attach_thread
+            this->cameraName = env->NewGlobalRef(camera_name.cameraName);
+        }
+        return *this;
+    }
+
     Camera_name &Camera_name::operator=(const jobject &cameraName) {
         if (this->cameraName) {
             attach_thread

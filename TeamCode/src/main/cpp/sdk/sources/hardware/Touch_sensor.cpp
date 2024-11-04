@@ -17,6 +17,14 @@ namespace sdk {
         }
     }
 
+    Touch_sensor &Touch_sensor::operator=(const Touch_sensor &touch_sensor) {
+        if (this != &touch_sensor && touch_sensor.touchSensor) {
+            attach_thread
+            this->touchSensor = env->NewGlobalRef(touch_sensor.touchSensor);
+        }
+        return *this;
+    }
+
     Touch_sensor &Touch_sensor::operator=(const jobject &touchSensor) {
         if (this->touchSensor) {
             attach_thread
@@ -25,7 +33,6 @@ namespace sdk {
         this->touchSensor = touchSensor;
         return *this;
     }
-
 
     double Touch_sensor::get_value() const {
         attach_thread

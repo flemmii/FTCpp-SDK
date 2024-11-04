@@ -20,6 +20,14 @@ namespace sdk {
         }
     }
 
+    Lynx_module &Lynx_module::operator=(const Lynx_module &lynx_module) {
+        if (this != &lynx_module && lynx_module.lynxModule) {
+            attach_thread
+            this->lynxModule = env->NewGlobalRef(lynx_module.lynxModule);
+        }
+        return *this;
+    }
+
     Lynx_module &Lynx_module::operator=(const jobject &lynxModule) {
         if (this->lynxModule) {
             attach_thread

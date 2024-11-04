@@ -63,6 +63,14 @@ namespace sdk {
         }
     }
 
+    Vision_portal &Vision_portal::operator=(const Vision_portal &vision_portal) {
+        if (this != &vision_portal && vision_portal.visionPortal) {
+            attach_thread
+            this->visionPortal = env->NewGlobalRef(vision_portal.visionPortal);
+        }
+        return *this;
+    }
+
     Vision_portal &Vision_portal::operator=(const jobject &visionPortal) {
         if (this->visionPortal) {
             attach_thread
@@ -307,6 +315,14 @@ namespace sdk {
             env->DeleteGlobalRef(builder);
             builder = nullptr;
         }
+    }
+
+    Vision_portal::Builder &Vision_portal::Builder::operator=(const Builder &builder) {
+        if (this != &builder && builder.builder) {
+            attach_thread
+            this->builder = env->NewGlobalRef(builder.builder);
+        }
+        return *this;
     }
 
     Vision_portal::Builder &Vision_portal::Builder::operator=(const jobject &builder) {

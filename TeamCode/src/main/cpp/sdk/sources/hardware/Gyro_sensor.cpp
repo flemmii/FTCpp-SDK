@@ -17,6 +17,14 @@ namespace sdk {
         }
     }
 
+    Gyro_sensor &Gyro_sensor::operator=(const Gyro_sensor &gyro_sensor) {
+        if (this != &gyro_sensor && gyro_sensor.gyroSensor) {
+            attach_thread
+            this->gyroSensor = env->NewGlobalRef(gyro_sensor.gyroSensor);
+        }
+        return *this;
+    }
+
     Gyro_sensor &Gyro_sensor::operator=(const jobject &gyroSensor) {
         if (this->gyroSensor) {
             attach_thread

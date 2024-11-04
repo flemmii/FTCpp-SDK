@@ -23,6 +23,14 @@ namespace sdk {
         }
     }
 
+    BNO055IMU &BNO055IMU::operator=(const BNO055IMU &bno055imu) {
+        if (this != &bno055imu && bno055imu.bno055imu) {
+            attach_thread
+            this->bno055imu = env->NewGlobalRef(bno055imu.bno055imu);
+        }
+        return *this;
+    }
+
     BNO055IMU &BNO055IMU::operator=(const jobject &bno055imu) {
         if (this->bno055imu) {
             attach_thread

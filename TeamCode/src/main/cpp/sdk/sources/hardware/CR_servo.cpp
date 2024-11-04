@@ -13,6 +13,12 @@ namespace sdk {
         crServo = nullptr;
     }
 
+    CR_servo &CR_servo::operator=(const CR_servo &cr_servo) {
+        Dc_motor_simple::operator=(cr_servo);
+        this->crServo = Dc_motor_simple::dcMotorSimple;
+        return *this;
+    }
+
     CR_servo &CR_servo::operator=(const jobject &crServo) {
         Dc_motor_simple::operator=(crServo);
         this->crServo = crServo;

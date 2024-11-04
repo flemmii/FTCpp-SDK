@@ -19,6 +19,8 @@ namespace sdk {
 
         ~Color_sensor();
 
+        Color_sensor &operator=(const Color_sensor &color_sensor);
+
         Color_sensor &operator=(const jobject &colorSensor);
 
         [[nodiscard]] int red() const;

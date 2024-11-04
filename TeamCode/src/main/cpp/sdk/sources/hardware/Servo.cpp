@@ -20,6 +20,14 @@ namespace sdk {
         }
     }
 
+    Servo &Servo::operator=(const Servo &servo) {
+        if (this != &servo && servo.servo) {
+            attach_thread
+            this->servo = env->NewGlobalRef(servo.servo);
+        }
+        return *this;
+    }
+
     class Servo &Servo::operator=(const jobject &servo) {
         if (this->servo) {
             attach_thread

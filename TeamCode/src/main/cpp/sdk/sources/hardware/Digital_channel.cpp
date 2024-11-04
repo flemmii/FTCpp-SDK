@@ -18,6 +18,14 @@ namespace sdk {
         }
     }
 
+    Digital_channel &Digital_channel::operator=(const Digital_channel &digital_channel) {
+        if (this != &digital_channel && digital_channel.digitalChannel) {
+            attach_thread
+            this->digitalChannel = env->NewGlobalRef(digital_channel.digitalChannel);
+        }
+        return *this;
+    }
+
     Digital_channel &Digital_channel::operator=(const jobject &digitalChannel) {
         if (this->digitalChannel) {
             attach_thread

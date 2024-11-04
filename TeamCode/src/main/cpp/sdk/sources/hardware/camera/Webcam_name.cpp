@@ -16,6 +16,12 @@ namespace sdk {
         webcamName = nullptr;
     }
 
+    Webcam_name &Webcam_name::operator=(const Webcam_name &webcam_name) {
+        Camera_name::operator=(webcam_name);
+        this->webcamName = Camera_name::cameraName;
+        return *this;
+    }
+
     Webcam_name &Webcam_name::operator=(const jobject &webcamName) {
         Camera_name::operator=(webcamName);
         this->webcamName = webcamName;

@@ -17,6 +17,14 @@ namespace sdk {
         }
     }
 
+    Analog_input &Analog_input::operator=(const Analog_input &analog_input) {
+        if (this != &analog_input && analog_input.analogInput) {
+            attach_thread
+            this->analogInput = env->NewGlobalRef(analog_input.analogInput);
+        }
+        return *this;
+    }
+
     Analog_input &Analog_input::operator=(const jobject &analogInput) {
         if (this->analogInput) {
             attach_thread
@@ -29,15 +37,15 @@ namespace sdk {
     double Analog_input::get_voltage() const {
         attach_thread
         return static_cast<double>(env->CallDoubleMethod(analogInput,
-                                                   env->GetMethodID(jclazz, "getVoltage",
-                                                                    "()D")));
+                                                         env->GetMethodID(jclazz, "getVoltage",
+                                                                          "()D")));
     }
 
     double Analog_input::get_max_voltage() const {
         attach_thread
         return static_cast<double>(env->CallDoubleMethod(analogInput,
-                                                   env->GetMethodID(jclazz, "getMaxVoltage",
-                                                                    "()D")));
+                                                         env->GetMethodID(jclazz, "getMaxVoltage",
+                                                                          "()D")));
     }
 
     std::string Analog_input::get_device_name() const {

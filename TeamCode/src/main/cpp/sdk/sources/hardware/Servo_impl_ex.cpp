@@ -14,6 +14,12 @@ namespace sdk {
         servoImplEx = nullptr;
     }
 
+    Servo_impl_ex &Servo_impl_ex::operator=(const Servo_impl_ex &servo_impl_ex) {
+        Servo::operator=(servo_impl_ex);
+        this->servoImplEx = Servo::servo;
+        return *this;
+    }
+
     Servo_impl_ex &Servo_impl_ex::operator=(const jobject &servoImplEx) {
         Servo::operator=(servoImplEx);
         this->servoImplEx = servoImplEx;

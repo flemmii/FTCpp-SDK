@@ -19,6 +19,8 @@ namespace sdk {
 
         ~Camera_name();
 
+        Camera_name &operator=(const Camera_name &camera_name);
+
         virtual Camera_name &operator=(const jobject &cameraName);
 
         [[nodiscard]] bool is_webcam() const;
