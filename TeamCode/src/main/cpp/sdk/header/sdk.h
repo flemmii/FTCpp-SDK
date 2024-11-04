@@ -12,6 +12,7 @@
 
 #include "hardware/Analog_input.h"
 #include "hardware/BNO055IMU.h"
+#include "hardware/Color_range_sensor.h"
 #include "hardware/Color_sensor.h"
 #include "hardware/CR_servo.h"
 #include "hardware/Dc_motor.h"
@@ -23,6 +24,7 @@
 #include "hardware/Gyro_sensor.h"
 #include "hardware/hardware_map.h"
 #include "hardware/IMU.h"
+#include "hardware/Light_sensor.h"
 #include "hardware/Lynx_module.h"
 #include "hardware/PIDF_coefficients.h"
 #include "hardware/Potentiometer.h"
