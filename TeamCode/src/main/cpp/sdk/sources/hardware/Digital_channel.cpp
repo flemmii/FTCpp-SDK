@@ -41,8 +41,9 @@ namespace sdk {
                                              env->GetMethodID(jclazz, "getMode",
                                                               "()Lcom/qualcomm/robotcore/hardware/DigitalChannel$Mode;"));
 
+        jclass Mode = env->GetObjectClass(mode);
         auto name = (jstring) env->CallObjectMethod(mode,
-                                                    env->GetMethodID(env->GetObjectClass(mode),
+                                                    env->GetMethodID(Mode,
                                                                      "name",
                                                                      "()Ljava/lang/String;"));
 
@@ -50,6 +51,7 @@ namespace sdk {
         std::string strModeName(modeName);
         env->DeleteLocalRef(name);
 
+        env->DeleteLocalRef(Mode);
         env->DeleteLocalRef(mode);
 
         if (strModeName == "INPUT")
