@@ -163,7 +163,7 @@ namespace sdk {
 
             extern "C"
             JNIEXPORT void JNICALL
-            Java_org_firstinspires_ftc_teamcode_VisionProcessor_FirstVisionProcessor_nativeInit(
+            Java_org_firstinspires_ftc_teamcode_sdk_VisionProcessor_FirstVisionProcessor_nativeInit(
                     JNIEnv *env,
                     jobject thiz,
                     jint width,
@@ -174,7 +174,7 @@ namespace sdk {
 
             extern "C"
             JNIEXPORT void JNICALL
-            Java_org_firstinspires_ftc_teamcode_VisionProcessor_FirstVisionProcessor_nativeProcessFrame(
+            Java_org_firstinspires_ftc_teamcode_sdk_VisionProcessor_FirstVisionProcessor_nativeProcessFrame(
                     JNIEnv *env,
                     jobject thiz,
                     jlong frame,
@@ -186,7 +186,7 @@ namespace sdk {
 
             extern "C"
             JNIEXPORT void JNICALL
-            Java_org_firstinspires_ftc_teamcode_VisionProcessor_FirstVisionProcessor_nativeOnDrawFrame(
+            Java_org_firstinspires_ftc_teamcode_sdk_VisionProcessor_FirstVisionProcessor_nativeOnDrawFrame(
                     JNIEnv *env,
                     jobject thiz,
                     jobject canvas,
@@ -211,7 +211,7 @@ namespace sdk {
 
             extern "C"
             JNIEXPORT void JNICALL
-            Java_org_firstinspires_ftc_teamcode_VisionProcessor_SecondVisionProcessor_nativeInit(
+            Java_org_firstinspires_ftc_teamcode_sdk_VisionProcessor_SecondVisionProcessor_nativeInit(
                     JNIEnv *env,
                     jobject thiz,
                     jint width,
@@ -222,7 +222,7 @@ namespace sdk {
 
             extern "C"
             JNIEXPORT void JNICALL
-            Java_org_firstinspires_ftc_teamcode_VisionProcessor_SecondVisionProcessor_nativeProcessFrame(
+            Java_org_firstinspires_ftc_teamcode_sdk_VisionProcessor_SecondVisionProcessor_nativeProcessFrame(
                     JNIEnv *env,
                     jobject thiz,
                     jlong frame,
@@ -234,7 +234,7 @@ namespace sdk {
 
             extern "C"
             JNIEXPORT void JNICALL
-            Java_org_firstinspires_ftc_teamcode_VisionProcessor_SecondVisionProcessor_nativeOnDrawFrame(
+            Java_org_firstinspires_ftc_teamcode_sdk_VisionProcessor_SecondVisionProcessor_nativeOnDrawFrame(
                     JNIEnv *env,
                     jobject thiz,
                     jobject canvas,
