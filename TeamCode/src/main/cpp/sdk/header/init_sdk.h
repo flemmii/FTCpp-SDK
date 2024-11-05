@@ -30,7 +30,7 @@
     find_class_and_create_global_ref("com/qualcomm/hardware/bosch/BNO055IMU$AngleUnit", BNO055IMU::jclazz_AngleUnit)         \
     find_class_and_create_global_ref("com/qualcomm/hardware/bosch/BNO055IMU$AccelUnit", BNO055IMU::jclazz_AccelUnit)         \
     find_class_and_create_global_ref("com/qualcomm/hardware/bosch/BNO055IMU$Parameters", BNO055IMU::Parameters::jclazz)      \
-    find_class_and_create_global_ref("com/qualcomm/hardware/bosch/ColorRangeSensor", Color_range_sensor::jclazz)            \
+    find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/ColorRangeSensor", Color_range_sensor::jclazz)            \
     find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/ColorSensor", Color_sensor::jclazz)                    \
     find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/CRServo", CR_servo::jclazz)                            \
     find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/DcMotor", Dc_motor::jclazz)                            \
