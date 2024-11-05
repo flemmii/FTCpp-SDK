@@ -26,6 +26,7 @@
 #include "hardware/IMU.h"
 #include "hardware/Light_sensor.h"
 #include "hardware/Lynx_module.h"
+#include "hardware/Modern_robotics_color_beacon.h"
 #include "hardware/PIDF_coefficients.h"
 #include "hardware/Potentiometer.h"
 #include "hardware/Servo.h"

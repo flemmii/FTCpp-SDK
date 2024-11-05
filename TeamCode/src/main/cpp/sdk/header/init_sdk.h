@@ -55,7 +55,8 @@
     env->DeleteLocalRef(localHardwareMap);                                                                                   \
     find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/LightSensor", Light_sensor::jclazz)                    \
     find_class_and_create_global_ref("com/qualcomm/hardware/lynx/LynxModule", Lynx_module::jclazz)                                    \
-    find_class_and_create_global_ref("com/qualcomm/hardware/lynx/LynxModule$BulkCachingMode", Lynx_module::jclazz_BulkCachingMode)\
+    find_class_and_create_global_ref("com/qualcomm/hardware/lynx/LynxModule$BulkCachingMode", Lynx_module::jclazz_BulkCachingMode)  \
+    find_class_and_create_global_ref("org/firstinspires/ftc/teamcode/sdk/hardware/ModernRoboticsColorBeacon", Modern_robotics_color_beacon::jclazz) \
     find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/PIDFCoefficients", PIDF_coefficients::jclazz)          \
     find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/Servo", Servo::jclazz)                                  \
     find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/Servo$Direction", Servo::jclazz_Direction)             \
