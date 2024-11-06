@@ -6,6 +6,7 @@
 
 namespace sdk {
     jclass Digital_channel::jclazz;
+    jclass Digital_channel::jclazz_Mode;
 
     Digital_channel::Digital_channel(const jobject &digitalChannel) : digitalChannel(
             digitalChannel) {}
