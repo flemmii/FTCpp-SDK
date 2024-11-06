@@ -72,7 +72,7 @@
     find_class_and_create_global_ref("org/firstinspires/ftc/vision/VisionPortal$StreamFormat", Vision_portal::jclazz_StreamFormat)                                                 \
     find_class_and_create_global_ref("org/firstinspires/ftc/vision/VisionPortal$MultiPortalLayout", Vision_portal::jclazz_MultiPortalLayout)                                          \
     find_class_and_create_global_ref("org/firstinspires/ftc/vision/VisionPortal$Builder", Vision_portal::Builder::jclazz) \
-    find_class_and_create_global_ref("org/firstinspires/ftc/teamcode/VisionProcessor/FirstVisionProcessor", vision_processor::first_vision_processor::jclazz)              \
-    find_class_and_create_global_ref("org/firstinspires/ftc/teamcode/VisionProcessor/SecondVisionProcessor", vision_processor::second_vision_processor::jclazz)                                                                        \
+    find_class_and_create_global_ref("org/firstinspires/ftc/teamcode/sdk/VisionProcessor/FirstVisionProcessor", vision_processor::first_vision_processor::jclazz)              \
+    find_class_and_create_global_ref("org/firstinspires/ftc/teamcode/sdk/VisionProcessor/SecondVisionProcessor", vision_processor::second_vision_processor::jclazz)                                                                        \
 
 #endif //FTCROBOTCONTROLLER_CPPENV_H
