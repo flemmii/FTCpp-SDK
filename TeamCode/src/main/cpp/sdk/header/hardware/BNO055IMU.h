@@ -64,11 +64,51 @@ namespace sdk {
         // There are more parameters in Java but I am to lazy to implement them
         void start_acceleration_integration(const int &ms_poll_interval) const;
 
+        /**
+         * Returns the absolute orientation of the sensor as a set three angles with indicated parameters.
+         * @param reference the axes reference in which the result will be expressed
+         * @param order     the axes order in which the result will be expressed
+         * @param angleUnit the angle units in which the result will be expressed
+         * @return the absolute orientation of the sensor
+         * @see Orientation
+         * @see #getAngularOrientation()
+         */
         [[nodiscard]] Orientation get_angular_orientation() const;
 
-        [[nodiscard]] Acceleration get_acceleration() const;
+        /**
+         * Returns the overall acceleration experienced by the sensor. This is composed of
+         * a component due to the movement of the sensor and a component due to the force of gravity.
+         * @return  the overall acceleration vector experienced by the sensor
+         * @see #getLinearAcceleration()
+         * @see #getGravity()
+         */
+        [[nodiscard]] Acceleration get_overall_acceleration() const;
 
+        /**
+         * Returns the rate of change of the absolute orientation of the sensor.
+         * @return the rate at which the orientation of the sensor is changing.
+         * @see #getAngularOrientation()
+         */
         [[nodiscard]] Angular_velocity get_angular_velocity() const;
+
+        /**
+         * Returns the last observed acceleration of the sensor. Note that this does not communicate
+         * with the sensor, but rather returns the most recent value reported to the acceleration
+         * integration algorithm.
+         * @return  the last observed acceleration of the sensor
+         * @see #getLinearAcceleration()
+         * @see Parameters#accelerationIntegrationAlgorithm
+         * @see #startAccelerationIntegration(Position, Velocity, int)
+         */
+        [[nodiscard]] Acceleration get_linear_acceleration() const;
+
+        /**
+         * Returns the direction of the force of gravity relative to the sensor.
+         * @return  the acceleration vector of gravity relative to the sensor
+         * @see #getOverallAcceleration()
+         * @see #getLinearAcceleration()
+         */
+        [[nodiscard]] Acceleration get_gravity() const;
     };
 
 } // sdk

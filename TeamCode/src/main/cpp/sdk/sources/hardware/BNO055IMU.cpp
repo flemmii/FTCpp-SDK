@@ -105,6 +105,27 @@ namespace sdk {
                             NULL, NULL, static_cast<jint>(ms_poll_interval));
     }
 
+    Acceleration BNO055IMU::get_overall_acceleration() const {
+        attach_thread
+        jobject acceleration = env->CallObjectMethod(bno055imu, env->GetMethodID(jclazz,
+                                                                                 "getOverallAcceleration",
+                                                                                 "()Lorg/firstinspires/ftc/robotcore/external/navigation/Acceleration;"));
+        jclass Acceleration = env->GetObjectClass(acceleration);
+        auto x = static_cast<double>(env->GetDoubleField(acceleration,
+                                                         env->GetFieldID(Acceleration, "xAccel",
+                                                                         "D")));
+        auto y = static_cast<double>(env->GetDoubleField(acceleration,
+                                                         env->GetFieldID(Acceleration, "yAccel",
+                                                                         "D")));
+        auto z = static_cast<double>(env->GetDoubleField(acceleration,
+                                                         env->GetFieldID(Acceleration, "zAccel",
+                                                                         "D")));
+
+        env->DeleteLocalRef(acceleration);
+        env->DeleteLocalRef(Acceleration);
+        return {x, y, z};
+    }
+
     Orientation BNO055IMU::get_angular_orientation() const {
         attach_thread
         jobject orientation = env->CallObjectMethod(bno055imu, env->GetMethodID(jclazz,
@@ -126,10 +147,31 @@ namespace sdk {
         return {x, y, z};
     }
 
-    Acceleration BNO055IMU::get_acceleration() const {
+    Acceleration BNO055IMU::get_linear_acceleration() const {
         attach_thread
         jobject acceleration = env->CallObjectMethod(bno055imu, env->GetMethodID(jclazz,
-                                                                                 "getAcceleration",
+                                                                                 "getLinearAcceleration",
+                                                                                 "()Lorg/firstinspires/ftc/robotcore/external/navigation/Acceleration;"));
+        jclass Acceleration = env->GetObjectClass(acceleration);
+        auto x = static_cast<double>(env->GetDoubleField(acceleration,
+                                                         env->GetFieldID(Acceleration, "xAccel",
+                                                                         "D")));
+        auto y = static_cast<double>(env->GetDoubleField(acceleration,
+                                                         env->GetFieldID(Acceleration, "yAccel",
+                                                                         "D")));
+        auto z = static_cast<double>(env->GetDoubleField(acceleration,
+                                                         env->GetFieldID(Acceleration, "zAccel",
+                                                                         "D")));
+
+        env->DeleteLocalRef(acceleration);
+        env->DeleteLocalRef(Acceleration);
+        return {x, y, z};
+    }
+
+    Acceleration BNO055IMU::get_gravity() const {
+        attach_thread
+        jobject acceleration = env->CallObjectMethod(bno055imu, env->GetMethodID(jclazz,
+                                                                                 "getGravity",
                                                                                  "()Lorg/firstinspires/ftc/robotcore/external/navigation/Acceleration;"));
         jclass Acceleration = env->GetObjectClass(acceleration);
         auto x = static_cast<double>(env->GetDoubleField(acceleration,
