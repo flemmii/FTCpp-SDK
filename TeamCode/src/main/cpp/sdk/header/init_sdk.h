@@ -40,6 +40,7 @@
     find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/DcMotorSimple", Dc_motor_simple::jclazz);                \
     find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/DcMotorSimple$Direction", Dc_motor_simple::jclazz_Direction);   \
     find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/DigitalChannel", Digital_channel::jclazz)              \
+    find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/DigitalChannel$Mode", Digital_channel::jclazz_Mode)    \
     find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/DistanceSensor", Distance_sensor::jclazz)              \
     find_class_and_create_global_ref("org/firstinspires/ftc/robotcore/external/navigation/DistanceUnit", Distance_sensor::DistanceUnit) \
     find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/Gamepad", Gamepad::jclazz)                             \

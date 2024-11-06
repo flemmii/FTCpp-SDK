@@ -13,6 +13,7 @@ namespace sdk {
     class Digital_channel {
     public:
         static jclass jclazz;
+        static jclass jclazz_Mode;
         jobject digitalChannel;
 
         enum class Mode {

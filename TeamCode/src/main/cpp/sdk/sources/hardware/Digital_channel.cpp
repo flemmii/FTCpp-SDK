@@ -41,9 +41,8 @@ namespace sdk {
                                              env->GetMethodID(jclazz, "getMode",
                                                               "()Lcom/qualcomm/robotcore/hardware/DigitalChannel$Mode;"));
 
-        jclass Mode = env->GetObjectClass(mode);
         auto name = (jstring) env->CallObjectMethod(mode,
-                                                    env->GetMethodID(Mode,
+                                                    env->GetMethodID(jclazz_Mode,
                                                                      "name",
                                                                      "()Ljava/lang/String;"));
 
@@ -51,7 +50,6 @@ namespace sdk {
         std::string strModeName(modeName);
         env->DeleteLocalRef(name);
 
-        env->DeleteLocalRef(Mode);
         env->DeleteLocalRef(mode);
 
         if (strModeName == "INPUT")
@@ -65,12 +63,12 @@ namespace sdk {
         attach_thread
         jobject modeObj;
         if (mode == Mode::INPUT) {
-            modeObj = env->GetStaticObjectField(jclazz,
-                                                env->GetStaticFieldID(jclazz, "Mode.INPUT",
+            modeObj = env->GetStaticObjectField(jclazz_Mode,
+                                                env->GetStaticFieldID(jclazz_Mode, "INPUT",
                                                                       "Lcom/qualcomm/robotcore/hardware/DigitalChannel$Mode;"));
         } else {
-            modeObj = env->GetStaticObjectField(jclazz,
-                                                env->GetStaticFieldID(jclazz, "Mode.OUTPUT",
+            modeObj = env->GetStaticObjectField(jclazz_Mode,
+                                                env->GetStaticFieldID(jclazz_Mode, "OUTPUT",
                                                                       "Lcom/qualcomm/robotcore/hardware/DigitalChannel$Mode;"));
         }
         env->CallVoidMethod(digitalChannel,
