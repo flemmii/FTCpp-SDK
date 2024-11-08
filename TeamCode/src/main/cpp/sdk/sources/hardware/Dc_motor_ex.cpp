@@ -8,6 +8,7 @@ using namespace std;
 
 namespace sdk {
     jclass Dc_motor_ex::jclazz;
+    jclass Dc_motor_ex::CurrentUnit;
 
     Dc_motor_ex::Dc_motor_ex(const jobject &dcMotorEx) : dcMotorEx(dcMotorEx),
                                                          Dc_motor(dcMotorEx) {}
@@ -132,6 +133,46 @@ namespace sdk {
                                                     env->GetMethodID(jclazz,
                                                                      "getTargetPositionTolerance",
                                                                      "()I")));
+    }
+
+    double Dc_motor_ex::get_current() const {
+        attach_thread
+        jobject ampsObject = env->GetStaticObjectField(CurrentUnit,
+                                                       env->GetStaticFieldID(CurrentUnit, "AMPS",
+                                                                             "Lorg/firstinspires/ftc/robotcore/external/navigation/CurrentUnit;"));
+
+        auto result = static_cast<double>(env->CallDoubleMethod(dcMotorEx,
+                                                                env->GetMethodID(jclazz,
+                                                                                 "getCurrent",
+                                                                                 "(Lorg/firstinspires/ftc/robotcore/external/navigation/CurrentUnit;)D"),
+                                                                ampsObject));
+        env->DeleteLocalRef(ampsObject);
+        return result;
+    }
+
+    double Dc_motor_ex::get_current_alert() const {
+        attach_thread
+        jobject ampsObject = env->GetStaticObjectField(CurrentUnit,
+                                                       env->GetStaticFieldID(CurrentUnit, "AMPS",
+                                                                           "Lorg/firstinspires/ftc/robotcore/external/navigation/CurrentUnit;"));
+
+        auto result = static_cast<double>(env->CallDoubleMethod(dcMotorEx,
+                                                                env->GetMethodID(jclazz,
+                                                                                 "getCurrentAlert",
+                                                                                 "(Lorg/firstinspires/ftc/robotcore/external/navigation/CurrentUnit;)D"),
+                                                                ampsObject));
+        env->DeleteLocalRef(ampsObject);
+        return result;
+    }
+
+    void Dc_motor_ex::set_current_alert(double current) const {
+        attach_thread
+        jobject ampsObject = env->GetStaticObjectField(CurrentUnit,
+                                                       env->GetStaticFieldID(CurrentUnit, "AMPS",
+                                                                             "Lorg/firstinspires/ftc/robotcore/external/navigation/CurrentUnit;"));
+
+        env->CallVoidMethod(dcMotorEx, env->GetMethodID(jclazz, "getCurrentAlert", "(D;Lorg/firstinspires/ftc/robotcore/external/navigation/CurrentUnit;)V"), static_cast<jdouble>(current), ampsObject);
+        env->DeleteLocalRef(ampsObject);
     }
 
     bool Dc_motor_ex::is_over_current() const {

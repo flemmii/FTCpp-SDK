@@ -36,7 +36,8 @@
     find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/DcMotor", Dc_motor::jclazz)                            \
     find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/DcMotor$RunMode", Dc_motor::jclazz_RunMode);                                    \
     find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/DcMotor$ZeroPowerBehavior", Dc_motor::jclazz_ZeroPowerBehavior); \
-    find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/DcMotorEx", Dc_motor_ex::jclazz);                        \
+    find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/DcMotorEx", Dc_motor_ex::jclazz);                      \
+    find_class_and_create_global_ref("org/firstinspires/ftc/robotcore/external/navigation/CurrentUnit", Dc_motor_ex::CurrentUnit) \
     find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/DcMotorSimple", Dc_motor_simple::jclazz);                \
     find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/DcMotorSimple$Direction", Dc_motor_simple::jclazz_Direction);   \
     find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/DigitalChannel", Digital_channel::jclazz)              \
