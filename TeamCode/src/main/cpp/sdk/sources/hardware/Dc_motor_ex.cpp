@@ -154,7 +154,7 @@ namespace sdk {
         attach_thread
         jobject ampsObject = env->GetStaticObjectField(CurrentUnit,
                                                        env->GetStaticFieldID(CurrentUnit, "AMPS",
-                                                                           "Lorg/firstinspires/ftc/robotcore/external/navigation/CurrentUnit;"));
+                                                                             "Lorg/firstinspires/ftc/robotcore/external/navigation/CurrentUnit;"));
 
         auto result = static_cast<double>(env->CallDoubleMethod(dcMotorEx,
                                                                 env->GetMethodID(jclazz,
@@ -165,13 +165,15 @@ namespace sdk {
         return result;
     }
 
-    void Dc_motor_ex::set_current_alert(double current) const {
+    void Dc_motor_ex::set_current_alert(const double &current) const {
         attach_thread
         jobject ampsObject = env->GetStaticObjectField(CurrentUnit,
                                                        env->GetStaticFieldID(CurrentUnit, "AMPS",
                                                                              "Lorg/firstinspires/ftc/robotcore/external/navigation/CurrentUnit;"));
 
-        env->CallVoidMethod(dcMotorEx, env->GetMethodID(jclazz, "getCurrentAlert", "(D;Lorg/firstinspires/ftc/robotcore/external/navigation/CurrentUnit;)V"), static_cast<jdouble>(current), ampsObject);
+        env->CallVoidMethod(dcMotorEx, env->GetMethodID(jclazz, "getCurrentAlert",
+                                                        "(D;Lorg/firstinspires/ftc/robotcore/external/navigation/CurrentUnit;)V"),
+                            static_cast<jdouble>(current), ampsObject);
         env->DeleteLocalRef(ampsObject);
     }
 

@@ -42,7 +42,7 @@ namespace sdk {
 
         void set_white() const;
 
-        void set_color(int red, int green, int blue) const;
+        void set_color(const int &red, const int &green, const int &blue) const;
 
         bool do_initialize() const;
 
