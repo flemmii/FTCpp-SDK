@@ -31,7 +31,7 @@ namespace sdk {
 
         [[nodiscard]] int alpha() const;
 
-        [[nodiscard]] int argb() const;
+        [[nodiscard]] std::tuple<int, int, int, int> argb() const;
 
         void enable_led(const bool &enable) const;
     };

@@ -58,10 +58,12 @@ namespace sdk {
                                                    env->GetMethodID(jclazz, "alpha", "()I")));
     }
 
-    int Color_sensor::argb() const {
+    std::tuple<int, int, int, int> Color_sensor::argb() const {
         attach_thread
-        return static_cast<int>(env->CallIntMethod(colorSensor,
-                                                   env->GetMethodID(jclazz, "argb", "()I")));
+        int argb = static_cast<int>(env->CallIntMethod(colorSensor,
+                                                       env->GetMethodID(jclazz, "argb", "()I")));
+        return std::make_tuple((argb >> 24) & 0xFF, (argb >> 16) & 0xFF, (argb >> 8) & 0xFF,
+                               argb & 0xFF);
     }
 
     void Color_sensor::enable_led(const bool &enable) const {
