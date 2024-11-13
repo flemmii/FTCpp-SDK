@@ -14,10 +14,21 @@ void logcat_log(const int &ERROR_LEVEL, const char *tag, const char *text, ...) 
 }
 
 void sleep(const chrono::duration<double> &duration) {
-    auto start = std::chrono::high_resolution_clock::now();
-    auto end = start + duration;
+    auto milliseconds = chrono::duration_cast<chrono::milliseconds>(duration).count();
+    int execution_count = static_cast<int>(milliseconds) / 50;
+    auto rest_time = chrono::milliseconds(milliseconds % 50);
 
-    while (chrono::high_resolution_clock::now() < end && !sdk::linear_op_mode::is_stop_requested());
+    for (int i = 0; i < execution_count; i++) {
+        if (sdk::linear_op_mode::is_stop_requested())
+            return;
+
+        this_thread::sleep_for(chrono::milliseconds(50));
+    }
+
+    if (sdk::linear_op_mode::is_stop_requested())
+        return;
+
+    this_thread::sleep_for(rest_time);
 }
 
 namespace sdk {
