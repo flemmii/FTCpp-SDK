@@ -18,7 +18,7 @@ namespace sdk {
 
         Color_range_sensor(const jobject &color_range_sensor);
 
-        ~Color_range_sensor() = default;
+        ~Color_range_sensor();
 
         Color_range_sensor &operator=(const Color_range_sensor &color_range_sensor) = default;
 
