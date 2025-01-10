@@ -83,7 +83,8 @@ namespace sdk {
         env->CallVoidMethod(modernRoboticsColorBeacon, env->GetMethodID(jclazz, "setWhite", "()V"));
     }
 
-    void Modern_robotics_color_beacon::set_color(int red, int green, int blue) const {
+    void Modern_robotics_color_beacon::set_color(const int &red, const int &green,
+                                                 const int &blue) const {
         attach_thread
         env->CallVoidMethod(modernRoboticsColorBeacon,
                             env->GetMethodID(jclazz, "setColor", "(III)V"), static_cast<jint>(red),

@@ -18,9 +18,13 @@ namespace sdk {
     }
 
     Color_range_sensor &Color_range_sensor::operator=(const jobject &colorRangeSensor) {
-        Color_sensor::operator=(colorRangeSensor);
-        Distance_sensor::operator=(colorRangeSensor);
-        Light_sensor::operator=(colorRangeSensor);
+        if (colorSensor) {
+            attach_thread
+            env->DeleteGlobalRef(colorSensor);
+        }
+        colorSensor = colorRangeSensor;
+        distanceSensor = colorRangeSensor;
+        lightSensor = colorRangeSensor;
         return *this;
     }
 } // sdk

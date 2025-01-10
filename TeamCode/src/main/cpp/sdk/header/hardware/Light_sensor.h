@@ -52,7 +52,7 @@ namespace sdk {
          * Enable the LED light
          * @param enable true to enable; false to disable
          */
-        void enable_led(bool enable) const;
+        void enable_led(const bool &enable) const;
 
         /**
          * Status of this sensor, in string form

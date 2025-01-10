@@ -52,7 +52,7 @@ namespace sdk {
                                      env->GetMethodID(jclazz, "getRawLightDetectedMax", "()D"));
     }
 
-    void Light_sensor::enable_led(bool enable) const {
+    void Light_sensor::enable_led(const bool &enable) const {
         attach_thread
         env->CallVoidMethod(lightSensor, env->GetMethodID(jclazz, "enableLed", "(Z)V"), enable);
     }

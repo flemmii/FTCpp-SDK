@@ -66,7 +66,7 @@ namespace sdk {
          * Sets the current alert for this motor
          * @param unit current units
          */
-        void set_current_alert(double current) const;
+        void set_current_alert(const double &current) const;
 
         [[nodiscard]] bool is_over_current() const;
     };
