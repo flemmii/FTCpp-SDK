@@ -52,11 +52,6 @@
     sdk::gamepads::gamepad2 = env->NewGlobalRef(localGamepad2); \
     env->DeleteLocalRef(localGamepad2);                                                                                      \
     find_class_and_create_global_ref("com/qualcomm/robotcore/hardware/GyroSensor", Gyro_sensor::jclazz)                      \
-    find_class_and_create_global_ref("org/firstinspires/ftc/teamcode/sdk/hardware/GoBildaPinpointDriver", GoBilda_pinpoint_driver::jclazz)              \
-    find_class_and_create_global_ref("org/firstinspires/ftc/teamcode/sdk/hardware/GoBildaPinpointDriver$DeviceStatus", GoBilda_pinpoint_driver::jclazz_DeviceStatus) \
-    find_class_and_create_global_ref("org/firstinspires/ftc/teamcode/sdk/hardware/GoBildaPinpointDriver$ReadData", GoBilda_pinpoint_driver::jclazz_readData) \
-    find_class_and_create_global_ref("org/firstinspires/ftc/teamcode/sdk/hardware/GoBildaPinpointDriver$EncoderDirection", GoBilda_pinpoint_driver::jclazz_EncoderDirection) \
-    find_class_and_create_global_ref("org/firstinspires/ftc/teamcode/sdk/hardware/GoBildaPinpointDriver$GoBildaOdometryPods", GoBilda_pinpoint_driver::jclazz_GoBildaOdometryPods) \
     jobject localHardwareMap = env->GetObjectField(sdk::linear_op_mode::thiz, env->GetFieldID(sdk::linear_op_mode::jclazz, "hardwareMap", "Lcom/qualcomm/robotcore/hardware/HardwareMap;"));               \
     sdk::hardware_map::hardwareMap = env->NewGlobalRef(localHardwareMap);                                                    \
     env->DeleteLocalRef(localHardwareMap);                                                                                   \
