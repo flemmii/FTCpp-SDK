@@ -2,47 +2,49 @@
 # This ensures that a certain set of CMake features is available to
 # your build.
 
-cmake_minimum_required(VERSION 3.4.1)
+cmake_minimum_required(VERSION 3.5)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Specifies a library name, specifies whether the library is STATIC or
-# SHARED, and provides relative paths to the source code. You can
-# define multiple libraries by adding multiple add_library() commands,
-# and CMake builds them for you. When you build your app, Gradle
-# automatically packages shared libraries with your APK.
-
 project("${CMAKE_PROJECT_NAME}")
 
-# Pfad zum Verzeichnis mit den Quellcodedateien
+# Path to the directory containing source files
 set(TEAMCODE_SOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/teamcode/sources)
+# image recognition
+set(IMAGE_RECOGNITION_SOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/teamcode/imageRec/src)
 set(SDK_SOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/sdk/sources)
 
-# Alle vorhandenen Quelldateien im Verzeichnis und seinen Unterordnern sammeln
+# Collect all source files in the directory and its subdirectories
 file(GLOB_RECURSE TEAMCODE_SOURCES CONFIGURE_DEPENDS ${TEAMCODE_SOURCES_DIR}/*.cpp)
+# image recognition
+file(GLOB_RECURSE IMAGE_RECOGNITION_SOURCES CONFIGURE_DEPENDS ${IMAGE_RECOGNITION_SOURCES_DIR}/*.cpp)
 file(GLOB_RECURSE SDK_SOURCES CONFIGURE_DEPENDS ${SDK_SOURCES_DIR}/*.cpp)
 
-# Aktualisiere die vorhandenen Dateien im Build
-add_library(teamcode SHARED ${TEAMCODE_SOURCES})
+# Update the existing files in the build
+add_library(teamcode SHARED ${TEAMCODE_SOURCES} ${IMAGE_RECOGNITION_SOURCES})
 add_library(sdk SHARED ${SDK_SOURCES})
 
-# Für armeabi-v7a
+# Separate library for lib_loader.cpp
+add_library(lib_loader SHARED ${CMAKE_CURRENT_SOURCE_DIR}/sdk/lib_loader/lib_loader.cpp)
+
+# For armeabi-v7a
 add_library(april_tag_v7a SHARED IMPORTED)
 set_target_properties(april_tag_v7a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/../../../build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libapriltag.so")
 
 add_library(opencv_java4_v7a SHARED IMPORTED)
 set_target_properties(opencv_java4_v7a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/../../../build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libopencv_java4.so")
 
-# Für arm64-v8a
+# For arm64-v8a
 add_library(april_tag_v8a SHARED IMPORTED)
 set_target_properties(april_tag_v8a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/../../../build/intermediates/merged_native_libs/debug/out/lib/arm64-v8a/libapriltag.so")
 
 add_library(opencv_java4_v8a SHARED IMPORTED)
 set_target_properties(opencv_java4_v8a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/../../../build/intermediates/merged_native_libs/debug/out/lib/arm64-v8a/libopencv_java4.so")
 
-find_library(log-lib log)
+# Set the exact path to the log library
+set(log-lib ${CMAKE_ANDROID_NDK}/platforms/android-21/arch-arm64/usr/lib/liblog.so)
 
-# Linken der Bibliotheken
+# Link the libraries
 target_link_libraries(
         sdk
         ${log-lib}
@@ -50,6 +52,11 @@ target_link_libraries(
         $<$<STREQUAL:${ANDROID_ABI},armeabi-v7a>:opencv_java4_v7a>
         $<$<STREQUAL:${ANDROID_ABI},arm64-v8a>:april_tag_v8a>
         $<$<STREQUAL:${ANDROID_ABI},arm64-v8a>:opencv_java4_v8a>
+)
+
+target_link_libraries(
+        lib_loader
+        ${log-lib}
 )
 
 target_link_libraries(
@@ -61,9 +68,6 @@ target_link_libraries(
 include_directories(
         teamcode/header
         sdk/header
-        external_libraries)
-
-#ignore all geometrical drive files
-set_directory_properties(PROPERTIES
-        EXCLUDE_FROM_ALL "teamcode/sources/geometrical_drive.cpp;sources/geometrical_drive_grapher.cpp;header/geometrical_drive.h;header/geometrical_drive_grapher.h;"
+        external_libraries
+        sdk/lib_loader/lib_loader.h
 )

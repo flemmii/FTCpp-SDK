@@ -112,6 +112,7 @@ scan_files() {
 
 # Function to delete all relevant Java classes
 cleanup_java_files() {
+    mkdir -p "$JAVA_OUTPUT_DIR"
     find "$JAVA_OUTPUT_DIR" -type f -name "*.java" | while read -r java_file; do
         if grep -q 'Do_not_remove_this_string' "$java_file"; then
             rm "$java_file"

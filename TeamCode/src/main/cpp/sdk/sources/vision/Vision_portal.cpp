@@ -46,36 +46,84 @@ namespace sdk
         }
     }
 
-    Vision_portal::Vision_portal(const jobject &visionPortal) : visionPortal(visionPortal)
+    Vision_portal::Vision_portal(const jobject &builder, const vector<pair<Vision_processor *, bool>> &processors) : processors(processors)
     {
         // Normally you just need 2 Vision_portals and more than 2 Vision_portals have also a high risk to crash the control hub
-        if (vision_portal_count > 2)
+        if (++vision_portal_count > 2)
             throw runtime_error("Only 2 Vision_portals are allowed to exist at a time");
-        vision_portal_count++;
 
-        if (vision_portal_count == 1)
+        attach_thread
+
+            jobject jprocessor;
+
+        if (Vision_portal::vision_portal_count == 1)
+        {
+            first_vision_procesor = true;
+            jprocessor = env->NewObject(vision_processor::first_vision_processor::jclazz,
+                                        env->GetMethodID(
+                                            vision_processor::first_vision_processor::jclazz,
+                                            "<init>", "()V"));
             vision_processor::first_vision_processor::processors = &processors;
+        }
         else
+        {
+            first_vision_procesor = false;
+            jprocessor = env->NewObject(vision_processor::second_vision_processor::jclazz,
+                                        env->GetMethodID(
+                                            vision_processor::second_vision_processor::jclazz,
+                                            "<init>", "()V"));
             vision_processor::second_vision_processor::processors = &processors;
+        }
+
+        visionProcessor = env->NewGlobalRef(jprocessor);
+
+        env->DeleteLocalRef(env->CallObjectMethod(builder, env->GetMethodID(Builder::jclazz, "addProcessor", "(Lorg/firstinspires/ftc/vision/VisionProcessor;)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"),
+                                                  visionProcessor));
+
+        jobject jvisionPortal = env->CallObjectMethod(builder,
+                                                      env->GetMethodID(Builder::jclazz,
+                                                                       "build",
+                                                                       "()Lorg/firstinspires/ftc/vision/VisionPortal;"));
+
+        visionPortal = env->NewGlobalRef(jvisionPortal);
+
+        if (processors.empty())
+            this->set_main_processor_enabled(false);
+
+        env->DeleteLocalRef(jprocessor);
+        env->DeleteLocalRef(jvisionPortal);
     }
 
     Vision_portal::~Vision_portal()
     {
         vision_portal_count--;
-        this->close();
         if (visionPortal)
         {
             attach_thread
                 env->DeleteGlobalRef(visionPortal);
             visionPortal = nullptr;
         }
+        if (visionProcessor)
+        {
+            attach_thread
+                env->DeleteGlobalRef(visionProcessor);
+            visionProcessor = nullptr;
+        }
     }
 
     Vision_portal &Vision_portal::operator=(const Vision_portal &vision_portal)
     {
-        if (this != &vision_portal && vision_portal.visionPortal)
+        if (this != &vision_portal && vision_portal.visionPortal && vision_portal.visionProcessor)
         {
             attach_thread this->visionPortal = env->NewGlobalRef(vision_portal.visionPortal);
+            this->visionProcessor = env->NewGlobalRef(vision_portal.visionProcessor);
+            this->processors = vision_portal.processors;
+            this->processor_enabled = vision_portal.processor_enabled;
+            this->first_vision_procesor = vision_portal.first_vision_procesor;
+            if (first_vision_procesor)
+                vision_processor::first_vision_processor::processors = &processors;
+            else
+                vision_processor::second_vision_processor::processors = &processors;
         }
         return *this;
     }
@@ -188,7 +236,7 @@ namespace sdk
         }
     }
 
-    void Vision_portal::set_main_processord_enabled(const bool &enabled)
+    void Vision_portal::set_main_processor_enabled(const bool &enabled)
     {
         if (processor_enabled == enabled)
             return;
@@ -207,7 +255,7 @@ namespace sdk
             throw invalid_argument("Processor cannot be null");
 
         if (enabled)
-            set_main_processord_enabled(true);
+            set_main_processor_enabled(true);
 
         bool all_processors_disabled = true;
         for (auto &proc : processors)
@@ -215,15 +263,14 @@ namespace sdk
             if (*proc.first == *processor)
             {
                 proc.second = enabled;
-                if (enabled)
+                if (enabled || !all_processors_disabled)
                     return;
             }
-
             all_processors_disabled &= !proc.second;
         }
 
         if (all_processors_disabled)
-            set_main_processord_enabled(false);
+            set_main_processor_enabled(false);
     }
 
     bool
@@ -536,36 +583,6 @@ namespace sdk
 
     Vision_portal Vision_portal::Builder::build()
     {
-        attach_thread
-
-            jobject jprocessor;
-
-        if (Vision_portal::vision_portal_count == 0)
-            jprocessor = env->NewObject(vision_processor::first_vision_processor::jclazz,
-                                        env->GetMethodID(
-                                            vision_processor::first_vision_processor::jclazz,
-                                            "<init>", "()V"));
-        else
-            jprocessor = env->NewObject(vision_processor::second_vision_processor::jclazz,
-                                        env->GetMethodID(
-                                            vision_processor::second_vision_processor::jclazz,
-                                            "<init>", "()V"));
-
-        env->DeleteLocalRef(env->CallObjectMethod(builder, env->GetMethodID(jclazz, "addProcessor", "(Lorg/firstinspires/ftc/vision/VisionProcessor;)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"),
-                                                  jprocessor));
-
-        jobject jvisionPortal = env->CallObjectMethod(builder,
-                                                      env->GetMethodID(jclazz,
-                                                                       "build",
-                                                                       "()Lorg/firstinspires/ftc/vision/VisionPortal;"));
-        Vision_portal vision_portal(env->NewGlobalRef(jvisionPortal));
-        if (processors.empty())
-            vision_portal.set_main_processord_enabled(false);
-
-        vision_portal.processors = processors;
-        vision_portal.visionProcessor = env->NewGlobalRef(jprocessor);
-        env->DeleteLocalRef(jprocessor);
-        env->DeleteLocalRef(jvisionPortal);
-        return vision_portal;
+        return Vision_portal(builder, processors);
     }
 } // sdk

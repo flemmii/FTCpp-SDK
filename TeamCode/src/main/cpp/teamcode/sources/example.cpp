@@ -2,7 +2,7 @@
 // Created by fnlg on 12.05.2024.
 //
 
-#include "example.h"
+#include "example.hpp"
 
 using namespace sdk;
 using namespace gamepads;

@@ -6,7 +6,7 @@
 #define FTCROBOTCONTROLLER_EXAMPLE_H
 
 #include <jni.h>
-#include "sdk.h"
+#include "sdk.hpp"
 
 /*
  * This is NOT a comment. It tells the compiler how to create the java files
@@ -15,4 +15,4 @@
 
 extern "C" void Example();
 
-#endif //FTCROBOTCONTROLLER_EXAMPLE_H
+#endif // FTCROBOTCONTROLLER_EXAMPLE_H

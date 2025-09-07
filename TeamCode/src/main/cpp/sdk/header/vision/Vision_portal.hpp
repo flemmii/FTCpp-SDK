@@ -14,7 +14,7 @@ namespace sdk
     {
     private:
         static int vision_portal_count;
-        void set_main_processord_enabled(const bool &enabled);
+        void set_main_processor_enabled(const bool &enabled);
 
     public:
         static jclass jclazz;
@@ -25,7 +25,8 @@ namespace sdk
         jobject visionProcessor;
 
         std::vector<std::pair<sdk::Vision_processor *, bool>> processors;
-        bool processor_enabled = false;
+        bool processor_enabled = true;
+        bool first_vision_procesor = true;
 
         static int DEFAULT_VIEW_CONTAINER_ID;
         enum class Stream_format
@@ -67,7 +68,7 @@ namespace sdk
 
         Vision_portal() = default;
 
-        Vision_portal(const jobject &visionPortal);
+        Vision_portal(const jobject &builder, const std::vector<std::pair<sdk::Vision_processor *, bool>> &processors);
 
         ~Vision_portal();
 
