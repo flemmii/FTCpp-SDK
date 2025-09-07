@@ -1,0 +1,11 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run download.sh",
+            "type": "node",
+            "request": "launch",
+            "preLaunchTask": "Download"
+        }
+    ]
+}
