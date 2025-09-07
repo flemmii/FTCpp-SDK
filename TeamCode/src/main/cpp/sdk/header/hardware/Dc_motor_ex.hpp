@@ -1,0 +1,71 @@
+#pragma once
+
+#include "utils.hpp"
+#include "Dc_motor.hpp"
+#include "PIDF_coefficients.hpp"
+
+namespace sdk
+{
+    class Dc_motor_ex : public Dc_motor
+    {
+    public:
+        static jclass jclazz;
+        // TODO: Implement CurrentUnit correctly
+        static jclass CurrentUnit;
+        jobject dcMotorEx{};
+
+        Dc_motor_ex() = default;
+
+        Dc_motor_ex(const jobject &dcMotorEx);
+
+        ~Dc_motor_ex();
+
+        Dc_motor_ex &operator=(const Dc_motor_ex &dc_motor_ex);
+
+        Dc_motor_ex &operator=(const jobject &dcMotorEx) override;
+
+        // DcMotorEx
+
+        void set_motor_enable() const;
+
+        void set_motor_disable() const;
+
+        [[nodiscard]] bool is_motor_enabled() const;
+
+        void set_velocity(const double &angular_rate) const;
+
+        [[nodiscard]] double get_velocity() const;
+
+        // Only usable with RUN_USING_ENCODER or RUN_TO_POSITION
+        void
+        set_PIDF_coefficients(const Run_mode &mode,
+                              const PIDF_coefficients &pid_coefficients) const;
+
+        [[nodiscard]] PIDF_coefficients get_PIDF_coefficients(const Run_mode &mode) const;
+
+        void set_target_position_tolerance(const int &tolerance) const;
+
+        [[nodiscard]] int get_target_position_tolerance() const;
+
+        /**
+         * Returns the current consumed by this motor.
+         * @return the current consumed by this motor.
+         */
+        [[nodiscard]] double get_current() const;
+
+        /**
+         * Returns the current alert for this motor.
+         * @return the current alert for this motor
+         */
+        [[nodiscard]] double get_current_alert() const;
+
+        /**
+         * Sets the current alert for this motor
+         * @param unit current units
+         */
+        void set_current_alert(const double &current) const;
+
+        [[nodiscard]] bool is_over_current() const;
+    };
+
+} // SDK
