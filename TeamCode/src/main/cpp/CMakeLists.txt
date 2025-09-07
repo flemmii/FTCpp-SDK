@@ -2,7 +2,7 @@
 # This ensures that a certain set of CMake features is available to
 # your build.
 
-cmake_minimum_required(VERSION 3.4.1)
+cmake_minimum_required(VERSION 3.5)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -40,7 +40,8 @@ set_target_properties(april_tag_v8a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE
 add_library(opencv_java4_v8a SHARED IMPORTED)
 set_target_properties(opencv_java4_v8a PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/../../../build/intermediates/merged_native_libs/debug/out/lib/arm64-v8a/libopencv_java4.so")
 
-find_library(log-lib log)
+# Set the exact path to the log library
+set(log-lib ${CMAKE_ANDROID_NDK}/platforms/android-21/arch-arm64/usr/lib/liblog.so)
 
 # Linken der Bibliotheken
 target_link_libraries(
@@ -62,8 +63,3 @@ include_directories(
         teamcode/header
         sdk/header
         external_libraries)
-
-#ignore all geometrical drive files
-set_directory_properties(PROPERTIES
-        EXCLUDE_FROM_ALL "teamcode/sources/geometrical_drive.cpp;sources/geometrical_drive_grapher.cpp;header/geometrical_drive.h;header/geometrical_drive_grapher.h;"
-)
