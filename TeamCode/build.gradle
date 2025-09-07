@@ -1,0 +1,83 @@
+//
+// build.gradle in TeamCode
+//
+// Most of the definitions for building your module reside in a common, shared
+// file 'build.common.gradle'. Being factored in this way makes it easier to
+// integrate updates to the FTC into your code. If you really need to customize
+// the build definitions, you can place those customizations in this file, but
+// please think carefully as to whether such customizations are really necessary
+// before doing so.
+
+
+// Custom definitions may go here
+
+// Funktion zum Überprüfen, ob eine Datei existiert
+def fileExists(String path) {
+    File file = file(path)
+    return file.exists()
+}
+
+// Include common definitions from above.
+apply from: '../build.common.gradle'
+apply from: '../build.dependencies.gradle'
+
+evaluationDependsOn(':FtcRobotController')
+
+android {
+    namespace = 'org.firstinspires.ftc.teamcode'
+
+    packagingOptions {
+        jniLibs.useLegacyPackaging true
+    }
+
+    ndkVersion '21.4.7075529'
+
+    externalNativeBuild {
+        cmake {
+            version '3.31.4'
+        }
+    }
+
+    // Überprüfen, ob die benötigten Bibliotheken vorhanden sind
+    if (fileExists("build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libapriltag.so") &&
+            fileExists("build/intermediates/merged_native_libs/debug/out/lib/armeabi-v7a/libopencv_java4.so")) {
+
+        /*
+        tasks.register('cmake') {
+            doLast {
+                exec {
+                    commandLine 'src/main/cpp/download.sh'
+                }
+            }
+        }
+        preBuild.dependsOn cmake
+         */
+    }
+
+    tasks.register('updateJavaClasses') {
+        doLast {
+            exec {
+                if (System.getProperty('os.name').toLowerCase().contains('win')) {
+                    commandLine 'powershell', '-NoProfile', '-ExecutionPolicy', 'Bypass', '-Command', "& { \$gitExecPath = git --exec-path; \$gitBashPath = Join-Path \$gitExecPath '..\\..\\..\\bin\\bash.exe'; & \$gitBashPath '${projectDir}/src/main/cpp/sdk/createOpModeJava/createOpMode.sh' }"
+                } else {
+                    commandLine '/bin/bash', "${projectDir}/src/main/cpp/sdk/createOpModeJava/createOpMode.sh"
+                }
+            }
+        }
+    }
+
+    applicationVariants.configureEach { variant ->
+        variant.preBuild.dependsOn updateJavaClasses
+    }
+}
+
+repositories {
+    maven { url = 'https://jitpack.io' }
+    maven { url = 'https://maven.brott.dev/' }
+}
+
+dependencies {
+    implementation 'com.github.Eeshwar-Krishnan:PhotonFTC:v3.0.1-ALPHA'
+    implementation 'com.acmerobotics.dashboard:dashboard:0.4.15'
+    implementation project(':FtcRobotController')
+}
