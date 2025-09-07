@@ -9,9 +9,13 @@
                 "Unable to run download.sh on this OS."
             ],
             "windows": {
-                "command": "C:\\Program Files\\Git\\bin\\bash.exe",
+                "command": "powershell",
                 "args": [
-                    "${workspaceFolder}/download.sh"
+                    "-NoProfile",
+                    "-ExecutionPolicy",
+                    "Bypass",
+                    "-Command",
+                    "& { $gitExecPath = git --exec-path; $gitBashPath = Join-Path $gitExecPath '..\\..\\..\\bin\\bash.exe'; & $gitBashPath '${workspaceFolder}/download.sh' }"
                 ]
             },
             "linux": {
@@ -19,6 +23,35 @@
                 "args": [
                     "${workspaceFolder}/download.sh"
                 ]
+            }
+        },
+        {
+            "label": "Build",
+            "type": "process",
+            "command": "echo",
+            "args": [
+                "Unable to run download.sh on this OS."
+            ],
+            "windows": {
+                "command": "powershell",
+                "args": [
+                    "-NoProfile",
+                    "-ExecutionPolicy",
+                    "Bypass",
+                    "-Command",
+                    "& { $gitExecPath = git --exec-path; $gitBashPath = Join-Path $gitExecPath '..\\..\\..\\bin\\bash.exe'; & $gitBashPath '${workspaceFolder}/download.sh' 'true' }"
+                ]
+            },
+            "linux": {
+                "command": "/bin/bash",
+                "args": [
+                    "${workspaceFolder}/download.sh",
+                    "true"
+                ]
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
             }
         }
     ]
