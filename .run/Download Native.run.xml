@@ -1,0 +1,17 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Download Native" type="ShConfigurationType">
+    <option name="SCRIPT_TEXT" value="ANDROID_NDK=$(locate ndk-build | grep -m 1 '/ndk-build$' | sed 's/\/ndk-build$//') &amp;&amp; if [ -z &quot;$ANDROID_NDK&quot; ]; then echo &quot;Android NDK not found. Please ensure it is installed and indexed by locate.&quot;; exit 1; fi &amp;&amp; echo &quot;ANDROID_NDK is set to: $ANDROID_NDK&quot; &amp;&amp; export ANDROID_NDK &amp;&amp; CMAKE_PATH='$USER_HOME$/Android/Sdk/cmake/3.18.1/bin/cmake' &amp;&amp; mkdir -p build &amp;&amp; cd build &amp;&amp; $CMAKE_PATH -DANDROID_NDK=$ANDROID_NDK ../src/main/cpp/CMakeLists.txt &amp;&amp; $CMAKE_PATH --build ../src/main/cpp &amp;&amp; adb push intermediates/merged_native_libs/debug/out/lib/arm64-v8a/libteamcode.so /data/local/tmp" />
+    <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+    <option name="SCRIPT_PATH" value="$PROJECT_DIR$/TeamCode/src/main/cpp/download.sh" />
+    <option name="SCRIPT_OPTIONS" value="" />
+    <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
+    <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$/TeamCode/src/main/cpp" />
+    <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
+    <option name="INTERPRETER_PATH" value="/bin/bash" />
+    <option name="INTERPRETER_OPTIONS" value="" />
+    <option name="EXECUTE_IN_TERMINAL" value="true" />
+    <option name="EXECUTE_SCRIPT_FILE" value="true" />
+    <envs />
+    <method v="2" />
+  </configuration>
+</component>

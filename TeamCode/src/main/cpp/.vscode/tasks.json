@@ -1,0 +1,58 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Download",
+            "type": "process",
+            "command": "echo",
+            "args": [
+                "Unable to run download.sh on this OS."
+            ],
+            "windows": {
+                "command": "powershell",
+                "args": [
+                    "-NoProfile",
+                    "-ExecutionPolicy",
+                    "Bypass",
+                    "-Command",
+                    "& { $gitExecPath = git --exec-path; $gitBashPath = Join-Path $gitExecPath '..\\..\\..\\bin\\bash.exe'; & $gitBashPath '${workspaceFolder}/download.sh' }"
+                ]
+            },
+            "linux": {
+                "command": "/bin/bash",
+                "args": [
+                    "${workspaceFolder}/download.sh"
+                ]
+            }
+        },
+        {
+            "label": "Build",
+            "type": "process",
+            "command": "echo",
+            "args": [
+                "Unable to run download.sh on this OS."
+            ],
+            "windows": {
+                "command": "powershell",
+                "args": [
+                    "-NoProfile",
+                    "-ExecutionPolicy",
+                    "Bypass",
+                    "-Command",
+                    "& { $gitExecPath = git --exec-path; $gitBashPath = Join-Path $gitExecPath '..\\..\\..\\bin\\bash.exe'; & $gitBashPath '${workspaceFolder}/download.sh' 'true' }"
+                ]
+            },
+            "linux": {
+                "command": "/bin/bash",
+                "args": [
+                    "${workspaceFolder}/download.sh",
+                    "true"
+                ]
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

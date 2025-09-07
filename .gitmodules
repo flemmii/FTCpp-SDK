@@ -1,0 +1,3 @@
+[submodule "TeamCode/src/main/cpp/teamcode/imageRec"]
+	path = TeamCode/src/main/cpp/teamcode/imageRec
+	url = https://Melectronicslab@git.tobiaswinden.de/Melectronicslab/imageRec.git

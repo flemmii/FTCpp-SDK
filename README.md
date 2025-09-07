@@ -101,14 +101,20 @@ But if you want to create a new OpMode from scratch you can use the following st
 
 // Your OpMode annotation shown below
     
-extern "C" void Example();
+extern "C"
+JNIEXPORT void JNICALL
+Java_org_firstinspires_ftc_teamcode_opmodes_teleop_Example_opMode(JNIEnv *env,
+                                                              jobject thiz);
 ```
 
 - Add the following code to the source file:
 
 ```cpp
-extern "C" void Example() {
-    // Your code here
+extern "C"
+JNIEXPORT void JNICALL
+Java_org_firstinspires_ftc_teamcode_opmodes_teleop_Example_opMode(JNIEnv *env,
+                                                              jobject thiz) {
+    init_sdk
 }
 ```
 
