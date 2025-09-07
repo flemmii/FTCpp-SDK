@@ -25,3 +25,7 @@
   the find out the corresponding version in
   the [EasyOpenCV repository](https://github.com/OpenFTC/EasyOpenCV/releases)
 - Replace the opencv2 folder with the new opencv2 folder found in sdk/native/jni/include
+
+## Android NDK
+
+[log.h](android/log.h) and [jni.h](jni.h) are included for IntelliSense in Visual Studio Code to detect the header files and avoid any include errors.

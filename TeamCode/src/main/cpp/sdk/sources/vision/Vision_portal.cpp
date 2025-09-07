@@ -2,12 +2,13 @@
 // Created by Frosch PC - V2 on 05.02.2024.
 //
 
-#include "vision/Vision_portal.h"
+#include "vision/Vision_portal.hpp"
 
 using namespace std;
 using namespace sdk;
 
-namespace sdk {
+namespace sdk
+{
     int Vision_portal::vision_portal_count = 0;
 
     jclass Vision_portal::jclazz;
@@ -19,29 +20,34 @@ namespace sdk {
     int Vision_portal::DEFAULT_VIEW_CONTAINER_ID;
 
     const char *
-    Vision_portal::multi_portal_layout_to_string(const Vision_portal::Multi_portal_layout &mpl) {
-        switch (mpl) {
-            case Multi_portal_layout::HORIZONTAL:
-                return "HORIZONTAL";
-            case Multi_portal_layout::VERTICAL:
-                return "VERTICAL";
-            default:
-                throw invalid_argument("Unimplemented item");
+    Vision_portal::multi_portal_layout_to_string(const Vision_portal::Multi_portal_layout &mpl)
+    {
+        switch (mpl)
+        {
+        case Multi_portal_layout::HORIZONTAL:
+            return "HORIZONTAL";
+        case Multi_portal_layout::VERTICAL:
+            return "VERTICAL";
+        default:
+            throw invalid_argument("Unimplemented item");
         }
     }
 
-    const char *Vision_portal::stream_format_to_string(const Vision_portal::Stream_format &sf) {
-        switch (sf) {
-            case Stream_format::YUY2:
-                return "YUY2";
-            case Stream_format::MJPEG:
-                return "MJPEG";
-            default:
-                throw invalid_argument("Unimplemented item");
+    const char *Vision_portal::stream_format_to_string(const Vision_portal::Stream_format &sf)
+    {
+        switch (sf)
+        {
+        case Stream_format::YUY2:
+            return "YUY2";
+        case Stream_format::MJPEG:
+            return "MJPEG";
+        default:
+            throw invalid_argument("Unimplemented item");
         }
     }
 
-    Vision_portal::Vision_portal(const jobject &visionPortal) : visionPortal(visionPortal) {
+    Vision_portal::Vision_portal(const jobject &visionPortal) : visionPortal(visionPortal)
+    {
         // Normally you just need 2 Vision_portals and more than 2 Vision_portals have also a high risk to crash the control hub
         if (vision_portal_count > 2)
             throw runtime_error("Only 2 Vision_portals are allowed to exist at a time");
@@ -53,20 +59,33 @@ namespace sdk {
             vision_processor::second_vision_processor::processors = &processors;
     }
 
-    Vision_portal::~Vision_portal() {
+    Vision_portal::~Vision_portal()
+    {
         vision_portal_count--;
         this->close();
-        if (visionPortal) {
+        if (visionPortal)
+        {
             attach_thread
-            env->DeleteGlobalRef(visionPortal);
+                env->DeleteGlobalRef(visionPortal);
             visionPortal = nullptr;
         }
     }
 
-    Vision_portal &Vision_portal::operator=(const jobject &visionPortal) {
-        if (this->visionPortal) {
+    Vision_portal &Vision_portal::operator=(const Vision_portal &vision_portal)
+    {
+        if (this != &vision_portal && vision_portal.visionPortal)
+        {
+            attach_thread this->visionPortal = env->NewGlobalRef(vision_portal.visionPortal);
+        }
+        return *this;
+    }
+
+    Vision_portal &Vision_portal::operator=(const jobject &visionPortal)
+    {
+        if (this->visionPortal)
+        {
             attach_thread
-            env->DeleteGlobalRef(this->visionPortal);
+                env->DeleteGlobalRef(this->visionPortal);
         }
         this->visionPortal = visionPortal;
         return *this;
@@ -74,20 +93,21 @@ namespace sdk {
 
     vector<int>
     Vision_portal::makeMultiPortalView(const int &numPortals,
-                                       const Vision_portal::Multi_portal_layout &mpl) {
+                                       const Vision_portal::Multi_portal_layout &mpl)
+    {
         attach_thread
-        jobject jmpl = env->GetStaticObjectField(jclazz_MultiPortalLayout,
-                                                 env->GetStaticFieldID(
+            jobject jmpl = env->GetStaticObjectField(jclazz_MultiPortalLayout,
+                                                     env->GetStaticFieldID(
                                                          jclazz_MultiPortalLayout,
                                                          multi_portal_layout_to_string(mpl),
                                                          "Lorg/firstinspires/ftc/vision/VisionPortal$MultiPortalLayout;"));
 
-        auto jarray = (jintArray) (env->CallStaticObjectMethod(jclazz,
-                                                               env->GetStaticMethodID(jclazz,
-                                                                                      "makeMultiPortalView",
-                                                                                      "(ILorg/firstinspires/ftc/vision/VisionPortal$MultiPortalLayout;)[I"),
-                                                               static_cast<jint>(numPortals),
-                                                               jmpl));
+        auto jarray = (jintArray)(env->CallStaticObjectMethod(jclazz,
+                                                              env->GetStaticMethodID(jclazz,
+                                                                                     "makeMultiPortalView",
+                                                                                     "(ILorg/firstinspires/ftc/vision/VisionPortal$MultiPortalLayout;)[I"),
+                                                              static_cast<jint>(numPortals),
+                                                              jmpl));
         jint *elements = env->GetIntArrayElements(jarray, nullptr);
         jsize size = env->GetArrayLength(jarray);
 
@@ -103,27 +123,33 @@ namespace sdk {
     }
 
     Vision_portal Vision_portal::easy_create_with_defaults(const Camera_name &camera_name,
-                                                           const std::vector<Vision_processor *> &processors) {
+                                                           const std::vector<Vision_processor *> &processors)
+    {
         return Vision_portal::Builder().set_camera(camera_name).add_processors(processors).build();
     }
 
-    void Vision_portal::enable_dual_cam_view() {
+    void Vision_portal::enable_dual_cam_view()
+    {
         vision_processor::dual_cam_view = true;
     }
 
-    void Vision_portal::disable_dual_cam_view() {
+    void Vision_portal::disable_dual_cam_view()
+    {
         vision_processor::dual_cam_view = false;
     }
 
-    void Vision_portal::add_processor(sdk::Vision_processor *processor) {
+    void Vision_portal::add_processor(sdk::Vision_processor *processor)
+    {
         if (processor == nullptr)
             throw invalid_argument("Processor cannot be null");
 
         this->processors.emplace_back(processor, true);
     }
 
-    void Vision_portal::add_processors(const vector<Vision_processor *> &processors) {
-        for (const auto &processor: processors) {
+    void Vision_portal::add_processors(const vector<Vision_processor *> &processors)
+    {
+        for (const auto &processor : processors)
+        {
             if (processor == nullptr)
                 throw invalid_argument("Processor cannot be null");
 
@@ -131,23 +157,30 @@ namespace sdk {
         }
     }
 
-    void Vision_portal::remove_processor(const sdk::Vision_processor *processor) {
+    void Vision_portal::remove_processor(const sdk::Vision_processor *processor)
+    {
         if (processor == nullptr)
             throw invalid_argument("Processor cannot be null");
-        for (auto it = processors.begin(); it != processors.end(); it++) {
-            if (*it->first == *processor) {
+        for (auto it = processors.begin(); it != processors.end(); it++)
+        {
+            if (*it->first == *processor)
+            {
                 processors.erase(it);
                 return;
             }
         }
     }
 
-    void Vision_portal::remove_processors(const vector<Vision_processor *> &processors) {
-        for (const auto &processor: processors) {
+    void Vision_portal::remove_processors(const vector<Vision_processor *> &processors)
+    {
+        for (const auto &processor : processors)
+        {
             if (processor == nullptr)
                 throw invalid_argument("Processor cannot be null");
-            for (auto it = this->processors.begin(); it != this->processors.end(); it++) {
-                if (*it->first == *processor) {
+            for (auto it = this->processors.begin(); it != this->processors.end(); it++)
+            {
+                if (*it->first == *processor)
+                {
                     this->processors.erase(it);
                     break;
                 }
@@ -155,40 +188,67 @@ namespace sdk {
         }
     }
 
+    void Vision_portal::set_main_processord_enabled(const bool &enabled)
+    {
+        if (processor_enabled == enabled)
+            return;
+
+        processor_enabled = enabled;
+
+        attach_thread
+            env->CallVoidMethod(visionPortal, env->GetMethodID(jclazz, "setProcessorEnabled", "(Lorg/firstinspires/ftc/vision/VisionProcessor;Z)V"), visionProcessor, enabled);
+    }
+
     void
     Vision_portal::set_processor_enabled(const Vision_processor *processor,
-                                         const bool &enabled) {
+                                         const bool &enabled)
+    {
         if (processor == nullptr)
             throw invalid_argument("Processor cannot be null");
 
-        for (auto &proc: processors) {
-            if (*proc.first == *processor) {
+        if (enabled)
+            set_main_processord_enabled(true);
+
+        bool all_processors_disabled = true;
+        for (auto &proc : processors)
+        {
+            if (*proc.first == *processor)
+            {
                 proc.second = enabled;
-                return;
+                if (enabled)
+                    return;
             }
+
+            all_processors_disabled &= !proc.second;
         }
+
+        if (all_processors_disabled)
+            set_main_processord_enabled(false);
     }
 
     bool
-    Vision_portal::get_processor_enabled(const Vision_processor *processor) {
+    Vision_portal::get_processor_enabled(const Vision_processor *processor)
+    {
         if (processor == nullptr)
             throw invalid_argument("Processor cannot be null");
 
-        for (const auto &proc: processors) {
+        for (const auto &proc : processors)
+        {
             if (*proc.first == *processor)
                 return proc.second;
         }
         return false;
     }
 
-    Vision_portal::Camera_state Vision_portal::get_camera_state() const {
+    Vision_portal::Camera_state Vision_portal::get_camera_state() const
+    {
         attach_thread
-        jobject javaEnum = env->CallObjectMethod(visionPortal,
-                                                 env->GetMethodID(jclazz, "getCameraState",
-                                                                  "()Lorg/firstinspires/ftc/vision/VisionPortal$CameraState;"));
+            jobject javaEnum = env->CallObjectMethod(visionPortal,
+                                                     env->GetMethodID(jclazz, "getCameraState",
+                                                                      "()Lorg/firstinspires/ftc/vision/VisionPortal$CameraState;"));
         jclass enumClass = env->GetObjectClass(javaEnum);
         jmethodID nameMethod = env->GetMethodID(enumClass, "name", "()Ljava/lang/String;");
-        auto name = (jstring) env->CallObjectMethod(javaEnum, nameMethod);
+        auto name = (jstring)env->CallObjectMethod(javaEnum, nameMethod);
 
         const char *nameCStr = env->GetStringUTFChars(name, nullptr);
         std::string nameStr(nameCStr);
@@ -216,9 +276,10 @@ namespace sdk {
             throw invalid_argument("Invalid enum value");
     }
 
-    void Vision_portal::save_next_frame_raw(const string &var1) const {
+    void Vision_portal::save_next_frame_raw(const string &var1) const
+    {
         attach_thread
-        jstring jvar1 = env->NewStringUTF(var1.c_str());
+            jstring jvar1 = env->NewStringUTF(var1.c_str());
         env->CallVoidMethod(visionPortal,
                             env->GetMethodID(jclazz, "saveNextFrameRaw",
                                              "(Ljava/lang/String;)V"),
@@ -226,117 +287,139 @@ namespace sdk {
         env->DeleteLocalRef(jvar1);
     }
 
-    void Vision_portal::stop_streaming() const {
+    void Vision_portal::stop_streaming() const
+    {
         attach_thread
-        env->CallVoidMethod(visionPortal,
-                            env->GetMethodID(jclazz, "stopStreaming",
-                                             "()V"));
+            env->CallVoidMethod(visionPortal,
+                                env->GetMethodID(jclazz, "stopStreaming",
+                                                 "()V"));
     }
 
-    void Vision_portal::resume_streaming() const {
+    void Vision_portal::resume_streaming() const
+    {
         attach_thread
-        env->CallVoidMethod(visionPortal,
-                            env->GetMethodID(jclazz, "resumeStreaming",
-                                             "()V"));
+            env->CallVoidMethod(visionPortal,
+                                env->GetMethodID(jclazz, "resumeStreaming",
+                                                 "()V"));
     }
 
-    void Vision_portal::stop_live_view() const {
+    void Vision_portal::stop_live_view() const
+    {
         attach_thread
-        env->CallVoidMethod(visionPortal,
-                            env->GetMethodID(jclazz, "stopLiveView",
-                                             "()V"));
+            env->CallVoidMethod(visionPortal,
+                                env->GetMethodID(jclazz, "stopLiveView",
+                                                 "()V"));
     }
 
-    void Vision_portal::resume_live_view() const {
+    void Vision_portal::resume_live_view() const
+    {
         attach_thread
-        env->CallVoidMethod(visionPortal,
-                            env->GetMethodID(jclazz, "resumeLiveView",
-                                             "()V"));
+            env->CallVoidMethod(visionPortal,
+                                env->GetMethodID(jclazz, "resumeLiveView",
+                                                 "()V"));
     }
 
-    float Vision_portal::get_fps() const {
-        attach_thread
-        return static_cast<float>(env->CallFloatMethod(visionPortal,
-                                                       env->GetMethodID(jclazz, "getFps",
-                                                                        "()F")));
+    float Vision_portal::get_fps() const
+    {
+        attach_thread return static_cast<float>(env->CallFloatMethod(visionPortal,
+                                                                     env->GetMethodID(jclazz, "getFps",
+                                                                                      "()F")));
     }
 
-    void Vision_portal::set_active_camera(const Webcam_name &webcam) const {
+    void Vision_portal::set_active_camera(const Webcam_name &webcam) const
+    {
         attach_thread
-        env->CallVoidMethod(visionPortal,
-                            env->GetMethodID(jclazz, "setActiveCamera",
-                                             "(Lorg/firstinspires/ftc/robotcore/external/hardware/camera/WebcamName;)V"),
-                            webcam.webcamName);
+            env->CallVoidMethod(visionPortal,
+                                env->GetMethodID(jclazz, "setActiveCamera",
+                                                 "(Lorg/firstinspires/ftc/robotcore/external/hardware/camera/WebcamName;)V"),
+                                webcam.webcamName);
     }
 
-    Webcam_name Vision_portal::get_active_camera() const {
+    Webcam_name Vision_portal::get_active_camera() const
+    {
         attach_thread
-        jobject jwebcamName = env->CallObjectMethod(visionPortal,
-                                                    env->GetMethodID(jclazz,
-                                                                     "getActiveCamera",
-                                                                     "()Lorg/firstinspires/ftc/robotcore/external/hardware/camera/WebcamName;"));
+            jobject jwebcamName = env->CallObjectMethod(visionPortal,
+                                                        env->GetMethodID(jclazz,
+                                                                         "getActiveCamera",
+                                                                         "()Lorg/firstinspires/ftc/robotcore/external/hardware/camera/WebcamName;"));
         Webcam_name webcamName(env->NewGlobalRef(jwebcamName));
         env->DeleteLocalRef(jwebcamName);
         return webcamName;
     }
 
-    void Vision_portal::close() const {
+    void Vision_portal::close() const
+    {
         attach_thread
-        env->CallVoidMethod(visionPortal,
-                            env->GetMethodID(jclazz, "close",
-                                             "()V"));
+            env->CallVoidMethod(visionPortal,
+                                env->GetMethodID(jclazz, "close",
+                                                 "()V"));
     }
 
-
-    Vision_portal::Builder::Builder() {
+    Vision_portal::Builder::Builder()
+    {
         attach_thread
-        jobject localBuilder = env->NewObject(jclazz, env->GetMethodID(jclazz, "<init>", "()V"));
+            jobject localBuilder = env->NewObject(jclazz, env->GetMethodID(jclazz, "<init>", "()V"));
         builder = env->NewGlobalRef(localBuilder);
 
         DEFAULT_VIEW_CONTAINER_ID = env->GetStaticIntField(Vision_portal::jclazz,
                                                            env->GetStaticFieldID(
-                                                                   Vision_portal::jclazz,
-                                                                   "DEFAULT_VIEW_CONTAINER_ID",
-                                                                   "I"));
+                                                               Vision_portal::jclazz,
+                                                               "DEFAULT_VIEW_CONTAINER_ID",
+                                                               "I"));
         env->DeleteLocalRef(localBuilder);
     }
 
-    Vision_portal::Builder::~Builder() {
-        if (builder) {
+    Vision_portal::Builder::~Builder()
+    {
+        if (builder)
+        {
             attach_thread
-            env->DeleteGlobalRef(builder);
+                env->DeleteGlobalRef(builder);
             builder = nullptr;
         }
     }
 
-    Vision_portal::Builder &Vision_portal::Builder::operator=(const jobject &builder) {
-        if (this->builder) {
+    Vision_portal::Builder &Vision_portal::Builder::operator=(const Builder &builder)
+    {
+        if (this != &builder && builder.builder)
+        {
+            attach_thread this->builder = env->NewGlobalRef(builder.builder);
+        }
+        return *this;
+    }
+
+    Vision_portal::Builder &Vision_portal::Builder::operator=(const jobject &builder)
+    {
+        if (this->builder)
+        {
             attach_thread
-            env->DeleteGlobalRef(this->builder);
+                env->DeleteGlobalRef(this->builder);
         }
         this->builder = builder;
         return *this;
     }
 
-    Vision_portal::Builder &Vision_portal::Builder::set_camera(const Camera_name &camera) {
+    Vision_portal::Builder &Vision_portal::Builder::set_camera(const Camera_name &camera)
+    {
         attach_thread
-        env->DeleteLocalRef(env->CallObjectMethod(builder,
-                                                  env->GetMethodID(jclazz,
-                                                                   "setCamera",
-                                                                   "(Lorg/firstinspires/ftc/robotcore/external/hardware/camera/CameraName;)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"),
-                                                  camera.cameraName));
+            env->DeleteLocalRef(env->CallObjectMethod(builder,
+                                                      env->GetMethodID(jclazz,
+                                                                       "setCamera",
+                                                                       "(Lorg/firstinspires/ftc/robotcore/external/hardware/camera/CameraName;)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"),
+                                                      camera.cameraName));
 
         return *this;
     }
 
     Vision_portal::Builder &
-    Vision_portal::Builder::set_stream_format(const Stream_format &streamFormat) {
+    Vision_portal::Builder::set_stream_format(const Stream_format &streamFormat)
+    {
         attach_thread
-        jobject jstreamFormat = env->GetStaticObjectField(jclazz_StreamFormat,
-                                                          env->GetStaticFieldID(
+            jobject jstreamFormat = env->GetStaticObjectField(jclazz_StreamFormat,
+                                                              env->GetStaticFieldID(
                                                                   jclazz_StreamFormat,
                                                                   stream_format_to_string(
-                                                                          streamFormat),
+                                                                      streamFormat),
                                                                   "Lorg/firstinspires/ftc/vision/VisionPortal$StreamFormat;"));
         env->DeleteLocalRef(env->CallObjectMethod(builder,
                                                   env->GetMethodID(jclazz,
@@ -348,46 +431,50 @@ namespace sdk {
         return *this;
     }
 
-    Vision_portal::Builder &Vision_portal::Builder::enable_live_view(const bool &enable_live_view) {
+    Vision_portal::Builder &Vision_portal::Builder::enable_live_view(const bool &enable_live_view)
+    {
         attach_thread
-        env->DeleteLocalRef(env->CallObjectMethod(builder,
-                                                  env->GetMethodID(jclazz,
-                                                                   "enableLiveView",
-                                                                   "(Z)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"),
-                                                  enable_live_view));
+            env->DeleteLocalRef(env->CallObjectMethod(builder,
+                                                      env->GetMethodID(jclazz,
+                                                                       "enableLiveView",
+                                                                       "(Z)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"),
+                                                      enable_live_view));
         return *this;
     }
 
     Vision_portal::Builder &
-    Vision_portal::Builder::set_auto_stop_live_view(const bool &auto_pause) {
+    Vision_portal::Builder::set_auto_stop_live_view(const bool &auto_pause)
+    {
         attach_thread
-        env->DeleteLocalRef(env->CallObjectMethod(builder,
-                                                  env->GetMethodID(jclazz,
-                                                                   "setAutoStopLiveView",
-                                                                   "(Z)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"),
-                                                  auto_pause));
+            env->DeleteLocalRef(env->CallObjectMethod(builder,
+                                                      env->GetMethodID(jclazz,
+                                                                       "setAutoStopLiveView",
+                                                                       "(Z)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"),
+                                                      auto_pause));
         return *this;
     }
 
     Vision_portal::Builder &
-    Vision_portal::Builder::set_live_view_container_id(const int &live_view_container_id) {
+    Vision_portal::Builder::set_live_view_container_id(const int &live_view_container_id)
+    {
         attach_thread
-        env->DeleteLocalRef(env->CallObjectMethod(builder,
-                                                  env->GetMethodID(jclazz,
-                                                                   "setLiveViewContainerId",
-                                                                   "(I)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"),
-                                                  static_cast<jint>(live_view_container_id)));
+            env->DeleteLocalRef(env->CallObjectMethod(builder,
+                                                      env->GetMethodID(jclazz,
+                                                                       "setLiveViewContainerId",
+                                                                       "(I)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"),
+                                                      static_cast<jint>(live_view_container_id)));
         return *this;
     }
 
     Vision_portal::Builder &
-    Vision_portal::Builder::set_camera_resolution(const Size &camera_resolution) {
+    Vision_portal::Builder::set_camera_resolution(const Size &camera_resolution)
+    {
         attach_thread
-        jclass Size = env->FindClass("android/util/Size");
+            jclass Size = env->FindClass("android/util/Size");
         jobject jcameraResolution = env->NewObject(Size,
                                                    env->GetMethodID(
-                                                           Size,
-                                                           "<init>", "(II)V"),
+                                                       Size,
+                                                       "<init>", "(II)V"),
                                                    static_cast<jint>(camera_resolution.width),
                                                    static_cast<jint>(camera_resolution.height));
         env->DeleteLocalRef(env->CallObjectMethod(builder,
@@ -401,7 +488,8 @@ namespace sdk {
     }
 
     Vision_portal::Builder &
-    Vision_portal::Builder::add_processor(Vision_processor *processor) {
+    Vision_portal::Builder::add_processor(Vision_processor *processor)
+    {
         if (processor == nullptr)
             throw invalid_argument("Processor cannot be null");
 
@@ -410,8 +498,10 @@ namespace sdk {
     }
 
     Vision_portal::Builder &Vision_portal::Builder::add_processors(
-            const vector<Vision_processor *> &processors) {
-        for (const auto &processor: processors) {
+        const vector<Vision_processor *> &processors)
+    {
+        for (const auto &processor : processors)
+        {
             if (processor == nullptr)
                 throw invalid_argument("Processor cannot be null");
 
@@ -421,55 +511,60 @@ namespace sdk {
     }
 
     Vision_portal::Builder &
-    Vision_portal::Builder::set_auto_start_stream_on_build(const bool &auto_start_stream_on_build) {
+    Vision_portal::Builder::set_auto_start_stream_on_build(const bool &auto_start_stream_on_build)
+    {
         attach_thread
-        env->DeleteLocalRef(env->CallObjectMethod(builder,
-                                                  env->GetMethodID(jclazz,
-                                                                   "setAutoStartStreamOnBuild",
-                                                                   "(Z)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"),
-                                                  auto_start_stream_on_build));
+            env->DeleteLocalRef(env->CallObjectMethod(builder,
+                                                      env->GetMethodID(jclazz,
+                                                                       "setAutoStartStreamOnBuild",
+                                                                       "(Z)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"),
+                                                      auto_start_stream_on_build));
         return *this;
     }
 
     Vision_portal::Builder &
-    Vision_portal::Builder::set_show_stats_overlay(const bool &show_stats_overlay) {
+    Vision_portal::Builder::set_show_stats_overlay(const bool &show_stats_overlay)
+    {
         attach_thread
-        env->DeleteLocalRef(env->CallObjectMethod(builder,
-                                                  env->GetMethodID(jclazz,
-                                                                   "setShowStatsOverlay",
-                                                                   "(Z)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"),
-                                                  show_stats_overlay));
+            env->DeleteLocalRef(env->CallObjectMethod(builder,
+                                                      env->GetMethodID(jclazz,
+                                                                       "setShowStatsOverlay",
+                                                                       "(Z)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"),
+                                                      show_stats_overlay));
         return *this;
     }
 
-    Vision_portal Vision_portal::Builder::build() {
+    Vision_portal Vision_portal::Builder::build()
+    {
         attach_thread
 
-        jobject jprocessor;
+            jobject jprocessor;
 
         if (Vision_portal::vision_portal_count == 0)
             jprocessor = env->NewObject(vision_processor::first_vision_processor::jclazz,
                                         env->GetMethodID(
-                                                vision_processor::first_vision_processor::jclazz,
-                                                "<init>", "()V"));
+                                            vision_processor::first_vision_processor::jclazz,
+                                            "<init>", "()V"));
         else
             jprocessor = env->NewObject(vision_processor::second_vision_processor::jclazz,
                                         env->GetMethodID(
-                                                vision_processor::second_vision_processor::jclazz,
-                                                "<init>", "()V"));
+                                            vision_processor::second_vision_processor::jclazz,
+                                            "<init>", "()V"));
 
-        env->DeleteLocalRef(env->CallObjectMethod(builder, env->GetMethodID(jclazz,
-                                                                            "addProcessor",
-                                                                            "(Lorg/firstinspires/ftc/vision/VisionProcessor;)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"),
+        env->DeleteLocalRef(env->CallObjectMethod(builder, env->GetMethodID(jclazz, "addProcessor", "(Lorg/firstinspires/ftc/vision/VisionProcessor;)Lorg/firstinspires/ftc/vision/VisionPortal$Builder;"),
                                                   jprocessor));
-        env->DeleteLocalRef(jprocessor);
 
         jobject jvisionPortal = env->CallObjectMethod(builder,
                                                       env->GetMethodID(jclazz,
                                                                        "build",
                                                                        "()Lorg/firstinspires/ftc/vision/VisionPortal;"));
         Vision_portal vision_portal(env->NewGlobalRef(jvisionPortal));
+        if (processors.empty())
+            vision_portal.set_main_processord_enabled(false);
+
         vision_portal.processors = processors;
+        vision_portal.visionProcessor = env->NewGlobalRef(jprocessor);
+        env->DeleteLocalRef(jprocessor);
         env->DeleteLocalRef(jvisionPortal);
         return vision_portal;
     }

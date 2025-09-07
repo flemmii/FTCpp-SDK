@@ -2,8 +2,9 @@
 // Created by fnlg on 20.05.2024.
 //
 
-#include "navigation/Voltage_unit.h"
+#include "navigation/Voltage_unit.hpp"
 
-namespace sdk {
+namespace sdk
+{
     jclass VoltageUnit;
 } // sdk

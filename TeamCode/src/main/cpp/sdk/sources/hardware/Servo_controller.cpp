@@ -2,59 +2,75 @@
 // Created by fnlg on 27.01.2024.
 //
 
-#include "hardware/Servo_controller.h"
+#include "hardware/Servo_controller.hpp"
 
 using namespace std;
 
-namespace sdk {
+namespace sdk
+{
     jclass Servo_controller::jclazz;
     jclass Servo_controller::jclazz_PwmStatus;
 
     Servo_controller::Servo_controller(const jobject &servoController) : servoController(
-            servoController) {}
+                                                                             servoController) {}
 
-    Servo_controller::~Servo_controller() {
-        if (servoController) {
+    Servo_controller::~Servo_controller()
+    {
+        if (servoController)
+        {
             attach_thread
-            env->DeleteGlobalRef(servoController);
+                env->DeleteGlobalRef(servoController);
             servoController = nullptr;
         }
     }
 
-    Servo_controller &Servo_controller::operator=(const jobject &servoController) {
-        if (this->servoController) {
+    Servo_controller &Servo_controller::operator=(const Servo_controller &servo_controller)
+    {
+        if (this != &servo_controller && servo_controller.servoController)
+        {
+            attach_thread this->servoController = env->NewGlobalRef(servo_controller.servoController);
+        }
+        return *this;
+    }
+
+    Servo_controller &Servo_controller::operator=(const jobject &servoController)
+    {
+        if (this->servoController)
+        {
             attach_thread
-            env->DeleteGlobalRef(this->servoController);
+                env->DeleteGlobalRef(this->servoController);
         }
         this->servoController = servoController;
         return *this;
     }
 
-
-    void Servo_controller::pwm_enable() const {
+    void Servo_controller::pwm_enable() const
+    {
         attach_thread
-        env->CallVoidMethod(servoController, env->GetMethodID(jclazz, "pwmEnable", "()V"));
+            env->CallVoidMethod(servoController, env->GetMethodID(jclazz, "pwmEnable", "()V"));
     }
 
-    void Servo_controller::pwm_disable() const {
+    void Servo_controller::pwm_disable() const
+    {
         attach_thread
-        env->CallVoidMethod(servoController,
-                            env->GetMethodID(jclazz, "pwmDisable", "()V"));
+            env->CallVoidMethod(servoController,
+                                env->GetMethodID(jclazz, "pwmDisable", "()V"));
     }
 
-    Servo_controller::Pwm_status Servo_controller::get_pwm_status() const {
+    Servo_controller::Pwm_status Servo_controller::get_pwm_status() const
+    {
         attach_thread
-        jobject pwmStatus = env->CallObjectMethod(servoController,
-                                                  env->GetMethodID(jclazz,
-                                                                   "getPwmStatus",
-                                                                   "()Lcom/qualcomm/robotcore/hardware/ServoController$PwmStatus;"));
+            jobject pwmStatus = env->CallObjectMethod(servoController,
+                                                      env->GetMethodID(jclazz,
+                                                                       "getPwmStatus",
+                                                                       "()Lcom/qualcomm/robotcore/hardware/ServoController$PwmStatus;"));
 
         jclass PwmStatus = env->GetObjectClass(pwmStatus);
 
-        auto name = (jstring) env->CallObjectMethod(pwmStatus,
-                                                    env->GetMethodID(PwmStatus,
-                                                                     "name",
-                                                                     "()Ljava/lang/String;"));
+        auto name = (jstring)env->CallObjectMethod(pwmStatus,
+                                                   env->GetMethodID(PwmStatus,
+                                                                    "name",
+                                                                    "()Ljava/lang/String;"));
 
         const char *pwmStatusName = env->GetStringUTFChars(name, nullptr);
         std::string strPwmStatusName(pwmStatusName);
@@ -71,19 +87,20 @@ namespace sdk {
         return Pwm_status::ENABLED;
     }
 
-    void Servo_controller::set_servo_position(const int &servo, const double &position) const {
+    void Servo_controller::set_servo_position(const int &servo, const double &position) const
+    {
         attach_thread
-        env->CallVoidMethod(servoController,
-                            env->GetMethodID(jclazz, "setServoPosition", "(ID)V"),
-                            static_cast<jint>(servo), static_cast<jdouble>(position));
+            env->CallVoidMethod(servoController,
+                                env->GetMethodID(jclazz, "setServoPosition", "(ID)V"),
+                                static_cast<jint>(servo), static_cast<jdouble>(position));
     }
 
-    double Servo_controller::get_servo_position(const int &servo) const {
-        attach_thread
-        return static_cast<jdouble> (env->CallDoubleMethod(servoController,
-                                                           env->GetMethodID(jclazz,
-                                                                            "getServoPosition",
-                                                                            "(I)D"),
-                                                           static_cast<jint>(servo)));
+    double Servo_controller::get_servo_position(const int &servo) const
+    {
+        attach_thread return static_cast<jdouble>(env->CallDoubleMethod(servoController,
+                                                                        env->GetMethodID(jclazz,
+                                                                                         "getServoPosition",
+                                                                                         "(I)D"),
+                                                                        static_cast<jint>(servo)));
     }
 } // sdk

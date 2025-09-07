@@ -1,46 +1,61 @@
-#include "hardware/Gamepad.h"
+#include "hardware/Gamepad.hpp"
 
-namespace sdk {
+namespace sdk
+{
     jclass Gamepad::jclazz;
 
     Gamepad::Gamepad(const jobject &gamepad) : gamepad(gamepad) {}
 
-    Gamepad::~Gamepad() {
-        if (gamepad) {
+    Gamepad::~Gamepad()
+    {
+        if (gamepad)
+        {
             attach_thread
-            env->DeleteGlobalRef(gamepad);
+                env->DeleteGlobalRef(gamepad);
             gamepad = nullptr;
         }
     }
 
-    class Gamepad &Gamepad::operator=(const jobject &gamepad) {
-        if (this->gamepad) {
+    Gamepad &Gamepad::operator=(const Gamepad &gamepad)
+    {
+        if (this != &gamepad && gamepad.gamepad)
+        {
+            attach_thread this->gamepad = env->NewGlobalRef(gamepad.gamepad);
+        }
+        return *this;
+    }
+
+    class Gamepad &Gamepad::operator=(const jobject &gamepad)
+    {
+        if (this->gamepad)
+        {
             attach_thread
-            env->DeleteGlobalRef(this->gamepad);
+                env->DeleteGlobalRef(this->gamepad);
         }
         this->gamepad = gamepad;
         return *this;
     }
 
-    void Gamepad::update() {
+    void Gamepad::update()
+    {
         attach_thread
 
-        left_stick_x = static_cast<float> (env->GetFloatField(gamepad,
+            left_stick_x = static_cast<float>(env->GetFloatField(gamepad,
+                                                                 env->GetFieldID(jclazz,
+                                                                                 "left_stick_x",
+                                                                                 "F")));
+        left_stick_y = static_cast<float>(env->GetFloatField(gamepad,
+                                                             env->GetFieldID(jclazz,
+                                                                             "left_stick_y",
+                                                                             "F")));
+        right_stick_x = static_cast<float>(env->GetFloatField(gamepad,
                                                               env->GetFieldID(jclazz,
-                                                                              "left_stick_x",
+                                                                              "right_stick_x",
                                                                               "F")));
-        left_stick_y = static_cast<float> (env->GetFloatField(gamepad,
+        right_stick_y = static_cast<float>(env->GetFloatField(gamepad,
                                                               env->GetFieldID(jclazz,
-                                                                              "left_stick_y",
+                                                                              "right_stick_y",
                                                                               "F")));
-        right_stick_x = static_cast<float> (env->GetFloatField(gamepad,
-                                                               env->GetFieldID(jclazz,
-                                                                               "right_stick_x",
-                                                                               "F")));
-        right_stick_y = static_cast<float> (env->GetFloatField(gamepad,
-                                                               env->GetFieldID(jclazz,
-                                                                               "right_stick_y",
-                                                                               "F")));
 
         left_stick_button = env->GetBooleanField(gamepad,
                                                  env->GetFieldID(jclazz,
@@ -51,13 +66,13 @@ namespace sdk {
                                                                            "Z"));
 
         left_trigger =
-                static_cast<float> (env->GetFloatField(gamepad, env->GetFieldID(jclazz,
-                                                                                "left_trigger",
-                                                                                "F")));
-        right_trigger = static_cast<float> (env->GetFloatField(gamepad,
-                                                               env->GetFieldID(jclazz,
-                                                                               "right_trigger",
-                                                                               "F")));
+            static_cast<float>(env->GetFloatField(gamepad, env->GetFieldID(jclazz,
+                                                                           "left_trigger",
+                                                                           "F")));
+        right_trigger = static_cast<float>(env->GetFloatField(gamepad,
+                                                              env->GetFieldID(jclazz,
+                                                                              "right_trigger",
+                                                                              "F")));
 
         left_bumper = env->GetBooleanField(gamepad,
                                            env->GetFieldID(jclazz, "left_bumper", "Z"));
@@ -71,13 +86,13 @@ namespace sdk {
         y = env->GetBooleanField(gamepad, env->GetFieldID(jclazz, "y", "Z"));
 
         dpad_up =
-                env->GetBooleanField(gamepad, env->GetFieldID(jclazz, "dpad_up", "Z"));
+            env->GetBooleanField(gamepad, env->GetFieldID(jclazz, "dpad_up", "Z"));
         dpad_right =
-                env->GetBooleanField(gamepad, env->GetFieldID(jclazz, "dpad_right", "Z"));
+            env->GetBooleanField(gamepad, env->GetFieldID(jclazz, "dpad_right", "Z"));
         dpad_down =
-                env->GetBooleanField(gamepad, env->GetFieldID(jclazz, "dpad_down", "Z"));
+            env->GetBooleanField(gamepad, env->GetFieldID(jclazz, "dpad_down", "Z"));
         dpad_left =
-                env->GetBooleanField(gamepad, env->GetFieldID(jclazz, "dpad_left", "Z"));
+            env->GetBooleanField(gamepad, env->GetFieldID(jclazz, "dpad_left", "Z"));
 
         guide = env->GetBooleanField(gamepad, env->GetFieldID(jclazz, "guide", "Z"));
         start = env->GetBooleanField(gamepad, env->GetFieldID(jclazz, "start", "Z"));
@@ -98,56 +113,61 @@ namespace sdk {
         touchpad_finger_2 = env->GetBooleanField(gamepad,
                                                  env->GetFieldID(jclazz, "touchpad_finger_2",
                                                                  "Z"));
-        touchpad_finger_1_x = static_cast<float> (env->GetFloatField(gamepad,
-                                                                     env->GetFieldID(jclazz,
-                                                                                     "touchpad_finger_1_x",
-                                                                                     "F")));
-        touchpad_finger_1_y = static_cast<float> (env->GetFloatField(gamepad,
-                                                                     env->GetFieldID(jclazz,
-                                                                                     "touchpad_finger_1_y",
-                                                                                     "F")));
-        touchpad_finger_2_x = static_cast<float> (env->GetFloatField(gamepad,
-                                                                     env->GetFieldID(jclazz,
-                                                                                     "touchpad_finger_2_x",
-                                                                                     "F")));
-        touchpad_finger_2_y = static_cast<float> (env->GetFloatField(gamepad,
-                                                                     env->GetFieldID(jclazz,
-                                                                                     "touchpad_finger_2_y",
-                                                                                     "F")));
+        touchpad_finger_1_x = static_cast<float>(env->GetFloatField(gamepad,
+                                                                    env->GetFieldID(jclazz,
+                                                                                    "touchpad_finger_1_x",
+                                                                                    "F")));
+        touchpad_finger_1_y = static_cast<float>(env->GetFloatField(gamepad,
+                                                                    env->GetFieldID(jclazz,
+                                                                                    "touchpad_finger_1_y",
+                                                                                    "F")));
+        touchpad_finger_2_x = static_cast<float>(env->GetFloatField(gamepad,
+                                                                    env->GetFieldID(jclazz,
+                                                                                    "touchpad_finger_2_x",
+                                                                                    "F")));
+        touchpad_finger_2_y = static_cast<float>(env->GetFloatField(gamepad,
+                                                                    env->GetFieldID(jclazz,
+                                                                                    "touchpad_finger_2_y",
+                                                                                    "F")));
 
         ps = env->GetBooleanField(gamepad, env->GetFieldID(jclazz, "ps", "Z"));
     }
 
-    void Gamepad::rumble(const int &duration_ms) const {
+    void Gamepad::rumble(const int &duration_ms) const
+    {
         attach_thread
-        env->CallVoidMethod(gamepad, env->GetMethodID(jclazz, "rumble", "(I)V"),
-                            static_cast<jint>(duration_ms));
+            env->CallVoidMethod(gamepad, env->GetMethodID(jclazz, "rumble", "(I)V"),
+                                static_cast<jint>(duration_ms));
     }
 
     void
-    Gamepad::rumble(const double &rumble1, const double &rumble2, const int &duration_ms) const {
+    Gamepad::rumble(const double &rumble1, const double &rumble2, const int &duration_ms) const
+    {
         attach_thread
-        env->CallVoidMethod(gamepad, env->GetMethodID(jclazz, "rumble", "(DDI)V"),
-                            static_cast<jdouble>(rumble1), static_cast<jdouble>(rumble2),
-                            static_cast<jint>(duration_ms));
+            env->CallVoidMethod(gamepad, env->GetMethodID(jclazz, "rumble", "(DDI)V"),
+                                static_cast<jdouble>(rumble1), static_cast<jdouble>(rumble2),
+                                static_cast<jint>(duration_ms));
     }
 
-    void Gamepad::stop_rumble() const {
+    void Gamepad::stop_rumble() const
+    {
         attach_thread
-        env->CallVoidMethod(gamepad, env->GetMethodID(jclazz, "stopRumble", "()V"));
+            env->CallVoidMethod(gamepad, env->GetMethodID(jclazz, "stopRumble", "()V"));
     }
 
-    bool Gamepad::is_rumbling() const {
-        attach_thread
-        return env->CallBooleanMethod(gamepad, env->GetMethodID(jclazz, "isRumbling", "()Z"));
+    bool Gamepad::is_rumbling() const
+    {
+        attach_thread return env->CallBooleanMethod(gamepad, env->GetMethodID(jclazz, "isRumbling", "()Z"));
     }
 
-    namespace gamepads {
+    namespace gamepads
+    {
         class Gamepad gamepad1;
 
         class Gamepad gamepad2;
 
-        void update() {
+        void update()
+        {
             gamepad1.update();
             gamepad2.update();
         }
