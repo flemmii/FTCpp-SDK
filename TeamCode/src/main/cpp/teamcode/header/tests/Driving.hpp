@@ -23,10 +23,7 @@
  * @TeleOp(name = "DrivingCpp", group = "tests")
  */
 
-extern "C"
-JNIEXPORT void JNICALL
-Java_org_firstinspires_ftc_teamcode_tests_cpp_DrivingCpp_opMode(JNIEnv *env,
-                                                                  jobject thiz);
+extern "C" void DrivingCpp();
 
 #endif //FTCROBOTCONTROLLER_EXAMPLE_H
 

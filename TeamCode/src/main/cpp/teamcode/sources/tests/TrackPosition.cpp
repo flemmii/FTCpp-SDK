@@ -2,19 +2,14 @@
 // Created by fnlg on 03.06.2024.
 //
 
-#include "tests/TrackPosition.h"
+#include "tests/TrackPosition.hpp"
 
 using namespace std;
 
 using namespace sdk;
 using namespace linear_op_mode;
 
-extern "C"
-JNIEXPORT void JNICALL
-Java_org_firstinspires_ftc_teamcode_tests_cpp_TrackPositionCpp_opMode(JNIEnv *env,
-                                                                      jobject thiz) {
-    init_sdk
-
+extern "C" void TrackPositionCpp_opMode() {
     Dc_motor_ex dead_wheel_forwards = hardware_map::get<Dc_motor_ex>("rear_left");
     Dc_motor_ex dead_wheel_sidewards = hardware_map::get<Dc_motor_ex>("front_right");
 

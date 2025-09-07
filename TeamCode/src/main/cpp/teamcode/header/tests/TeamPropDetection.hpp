@@ -13,10 +13,7 @@
  * This is NOT a comment. It tells the compiler how to create the java files
  * @TeleOp(name = "TeamPropDetectionCpp", group = "tests")
  */
-extern "C"
-JNIEXPORT void JNICALL
-Java_org_firstinspires_ftc_teamcode_tests_cpp_TeamPropDetectionCpp_opMode(JNIEnv *env,
-                                                                          jobject thiz);
+extern "C" void TeamPropDetectionCpp();
 
 namespace team_prop_detection {
     extern int position_team_prop;

@@ -2,7 +2,7 @@
 // Created by Frosch PC - V2 on 04.06.2024.
 //
 
-#include "tests/TeamPropDetection.h"
+#include "tests/TeamPropDetection.hpp"
 
 using namespace std;
 using namespace sdk::linear_op_mode;
@@ -18,12 +18,7 @@ int min_loop_time = 1000000000;
 int max_loop_time = 0;
 double average_loop_time = 0;
 
-extern "C"
-JNIEXPORT void JNICALL
-Java_org_firstinspires_ftc_teamcode_tests_cpp_TeamPropDetectionCpp_opMode(JNIEnv *env,
-                                                                          jobject thiz) {
-    init_sdk
-
+extern "C" void TeamPropDetectionCpp() {
     telemetry::add_line("Initialized");
     telemetry::update();
 

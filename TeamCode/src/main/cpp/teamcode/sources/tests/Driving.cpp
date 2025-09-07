@@ -2,20 +2,14 @@
 // Created by Frosch PC - V2 on 04.06.2024.
 //
 
-#include "tests/Driving.h"
+#include "tests/Driving.hpp"
 
 using namespace sdk;
 using namespace std;
 using namespace gamepads;
 using namespace linear_op_mode;
 
-extern "C"
-JNIEXPORT void JNICALL
-Java_org_firstinspires_ftc_teamcode_tests_cpp_DrivingCpp_opMode(JNIEnv *env,
-                                                                jobject thiz) {
-    // This initializes the SDK, it needs to be called at the start of every opmode
-    init_sdk
-
+extern "C" void DrivingCpp() {
     // This gets all the drive motors from the hardware map
     Dc_motor_ex front_right = hardware_map::get<Dc_motor_ex>("front_right");
     Dc_motor_ex front_left = hardware_map::get<Dc_motor_ex>("front_left");
