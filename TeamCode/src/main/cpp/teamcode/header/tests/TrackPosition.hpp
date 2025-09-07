@@ -7,7 +7,7 @@
 
 #include <numeric>
 
-#include "sdk.h"
+#include "sdk.hpp"
 
 #define ENCODER_TICKS_PER_ROTATION 8192
 #define WHEEL_DIAMETER_MM 60
@@ -16,10 +16,8 @@
  * This is NOT a comment. It tells the compiler how to create the java files
  * @TeleOp(name = "TrackPositionCpp", group = "tests")
  */
-extern "C"
-JNIEXPORT void JNICALL
+extern "C" JNIEXPORT void JNICALL
 Java_org_firstinspires_ftc_teamcode_tests_cpp_TrackPositionCpp_opMode(JNIEnv *env,
                                                                       jobject thiz);
 
-
-#endif //FTCROBOTCONTROLLER_TEST_H
+#endif // FTCROBOTCONTROLLER_TEST_H

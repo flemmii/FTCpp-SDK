@@ -16,7 +16,7 @@
 #include <chrono>
 #include <numeric>
 
-#include "sdk.h"
+#include "sdk.hpp"
 
 /*
  * This is NOT a comment. It tells the compiler how to create the java files
@@ -25,7 +25,6 @@
 
 extern "C" void DrivingCpp();
 
-#endif //FTCROBOTCONTROLLER_EXAMPLE_H
+#endif // FTCROBOTCONTROLLER_EXAMPLE_H
 
-
-#endif //FTCROBOTCONTROLLER_DRIVING_H
+#endif // FTCROBOTCONTROLLER_DRIVING_H
