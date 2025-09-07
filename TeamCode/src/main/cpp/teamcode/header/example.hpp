@@ -13,9 +13,6 @@
  * @TeleOp(name = "Example", group = "Example")
  */
 
-extern "C"
-JNIEXPORT void JNICALL
-Java_org_firstinspires_ftc_teamcode_opmodes_teleop_Example_opMode(JNIEnv *env,
-                                                                  jobject thiz);
+extern "C" void Example();
 
 #endif //FTCROBOTCONTROLLER_EXAMPLE_H

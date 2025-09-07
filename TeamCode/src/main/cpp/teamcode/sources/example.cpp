@@ -8,13 +8,7 @@ using namespace sdk;
 using namespace gamepads;
 using namespace linear_op_mode;
 
-extern "C"
-JNIEXPORT void JNICALL
-Java_org_firstinspires_ftc_teamcode_opmodes_teleop_Example_opMode(JNIEnv *env,
-                                                                  jobject thiz) {
-    // This initializes the SDK, it needs to be called at the start of every opmode
-    init_sdk
-
+extern "C" void Example() {
     // This gets all the drive motors from the hardware map
     Dc_motor_ex front_right = hardware_map::get<Dc_motor_ex>("front_right");
     Dc_motor_ex front_left = hardware_map::get<Dc_motor_ex>("front_left");
